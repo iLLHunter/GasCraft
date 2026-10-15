@@ -1,0 +1,12 @@
+{
+  "type": "gascraft:powderizing",
+  "ingredient": {
+    "tag": "gascraft:cooked_meat_and_fish"
+  },
+  "result": {
+    "id": "gascraft:powdered_protein",
+    "count": 1
+  },
+  "processing_ticks": 200,
+  "energy_per_operation": 6400
+}

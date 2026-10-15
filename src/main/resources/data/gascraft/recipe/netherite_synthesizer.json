@@ -1,0 +1,30 @@
+{
+  "type": "gascraft:machine_tier_crafting",
+  "category": "misc",
+  "pattern": [
+    "NGN",
+    "USU",
+    "NRN"
+  ],
+  "key": {
+    "N": {
+      "tag": "c:ingots/netherite"
+    },
+    "G": {
+      "item": "minecraft:glass"
+    },
+    "U": {
+      "tag": "c:ingots/copper"
+    },
+    "S": {
+      "item": "gascraft:diamond_synthesizer"
+    },
+    "R": {
+      "item": "minecraft:redstone_block"
+    }
+  },
+  "result": {
+    "id": "gascraft:netherite_synthesizer",
+    "count": 1
+  }
+}

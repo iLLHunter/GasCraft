@@ -1,0 +1,6 @@
+{
+  "type": "gascraft:synthesizing",
+  "gas": "gascraft:napalm",
+  "input_gas": "gascraft:smoke",
+  "ingredient": {"item": "gascraft:napalm"}
+}

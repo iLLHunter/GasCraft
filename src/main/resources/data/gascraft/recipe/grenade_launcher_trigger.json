@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " N ",
+    "NRG",
+    "A  "
+  ],
+  "key": {
+    "N": {
+      "tag": "c:nuggets/iron"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    },
+    "G": {
+      "tag": "c:nuggets/gold"
+    },
+    "A": {
+      "tag": "c:ingots/gold"
+    }
+  },
+  "result": {
+    "id": "gascraft:grenade_launcher_trigger",
+    "count": 1
+  }
+}

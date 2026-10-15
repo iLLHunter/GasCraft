@@ -1,0 +1,12 @@
+{
+  "type": "gascraft:powderizing",
+  "ingredient": {
+    "item": "minecraft:glistering_melon_slice"
+  },
+  "result": {
+    "id": "gascraft:powdered_glistering_melon",
+    "count": 1
+  },
+  "processing_ticks": 200,
+  "energy_per_operation": 6400
+}

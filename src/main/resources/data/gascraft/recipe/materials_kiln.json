@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "IGI",
+    "UBU",
+    "IRI"
+  ],
+  "key": {
+    "I": {
+      "tag": "c:ingots/iron"
+    },
+    "G": {
+      "item": "minecraft:glass"
+    },
+    "U": {
+      "tag": "c:ingots/copper"
+    },
+    "B": {
+      "item": "minecraft:blast_furnace"
+    },
+    "R": {
+      "tag": "c:dusts/redstone"
+    }
+  },
+  "result": {
+    "id": "gascraft:materials_kiln",
+    "count": 1
+  }
+}

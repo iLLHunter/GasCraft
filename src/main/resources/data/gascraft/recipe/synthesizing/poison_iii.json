@@ -1,0 +1,8 @@
+{
+  "type": "gascraft:synthesizing",
+  "gas": "gascraft:poison_iii",
+  "input_gas": "gascraft:smoke",
+  "ingredient": {
+    "item": "gascraft:poison_pellet"
+  }
+}

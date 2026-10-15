@@ -1,0 +1,10 @@
+{
+  "type": "gascraft:synthesizing",
+  "gas": "gascraft:healing_mist",
+  "input_gas": "gascraft:smoke",
+  "ingredient": {
+    "item": "gascraft:healing_pellet"
+  },
+  "minimum_tier": "netherite",
+  "reagent_charges": 1
+}

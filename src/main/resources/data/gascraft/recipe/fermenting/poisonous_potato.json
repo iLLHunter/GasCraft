@@ -1,0 +1,7 @@
+{
+  "type": "gascraft:fermenting",
+  "ingredient": {"item": "minecraft:potato"},
+  "result": {"id": "minecraft:poisonous_potato", "count": 1},
+  "processing_ticks": 24000,
+  "energy_per_operation": 0
+}

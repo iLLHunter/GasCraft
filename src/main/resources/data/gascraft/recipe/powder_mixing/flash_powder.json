@@ -1,0 +1,13 @@
+{
+  "type": "gascraft:powder_mixing",
+  "pattern": ["GIG", "WFW", "GIG"],
+  "key": {
+    "G": {"item": "minecraft:gunpowder"},
+    "I": [{"tag": "c:dusts/iron"}, {"item": "gascraft:powdered_iron"}],
+    "W": {"item": "minecraft:glowstone_dust"},
+    "F": {"item": "minecraft:firework_star"}
+  },
+  "result": {"id": "gascraft:flash_powder", "count": 1},
+  "processing_ticks": 200,
+  "energy_per_operation": 6400
+}

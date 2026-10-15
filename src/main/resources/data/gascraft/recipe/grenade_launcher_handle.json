@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "IG",
+    "PP",
+    "G "
+  ],
+  "key": {
+    "I": {
+      "tag": "c:ingots/iron"
+    },
+    "P": {
+      "tag": "minecraft:planks"
+    },
+    "G": {
+      "tag": "c:nuggets/gold"
+    }
+  },
+  "result": {
+    "id": "gascraft:grenade_launcher_handle",
+    "count": 1
+  }
+}

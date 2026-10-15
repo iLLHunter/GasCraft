@@ -1,0 +1,18 @@
+{
+  "type": "gascraft:powder_mixing",
+  "pattern": [
+    "RR",
+    "RR"
+  ],
+  "key": {
+    "R": {
+      "item": "gascraft:regeneration_agent"
+    }
+  },
+  "result": {
+    "id": "gascraft:regeneration_agent_concentrated",
+    "count": 1
+  },
+  "processing_ticks": 200,
+  "energy_per_operation": 6400
+}

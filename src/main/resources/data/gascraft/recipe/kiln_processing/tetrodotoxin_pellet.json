@@ -1,0 +1,12 @@
+{
+  "type": "gascraft:kiln_processing",
+  "ingredient": {
+    "item": "gascraft:tetrodotoxin_pellet_composite"
+  },
+  "result": {
+    "id": "gascraft:tetrodotoxin_pellet",
+    "count": 1
+  },
+  "processing_ticks": 1200,
+  "energy_per_operation": 38400
+}

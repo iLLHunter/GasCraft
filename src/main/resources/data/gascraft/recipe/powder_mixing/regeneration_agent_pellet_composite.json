@@ -1,0 +1,22 @@
+{
+  "type": "gascraft:powder_mixing",
+  "pattern": [
+    "PPP",
+    "PBP",
+    "PPP"
+  ],
+  "key": {
+    "P": {
+      "item": "gascraft:regeneration_agent_concentrated"
+    },
+    "B": {
+      "item": "gascraft:composite_binder"
+    }
+  },
+  "result": {
+    "id": "gascraft:regeneration_agent_pellet_composite",
+    "count": 1
+  },
+  "processing_ticks": 200,
+  "energy_per_operation": 6400
+}

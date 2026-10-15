@@ -1,0 +1,31 @@
+{
+  "type": "gascraft:powder_mixing",
+  "pattern": [
+    "CLS",
+    "LPL",
+    "GLC"
+  ],
+  "key": {
+    "C": {
+      "item": "minecraft:clay"
+    },
+    "L": {
+      "item": "minecraft:slime_ball"
+    },
+    "S": {
+      "item": "minecraft:sand"
+    },
+    "P": {
+      "item": "gascraft:powdered_poison"
+    },
+    "G": {
+      "item": "minecraft:gravel"
+    }
+  },
+  "result": {
+    "id": "gascraft:toxic_binder",
+    "count": 9
+  },
+  "processing_ticks": 200,
+  "energy_per_operation": 6400
+}

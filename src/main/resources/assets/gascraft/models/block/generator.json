@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/orientable_with_bottom",
+  "textures": {
+    "front": "gascraft:block/generator_off",
+    "side": "gascraft:block/machine_dark_casing",
+    "top": "gascraft:block/machine_dark_casing",
+    "bottom": "gascraft:block/machine_dark_casing"
+  }
+}

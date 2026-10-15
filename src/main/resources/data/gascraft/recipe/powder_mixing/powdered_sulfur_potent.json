@@ -1,0 +1,8 @@
+{
+  "type": "gascraft:powder_mixing",
+  "pattern": ["SS", "SS"],
+  "key": {"S": [{"item": "gascraft:powdered_sulfur"}, {"tag": "c:dusts/sulfur"}]},
+  "result": {"id": "gascraft:powdered_sulfur_potent", "count": 1},
+  "processing_ticks": 200,
+  "energy_per_operation": 6400
+}

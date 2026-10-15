@@ -1,0 +1,21 @@
+{
+  "type": "gascraft:powder_mixing",
+  "pattern": [
+    "SG",
+    "GS"
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:sugar"
+    },
+    "G": {
+      "item": "minecraft:gunpowder"
+    }
+  },
+  "result": {
+    "id": "gascraft:powdered_smoke",
+    "count": 2
+  },
+  "processing_ticks": 200,
+  "energy_per_operation": 6400
+}

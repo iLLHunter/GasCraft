@@ -1,0 +1,236 @@
+plugins {
+    id 'java-library'
+    id 'net.neoforged.moddev' version '2.0.147'
+}
+
+group = 'gascraft'
+version = mod_version
+base { archivesName = "gascraft-${minecraft_version}" }
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+
+repositories {
+    maven { url = 'https://modmaven.dev/'; content { includeGroup 'mekanism' } }
+    maven { url = 'https://maven.theillusivec4.top/' }
+    maven { url = 'https://maven.blamejared.com/' }
+}
+dependencies {
+    compileOnly 'mekanism:Mekanism:1.21.1-10.7.19.85:api'
+    if (providers.gradleProperty('withMekanism').isPresent()) runtimeOnly 'mekanism:Mekanism:1.21.1-10.7.19.85'
+    compileOnly 'top.theillusivec4.curios:curios-neoforge:9.5.1+1.21.1:api'
+    compileOnly 'mezz.jei:jei-1.21.1-neoforge-api:19.27.0.340'
+    if (!providers.gradleProperty('withoutOptionalMods').isPresent()) {
+        if (!providers.gradleProperty('withoutCurios').isPresent()) runtimeOnly 'top.theillusivec4.curios:curios-neoforge:9.5.1+1.21.1'
+        runtimeOnly 'mezz.jei:jei-1.21.1-neoforge:19.27.0.340'
+    }
+}
+
+sourceSets {
+    multiplayerTest {
+        compileClasspath += sourceSets.main.output + sourceSets.main.compileClasspath
+        runtimeClasspath += sourceSets.main.runtimeClasspath - sourceSets.main.output
+    }
+    worldLifecycleTest {
+        compileClasspath += sourceSets.main.output + sourceSets.main.compileClasspath
+        runtimeClasspath += sourceSets.main.runtimeClasspath - sourceSets.main.output
+    }
+    gameTest {
+        compileClasspath += sourceSets.main.output + sourceSets.main.compileClasspath
+        runtimeClasspath += sourceSets.main.runtimeClasspath
+    }
+}
+configurations {
+    multiplayerTestImplementation.extendsFrom implementation
+    worldLifecycleTestImplementation.extendsFrom implementation
+    gameTestImplementation.extendsFrom implementation
+}
+
+neoForge {
+    version = neo_forge_version
+    accessTransformers.from('src/main/resources/META-INF/accesstransformer.cfg')
+    mods {
+        gascraft { sourceSet sourceSets.main }
+        gascraft_tests { sourceSet sourceSets.gameTest }
+        gascraft_multiplayer_tests { sourceSet sourceSets.multiplayerTest }
+        gascraft_world_tests { sourceSet sourceSets.worldLifecycleTest }
+    }
+    runs {
+        machineMultiplayerServer {
+            server()
+            jvmArgument '-Xmx2G'
+            systemProperty 'gascraft.multiplayerSection', providers.gradleProperty('multiplayerSection').getOrElse('')
+            systemProperty 'gascraft.multiplayerClientReady', providers.gradleProperty('multiplayerClientReady').getOrElse('false')
+            gameDirectory = file("runs/multiplayer-${providers.gradleProperty('multiplayerProfile').getOrElse('base')}/server")
+            sourceSet = sourceSets.multiplayerTest
+            loadedMods = [mods.gascraft_multiplayer_tests]
+            programArgument '--nogui'
+        }
+        machineMultiplayerClientA {
+            client()
+            jvmArgument '-Xmx2G'
+            gameDirectory = file("runs/multiplayer-${providers.gradleProperty('multiplayerProfile').getOrElse('base')}/client-a")
+            sourceSet = sourceSets.multiplayerTest
+            loadedMods = [mods.gascraft_multiplayer_tests]
+            programArguments.addAll('--username', 'GasMP_A', '--width', '1280', '--height', '720')
+        }
+        machineMultiplayerClientB {
+            client()
+            jvmArgument '-Xmx2G'
+            gameDirectory = file("runs/multiplayer-${providers.gradleProperty('multiplayerProfile').getOrElse('base')}/client-b")
+            sourceSet = sourceSets.multiplayerTest
+            loadedMods = [mods.gascraft_multiplayer_tests]
+            programArguments.addAll('--username', 'GasMP_B', '--width', '1280', '--height', '720')
+        }
+        worldLifecycle {
+            client()
+            gameDirectory = file('runs/world-lifecycle')
+            sourceSet = sourceSets.worldLifecycleTest
+            loadedMods = [mods.gascraft_world_tests]
+            programArguments.addAll('--username', 'GasLifecycle', '--width', '960', '--height', '540')
+        }
+        client {
+            client()
+            gameDirectory = file('runs/client')
+            loadedMods = [mods.gascraft]
+        }
+        server {
+            server()
+            gameDirectory = file('runs/server')
+            programArgument '--nogui'
+            loadedMods = [mods.gascraft]
+        }
+        serverSmoke {
+            server()
+            gameDirectory = file('runs/server-smoke')
+            sourceSet = sourceSets.gameTest
+            loadedMods = [mods.gascraft, mods.gascraft_tests]
+            programArgument '--nogui'
+            systemProperty 'gascraft.serverSmoke', 'true'
+        }
+        gameTestServer {
+            type = 'gameTestServer'
+            gameDirectory = file('runs/gameTest')
+            sourceSet = sourceSets.gameTest
+            loadedMods = [mods.gascraft, mods.gascraft_tests]
+            systemProperty 'neoforge.enabledGameTestNamespaces', 'gascraft'
+        }
+        clientSmoke {
+            client()
+            gameDirectory = file('runs/client-smoke')
+            sourceSet = sourceSets.gameTest
+            loadedMods = [mods.gascraft, mods.gascraft_tests]
+            systemProperty 'gascraft.clientSmoke', 'true'
+            programArguments.addAll('--username', 'GascraftSmoke', '--width', '960', '--height', '540')
+        }
+        napalmClientSmoke {
+            client()
+            gameDirectory = file('runs/napalm-client-smoke')
+            sourceSet = sourceSets.gameTest
+            loadedMods = [mods.gascraft, mods.gascraft_tests]
+            systemProperty 'gascraft.napalmClientSmoke', 'true'
+            programArguments.addAll('--username', 'GasNapalmSmoke', '--width', '1280', '--height', '720')
+        }
+        progressionClientSmoke {
+            client()
+            gameDirectory = file('runs/progression-client-smoke')
+            sourceSet = sourceSets.gameTest
+            loadedMods = [mods.gascraft, mods.gascraft_tests]
+            systemProperty 'gascraft.progressionClientSmoke', 'true'
+            programArguments.addAll('--username', 'GasProgression', '--width', '1280', '--height', '720')
+        }
+        tetrodotoxinClientSmoke {
+            client()
+            gameDirectory = file('runs/tetrodotoxin-client-smoke')
+            sourceSet = sourceSets.gameTest
+            loadedMods = [mods.gascraft, mods.gascraft_tests]
+            systemProperty 'gascraft.tetrodotoxinClientSmoke', 'true'
+            programArguments.addAll('--username', 'GasTetrodotoxin', '--width', '1280', '--height', '720')
+        }
+        machineClientSmoke {
+            client()
+            gameDirectory = file('runs/machine-client-smoke')
+            sourceSet = sourceSets.gameTest
+            loadedMods = [mods.gascraft, mods.gascraft_tests]
+            systemProperty 'gascraft.machineClientSmoke', 'true'
+            programArguments.addAll('--username', 'GasMachineSmoke', '--width', '1280', '--height', '720')
+        }
+        jeiMachineSmoke {
+            client()
+            gameDirectory = file('runs/jei-machine-smoke')
+            sourceSet = sourceSets.gameTest
+            loadedMods = [mods.gascraft, mods.gascraft_tests]
+            systemProperty 'gascraft.jeiMachineSmoke', 'true'
+            programArguments.addAll('--username', 'GasJeiSmoke', '--width', '1280', '--height', '720')
+        }
+        clientDeathSmoke {
+            client()
+            gameDirectory = file('runs/client-death-smoke')
+            sourceSet = sourceSets.gameTest
+            loadedMods = [mods.gascraft, mods.gascraft_tests]
+            systemProperty 'gascraft.clientDeathSmoke', 'true'
+            programArguments.addAll('--username', 'GasDeathSmoke', '--width', '1280', '--height', '720')
+        }
+        clientGameplay {
+            client()
+            gameDirectory = file('runs/client-gameplay')
+            sourceSet = sourceSets.gameTest
+            loadedMods = [mods.gascraft, mods.gascraft_tests]
+            systemProperty 'gascraft.clientGameplay', 'true'
+            programArguments.addAll('--username', 'GascraftGameplay', '--width', '1280', '--height', '720')
+        }
+    }
+}
+
+tasks.register('stageMachineMultiplayerJar') {
+    dependsOn tasks.named('jar')
+    def profile = providers.gradleProperty('multiplayerProfile').getOrElse('base')
+    doLast {
+        ['server', 'client-a', 'client-b'].each { role ->
+            def sourceJar = tasks.named('jar', Jar).get().archiveFile.get().asFile
+            def stagedJar = file("runs/multiplayer-${profile}/${role}/mods/gascraft-under-test.jar")
+            // Another test JVM may already be reading this file. Never rewrite identical bytes.
+            if (stagedJar.exists() && java.nio.file.Files.mismatch(sourceJar.toPath(), stagedJar.toPath()) == -1L) return
+            copy {
+                from(tasks.named('jar', Jar).flatMap { it.archiveFile })
+                into("runs/multiplayer-${profile}/${role}/mods")
+                rename { 'gascraft-under-test.jar' }
+            }
+        }
+    }
+}
+['Server', 'ClientA', 'ClientB'].each { role ->
+    tasks.named("runMachineMultiplayer${role}") { dependsOn 'stageMachineMultiplayerJar' }
+}
+
+tasks.register('stageWorldLifecycleJar', Copy) {
+    if (!providers.gradleProperty('worldLifecycleJar').isPresent()) dependsOn tasks.named('jar')
+    from(providers.gradleProperty('worldLifecycleJar').map { file(it) }.orElse(tasks.named('jar', Jar).flatMap { it.archiveFile }.map { it.asFile }))
+    into('runs/world-lifecycle/mods')
+    rename { 'gascraft-under-test.jar' }
+}
+tasks.named('runWorldLifecycle') { dependsOn 'stageWorldLifecycleJar' }
+
+tasks.register('silenceTestNarrators') {
+    doLast {
+        ['runs/client', 'runs/client-smoke', 'runs/napalm-client-smoke', 'runs/progression-client-smoke', 'runs/tetrodotoxin-client-smoke', 'runs/machine-client-smoke', 'runs/jei-machine-smoke', 'runs/client-death-smoke', 'runs/client-gameplay', 'runs/world-lifecycle'].each { directory ->
+            def settings = file("${directory}/options.txt")
+            settings.parentFile.mkdirs()
+            def content = settings.exists() ? settings.getText('UTF-8') : ''
+            [narrator: '0', narratorHotkey: 'false', onboardAccessibility: 'false'].each { key, value ->
+                def pattern = "(?m)^${key}:[^\\r\\n]*"
+                if (content =~ pattern) content = content.replaceAll(pattern, "${key}:${value}")
+                else content += (content.endsWith('\n') || content.isEmpty() ? '' : '\n') + "${key}:${value}\n"
+            }
+            settings.setText(content, 'UTF-8')
+        }
+    }
+}
+['runClient', 'runClientSmoke', 'runNapalmClientSmoke', 'runProgressionClientSmoke', 'runTetrodotoxinClientSmoke', 'runMachineClientSmoke', 'runJeiMachineSmoke', 'runClientDeathSmoke', 'runClientGameplay', 'runWorldLifecycle'].each { name ->
+    tasks.named(name) { dependsOn 'silenceTestNarrators' }
+}
+
+tasks.withType(JavaCompile).configureEach { options.encoding = 'UTF-8' }
+tasks.named('processResources', ProcessResources) {
+    inputs.property 'mod_version', mod_version
+    filesMatching('META-INF/neoforge.mods.toml') { expand mod_version: mod_version }
+}
+

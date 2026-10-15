@@ -1,0 +1,211 @@
+[
+  {
+    "gas": "gascraft:misted_meat",
+    "input": {
+      "gas": "gascraft:smoke"
+    },
+    "ingredient": {
+      "item": "gascraft:powdered_protein"
+    }
+  },
+  {
+    "gas": "gascraft:pulmonary_agent",
+    "input": {
+      "gas": "gascraft:smoke"
+    },
+    "ingredient": {
+      "item": "gascraft:flesh_ash"
+    }
+  },
+  {
+    "gas": "gascraft:colored_smoke_black",
+    "input": {
+      "gas": "gascraft:smoke"
+    },
+    "ingredient": {
+      "item": "minecraft:black_dye"
+    }
+  },
+  {
+    "gas": "gascraft:colored_smoke_blue",
+    "input": {
+      "gas": "gascraft:smoke"
+    },
+    "ingredient": {
+      "item": "minecraft:blue_dye"
+    }
+  },
+  {
+    "gas": "gascraft:colored_smoke_brown",
+    "input": {
+      "gas": "gascraft:smoke"
+    },
+    "ingredient": {
+      "item": "minecraft:brown_dye"
+    }
+  },
+  {
+    "gas": "gascraft:colored_smoke_cyan",
+    "input": {
+      "gas": "gascraft:smoke"
+    },
+    "ingredient": {
+      "item": "minecraft:cyan_dye"
+    }
+  },
+  {
+    "gas": "gascraft:colored_smoke_gray",
+    "input": {
+      "gas": "gascraft:smoke"
+    },
+    "ingredient": {
+      "item": "minecraft:gray_dye"
+    }
+  },
+  {
+    "gas": "gascraft:colored_smoke_green",
+    "input": {
+      "gas": "gascraft:smoke"
+    },
+    "ingredient": {
+      "item": "minecraft:green_dye"
+    }
+  },
+  {
+    "gas": "gascraft:colored_smoke_light_blue",
+    "input": {
+      "gas": "gascraft:smoke"
+    },
+    "ingredient": {
+      "item": "minecraft:light_blue_dye"
+    }
+  },
+  {
+    "gas": "gascraft:colored_smoke_lime",
+    "input": {
+      "gas": "gascraft:smoke"
+    },
+    "ingredient": {
+      "item": "minecraft:lime_dye"
+    }
+  },
+  {
+    "gas": "gascraft:colored_smoke_magenta",
+    "input": {
+      "gas": "gascraft:smoke"
+    },
+    "ingredient": {
+      "item": "minecraft:magenta_dye"
+    }
+  },
+  {
+    "gas": "gascraft:colored_smoke_orange",
+    "input": {
+      "gas": "gascraft:smoke"
+    },
+    "ingredient": {
+      "item": "minecraft:orange_dye"
+    }
+  },
+  {
+    "gas": "gascraft:colored_smoke_pink",
+    "input": {
+      "gas": "gascraft:smoke"
+    },
+    "ingredient": {
+      "item": "minecraft:pink_dye"
+    }
+  },
+  {
+    "gas": "gascraft:colored_smoke_purple",
+    "input": {
+      "gas": "gascraft:smoke"
+    },
+    "ingredient": {
+      "item": "minecraft:purple_dye"
+    }
+  },
+  {
+    "gas": "gascraft:colored_smoke_red",
+    "input": {
+      "gas": "gascraft:smoke"
+    },
+    "ingredient": {
+      "item": "minecraft:red_dye"
+    }
+  },
+  {
+    "gas": "gascraft:colored_smoke_light_gray",
+    "input": {
+      "gas": "gascraft:smoke"
+    },
+    "ingredient": {
+      "item": "minecraft:light_gray_dye"
+    }
+  },
+  {
+    "gas": "gascraft:colored_smoke_white",
+    "input": {
+      "gas": "gascraft:smoke"
+    },
+    "ingredient": {
+      "item": "minecraft:white_dye"
+    }
+  },
+  {
+    "gas": "gascraft:colored_smoke_yellow",
+    "input": {
+      "gas": "gascraft:smoke"
+    },
+    "ingredient": {
+      "item": "minecraft:yellow_dye"
+    }
+  },
+  {
+    "gas": "gascraft:regenerating_mist",
+    "input": {
+      "gas": "gascraft:smoke"
+    },
+    "ingredient": {
+      "item": "gascraft:regeneration_agent_pellet"
+    }
+  },
+  {
+    "gas": "gascraft:mustard_gas",
+    "input": {
+      "gas": "gascraft:pulmonary_agent"
+    },
+    "ingredient": {
+      "item": "gascraft:powdered_sulfur_potent"
+    }
+  },
+  {
+    "gas": "gascraft:sarin_gas",
+    "input": {
+      "item": "minecraft:potion",
+      "potion": "minecraft:mundane"
+    },
+    "ingredient": {
+      "item": "gascraft:sarin_pellet"
+    }
+  },
+  {
+    "gas": "gascraft:smoke",
+    "input": {
+      "item": "minecraft:potion",
+      "potion": "minecraft:mundane"
+    },
+    "ingredient": {
+      "item": "gascraft:powdered_smoke"
+    }
+  },
+  {
+    "gas": "gascraft:tear_gas",
+    "input": {
+      "gas": "gascraft:smoke"
+    },
+    "ingredient": {
+      "item": "gascraft:lachrymator_agent"
+    }
+  }
+]

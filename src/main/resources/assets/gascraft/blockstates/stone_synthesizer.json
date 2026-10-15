@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "gascraft:block/stone_synthesizer"
+    },
+    "facing=east": {
+      "model": "gascraft:block/stone_synthesizer",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "gascraft:block/stone_synthesizer",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "gascraft:block/stone_synthesizer",
+      "y": 270
+    }
+  }
+}

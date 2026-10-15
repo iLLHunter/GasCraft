@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "result": {
+    "id": "gascraft:gas_mask"
+  },
+  "pattern": [
+    "###",
+    "XOX",
+    "@+@"
+  ],
+  "key": {
+    "#": {
+      "tag": "c:leathers"
+    },
+    "X": {
+      "tag": "c:glass_blocks"
+    },
+    "O": {
+      "tag": "c:papers"
+    },
+    "@": {
+      "tag": "c:ingots/iron"
+    },
+    "+": {
+      "item": "minecraft:hopper"
+    }
+  }
+}

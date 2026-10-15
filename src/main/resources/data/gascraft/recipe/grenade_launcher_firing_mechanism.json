@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " R ",
+    "CPC",
+    " D "
+  ],
+  "key": {
+    "C": {
+      "tag": "c:storage_blocks/copper"
+    },
+    "P": {
+      "item": "minecraft:piston"
+    },
+    "R": {
+      "tag": "c:storage_blocks/redstone"
+    },
+    "D": {
+      "tag": "c:storage_blocks/diamond"
+    }
+  },
+  "result": {
+    "id": "gascraft:grenade_launcher_firing_mechanism",
+    "count": 1
+  }
+}

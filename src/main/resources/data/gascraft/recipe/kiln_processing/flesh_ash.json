@@ -1,0 +1,13 @@
+{
+  "type": "gascraft:kiln_processing",
+  "ingredient": {
+    "item": "minecraft:rotten_flesh"
+  },
+  "result": {
+    "id": "gascraft:flesh_ash",
+    "count": 1
+  },
+  "processing_ticks": 200,
+  "energy_per_operation": 6400,
+  "experience": 0.35
+}

@@ -1,0 +1,34 @@
+{
+  "type": "gascraft:powder_mixing",
+  "pattern": [
+    "FEF",
+    "GPR",
+    "FCF"
+  ],
+  "key": {
+    "F": {
+      "item": "gascraft:poison_pellet"
+    },
+    "E": {
+      "item": "minecraft:ender_pearl"
+    },
+    "G": {
+      "item": "minecraft:glowstone_dust"
+    },
+    "P": {
+      "item": "gascraft:toxic_binder"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    },
+    "C": {
+      "item": "minecraft:clay_ball"
+    }
+  },
+  "result": {
+    "id": "gascraft:sarin_pellet_composite",
+    "count": 1
+  },
+  "processing_ticks": 200,
+  "energy_per_operation": 6400
+}

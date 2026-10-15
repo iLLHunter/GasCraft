@@ -1,0 +1,13 @@
+{
+  "type": "gascraft:powder_mixing",
+  "pattern": ["BM", "SF"],
+  "key": {
+    "B": {"item": "minecraft:blaze_powder"},
+    "M": {"item": "minecraft:magma_cream"},
+    "S": {"item": "gascraft:sulfur"},
+    "F": [{"item": "minecraft:charcoal"}, {"item": "minecraft:coal"}]
+  },
+  "result": {"id": "gascraft:napalm", "count": 1},
+  "processing_ticks": 200,
+  "energy_per_operation": 6400
+}

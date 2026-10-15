@@ -1,0 +1,13 @@
+{
+  "gasType": "SMOKE",
+  "color": "0xAACCCCCC",
+  "agents": [
+    {
+      "agent": "gascraft:lachrymator",
+      "potency": 0.2
+    }
+  ],
+  "tooltipLines": [
+    "tooltip.gascraft.raid_outline"
+  ]
+}

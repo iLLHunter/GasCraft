@@ -1,0 +1,6 @@
+{
+  "factory": "potion",
+  "potion": "minecraft:poison",
+  "duration": 20,
+  "amplifier": 1
+}

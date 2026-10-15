@@ -1,0 +1,8 @@
+{
+  "type": "gascraft:synthesizing",
+  "gas": "gascraft:raid_gas",
+  "input_gas": "gascraft:tear_gas",
+  "ingredient": {
+    "item": "gascraft:tracking_powder"
+  }
+}

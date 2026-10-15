@@ -1,0 +1,26 @@
+{
+  "gasType": "SMOKE",
+  "color": "0xFFFFFFFF",
+  "particleType": "SMOKE",
+  "agents": [],
+  "tooltipLines": [
+    "Stuns while inside the cloud for 20 seconds"
+  ],
+  "timedEffects": [
+    {
+      "delayTicks": 0,
+      "type": "flash",
+      "durationTicks": 10
+    },
+    {
+      "delayTicks": 0,
+      "type": "paralysis",
+      "durationTicks": 400
+    },
+    {
+      "delayTicks": 400,
+      "type": "fade",
+      "durationTicks": 60
+    }
+  ]
+}

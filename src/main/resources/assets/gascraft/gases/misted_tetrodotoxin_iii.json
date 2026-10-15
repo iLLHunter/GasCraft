@@ -1,0 +1,26 @@
+{
+  "gasType": "SMOKE",
+  "color": "0xFF48205F",
+  "particleType": "SMOKE",
+  "agents": [],
+  "tooltipLines": [
+    "Paralyzes immediately for 5 seconds",
+    "then deals FAFO damage"
+  ],
+  "timedEffects": [
+    {
+      "delayTicks": 0,
+      "type": "paralysis",
+      "durationTicks": 100
+    },
+    {
+      "delayTicks": 100,
+      "type": "melee_damage",
+      "damage": 424
+    },
+    {
+      "delayTicks": 0,
+      "type": "end"
+    }
+  ]
+}

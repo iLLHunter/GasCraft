@@ -1,0 +1,8 @@
+{
+  "type": "gascraft:synthesizing",
+  "gas": "gascraft:misted_tetrodotoxin_ii",
+  "input_gas": "gascraft:smoke",
+  "ingredient": {
+    "item": "gascraft:powdered_tetrodotoxin_concentrated"
+  }
+}

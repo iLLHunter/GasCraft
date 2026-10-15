@@ -1,0 +1,30 @@
+{
+  "type": "gascraft:machine_tier_crafting",
+  "category": "misc",
+  "pattern": [
+    "IGI",
+    "USU",
+    "IRI"
+  ],
+  "key": {
+    "I": {
+      "tag": "c:ingots/iron"
+    },
+    "G": {
+      "item": "minecraft:glass"
+    },
+    "U": {
+      "tag": "c:ingots/copper"
+    },
+    "S": {
+      "item": "gascraft:stone_synthesizer"
+    },
+    "R": {
+      "tag": "c:dusts/redstone"
+    }
+  },
+  "result": {
+    "id": "gascraft:iron_synthesizer",
+    "count": 1
+  }
+}

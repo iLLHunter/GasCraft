@@ -1,0 +1,218 @@
+{
+  "parent": "minecraft:block/orientable_with_bottom",
+  "textures": {
+    "front": "gascraft:block/materials_kiln_off",
+    "side": "gascraft:block/machine_dark_casing",
+    "top": "gascraft:block/machine_dark_casing",
+    "bottom": "gascraft:block/machine_dark_casing",
+    "flame": "gascraft:block/kiln_flame_animation"
+  },
+  "elements": [
+    {
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ],
+      "faces": {
+        "north": {
+          "texture": "#front",
+          "cullface": "north"
+        },
+        "east": {
+          "texture": "#side",
+          "cullface": "east"
+        },
+        "south": {
+          "texture": "#side",
+          "cullface": "south"
+        },
+        "west": {
+          "texture": "#side",
+          "cullface": "west"
+        },
+        "up": {
+          "texture": "#top",
+          "cullface": "up"
+        },
+        "down": {
+          "texture": "#bottom",
+          "cullface": "down"
+        }
+      }
+    },
+    {
+      "from": [
+        9.0,
+        13.5,
+        -0.01
+      ],
+      "to": [
+        9.5,
+        15.0,
+        -0.01
+      ],
+      "faces": {
+        "north": {
+          "texture": "#flame",
+          "uv": [
+            6.5,
+            0.75,
+            7.0,
+            2.5
+          ],
+          "cullface": "north"
+        }
+      }
+    },
+    {
+      "from": [
+        7.75,
+        13.5,
+        -0.01
+      ],
+      "to": [
+        8.25,
+        15.0,
+        -0.01
+      ],
+      "faces": {
+        "north": {
+          "texture": "#flame",
+          "uv": [
+            7.75,
+            0.75,
+            8.25,
+            2.5
+          ],
+          "cullface": "north"
+        }
+      }
+    },
+    {
+      "from": [
+        6.5,
+        13.5,
+        -0.01
+      ],
+      "to": [
+        7.0,
+        15.0,
+        -0.01
+      ],
+      "faces": {
+        "north": {
+          "texture": "#flame",
+          "uv": [
+            9.0,
+            0.75,
+            9.5,
+            2.5
+          ],
+          "cullface": "north"
+        }
+      }
+    },
+    {
+      "from": [
+        5.5,
+        7.0,
+        -0.01
+      ],
+      "to": [
+        10.5,
+        9.0,
+        -0.01
+      ],
+      "faces": {
+        "north": {
+          "texture": "#flame",
+          "uv": [
+            5.5,
+            7.0,
+            10.5,
+            9.0
+          ],
+          "cullface": "north"
+        }
+      }
+    },
+    {
+      "from": [
+        9.5,
+        1.0,
+        -0.01
+      ],
+      "to": [
+        10.0,
+        2.0,
+        -0.01
+      ],
+      "faces": {
+        "north": {
+          "texture": "#flame",
+          "uv": [
+            6.0,
+            13.75,
+            6.5,
+            15.25
+          ],
+          "cullface": "north"
+        }
+      }
+    },
+    {
+      "from": [
+        8.5,
+        1.0,
+        -0.01
+      ],
+      "to": [
+        9.0,
+        2.0,
+        -0.01
+      ],
+      "faces": {
+        "north": {
+          "texture": "#flame",
+          "uv": [
+            7.75,
+            13.75,
+            8.25,
+            15.25
+          ],
+          "cullface": "north"
+        }
+      }
+    },
+    {
+      "from": [
+        6.5,
+        1.0,
+        -0.01
+      ],
+      "to": [
+        7.0,
+        2.0,
+        -0.01
+      ],
+      "faces": {
+        "north": {
+          "texture": "#flame",
+          "uv": [
+            9.0,
+            13.75,
+            9.5,
+            15.25
+          ],
+          "cullface": "north"
+        }
+      }
+    }
+  ]
+}

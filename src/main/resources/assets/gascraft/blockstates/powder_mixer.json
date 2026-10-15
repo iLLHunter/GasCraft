@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "gascraft:block/powder_mixer"
+    },
+    "facing=east": {
+      "model": "gascraft:block/powder_mixer",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "gascraft:block/powder_mixer",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "gascraft:block/powder_mixer",
+      "y": 270
+    }
+  }
+}

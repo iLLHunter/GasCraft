@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "gascraft:block/powderizer"
+    },
+    "facing=east": {
+      "model": "gascraft:block/powderizer",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "gascraft:block/powderizer",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "gascraft:block/powderizer",
+      "y": 270
+    }
+  }
+}

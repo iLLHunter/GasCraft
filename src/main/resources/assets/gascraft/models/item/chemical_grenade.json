@@ -1,0 +1,30 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "gascraft:item/grenade_pinned_stripe",
+    "layer1": "gascraft:item/grenade_pinned"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "gascraft:pin_removed": 1,
+        "gascraft:gas_type": 0
+      },
+      "model": "gascraft:item/chemical_grenade/grenade_pin_removed"
+    },
+    {
+      "predicate": {
+        "gascraft:pin_removed": 0,
+        "gascraft:gas_type": 1
+      },
+      "model": "gascraft:item/chemical_grenade/smoke_grenade_pinned"
+    },
+    {
+      "predicate": {
+        "gascraft:pin_removed": 1,
+        "gascraft:gas_type": 1
+      },
+      "model": "gascraft:item/chemical_grenade/smoke_grenade_pin_removed"
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "gasType": "SMOKE",
+  "color": "0xFFB02E26",
+  "timedEffects": [
+    {"delayTicks": 100, "type": "detonation", "damage": 18, "fireTicks": 100, "knockbackLevel": 5},
+    {"delayTicks": 0, "type": "color", "color": "0xFF000000"},
+    {"delayTicks": 100, "type": "fade", "durationTicks": 60}
+  ]
+}

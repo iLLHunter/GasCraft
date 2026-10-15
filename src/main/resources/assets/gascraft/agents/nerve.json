@@ -1,0 +1,6 @@
+{
+  "factory": "sickness",
+  "toxic": "true",
+  "ignoreBreath": "true",
+  "sickness": "gascraft:nerve_agent_exposure"
+}

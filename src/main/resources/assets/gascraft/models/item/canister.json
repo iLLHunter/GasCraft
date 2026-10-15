@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "gascraft:item/canister_stripe",
+    "layer1": "gascraft:item/canister_body"
+  }
+}

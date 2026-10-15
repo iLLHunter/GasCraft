@@ -1,0 +1,22 @@
+{
+  "type": "gascraft:powder_mixing",
+  "pattern": [
+    "PPP",
+    "PBP",
+    "PPP"
+  ],
+  "key": {
+    "P": {
+      "item": "gascraft:powdered_tetrodotoxin_concentrated"
+    },
+    "B": {
+      "item": "gascraft:toxic_binder"
+    }
+  },
+  "result": {
+    "id": "gascraft:tetrodotoxin_pellet_composite",
+    "count": 1
+  },
+  "processing_ticks": 200,
+  "energy_per_operation": 6400
+}

@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "III",
+    "   ",
+    "III"
+  ],
+  "key": {
+    "I": {
+      "tag": "c:storage_blocks/iron"
+    }
+  },
+  "result": {
+    "id": "gascraft:grenade_launcher_barrel",
+    "count": 1
+  }
+}

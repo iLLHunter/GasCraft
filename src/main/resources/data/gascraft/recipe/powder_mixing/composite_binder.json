@@ -1,0 +1,42 @@
+{
+  "type": "gascraft:powder_mixing",
+  "pattern": [
+    "CHS",
+    "HPH",
+    "GHC"
+  ],
+  "key": {
+    "C": {
+      "item": "minecraft:clay"
+    },
+    "H": [
+      {
+        "item": "minecraft:honey_bottle"
+      },
+      {
+        "item": "minecraft:honeycomb"
+      },
+      {
+        "item": "minecraft:egg"
+      },
+      {
+        "item": "minecraft:sugar"
+      }
+    ],
+    "S": {
+      "item": "minecraft:sand"
+    },
+    "P": {
+      "item": "gascraft:powdered_protein"
+    },
+    "G": {
+      "item": "minecraft:gravel"
+    }
+  },
+  "result": {
+    "id": "gascraft:composite_binder",
+    "count": 9
+  },
+  "processing_ticks": 200,
+  "energy_per_operation": 6400
+}

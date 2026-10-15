@@ -1,0 +1,6 @@
+{
+  "type": "gascraft:synthesizing",
+  "gas": "gascraft:poison_ii",
+  "input_gas": "gascraft:smoke",
+  "ingredient": {"item": "gascraft:powdered_poison_concentrated"}
+}

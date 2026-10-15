@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    "gascraft:generator",
+    "gascraft:powderizer",
+    "gascraft:powder_mixer",
+    "gascraft:materials_kiln",
+    "gascraft:stone_synthesizer",
+    "gascraft:iron_synthesizer",
+    "gascraft:diamond_synthesizer",
+    "gascraft:netherite_synthesizer"
+  ]
+}

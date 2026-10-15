@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "BMI",
+    "ITC",
+    "H  "
+  ],
+  "key": {
+    "B": {
+      "item": "gascraft:grenade_launcher_barrel"
+    },
+    "M": {
+      "item": "gascraft:grenade_launcher_firing_mechanism"
+    },
+    "I": {
+      "tag": "c:ingots/iron"
+    },
+    "T": {
+      "item": "gascraft:grenade_launcher_trigger"
+    },
+    "C": {
+      "tag": "c:ingots/copper"
+    },
+    "H": {
+      "item": "gascraft:grenade_launcher_handle"
+    }
+  },
+  "result": {
+    "id": "gascraft:grenade_launcher",
+    "count": 1
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "type": "gascraft:powderizing",
+  "ingredient": {"item": "gascraft:fermented_vegetation"},
+  "result": {"id": "gascraft:powdered_poison", "count": 1},
+  "processing_ticks": 200,
+  "energy_per_operation": 6400
+}

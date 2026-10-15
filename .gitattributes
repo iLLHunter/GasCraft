@@ -1,0 +1,16 @@
+# Keep development material in GasCraft-build, outside public git archives.
+/.gradle export-ignore
+/build export-ignore
+/runs export-ignore
+/tools export-ignore
+/test export-ignore
+/tests export-ignore
+/docs export-ignore
+/research export-ignore
+/artwork export-ignore
+/src/test export-ignore
+/src/gameTest export-ignore
+/src/multiplayerTest export-ignore
+/src/worldLifecycleTest export-ignore
+/.idea export-ignore
+*.iml export-ignore

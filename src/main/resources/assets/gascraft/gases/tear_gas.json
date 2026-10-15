@@ -1,0 +1,10 @@
+{
+  "gasType": "SMOKE",
+  "color": "0xAACCCCCC",
+  "agents": [
+    {
+      "agent": "gascraft:lachrymator",
+      "potency": 0.2
+    }
+  ]
+}

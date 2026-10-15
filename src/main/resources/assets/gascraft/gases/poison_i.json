@@ -1,0 +1,5 @@
+{
+  "gasType": "SMOKE",
+  "color": "0xFF5E7C16",
+  "agents": [{"agent": "gascraft:poison_i", "potency": 1.0}]
+}

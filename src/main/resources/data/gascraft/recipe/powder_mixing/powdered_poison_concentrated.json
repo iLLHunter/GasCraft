@@ -1,0 +1,8 @@
+{
+  "type": "gascraft:powder_mixing",
+  "pattern": ["PP", "PP"],
+  "key": {"P": {"item": "gascraft:powdered_poison"}},
+  "result": {"id": "gascraft:powdered_poison_concentrated", "count": 1},
+  "processing_ticks": 200,
+  "energy_per_operation": 6400
+}

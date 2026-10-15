@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/orientable_with_bottom",
+  "textures": {
+    "front": "gascraft:block/stone_synthesizer_front",
+    "side": "gascraft:block/stone_machine_casing",
+    "top": "gascraft:block/stone_machine_casing",
+    "bottom": "gascraft:block/stone_machine_casing"
+  }
+}

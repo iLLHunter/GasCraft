@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": ["LGL", "LCL", "LSL"],
+  "key": {
+    "L": {"tag": "minecraft:logs"},
+    "G": {"tag": "c:glass_blocks"},
+    "C": {"item": "minecraft:composter"},
+    "S": {"tag": "minecraft:wooden_slabs"}
+  },
+  "result": {"id": "gascraft:fermenter", "count": 1}
+}

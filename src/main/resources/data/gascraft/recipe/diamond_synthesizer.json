@@ -1,0 +1,30 @@
+{
+  "type": "gascraft:machine_tier_crafting",
+  "category": "misc",
+  "pattern": [
+    "DGD",
+    "USU",
+    "DRD"
+  ],
+  "key": {
+    "D": {
+      "tag": "c:gems/diamond"
+    },
+    "G": {
+      "item": "minecraft:glass"
+    },
+    "U": {
+      "tag": "c:ingots/copper"
+    },
+    "S": {
+      "item": "gascraft:iron_synthesizer"
+    },
+    "R": {
+      "item": "minecraft:redstone_block"
+    }
+  },
+  "result": {
+    "id": "gascraft:diamond_synthesizer",
+    "count": 1
+  }
+}

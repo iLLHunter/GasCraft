@@ -1,0 +1,20 @@
+{
+  "gasType": "GAS",
+  "color": "0xFFF82423",
+  "tooltipLines": [
+    "Healing Agent"
+  ],
+  "timedEffects": [
+    {
+      "delayTicks": 0,
+      "type": "instant_potion",
+      "potion": "minecraft:instant_health",
+      "amplifier": 4
+    },
+    {
+      "delayTicks": 60,
+      "type": "fade",
+      "durationTicks": 40
+    }
+  ]
+}

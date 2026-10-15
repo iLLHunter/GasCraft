@@ -1,0 +1,12 @@
+{
+  "gasType": "SMOKE",
+  "color": "0xFFFFFFFF",
+  "canisterStripeColor": "0xECCCCC",
+  "particleType": "MISTED_MEAT",
+  "agents": [
+    {
+      "agent": "gascraft:misted_meat",
+      "potency": 1.0
+    }
+  ]
+}

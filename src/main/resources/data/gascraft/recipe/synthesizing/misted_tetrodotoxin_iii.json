@@ -1,0 +1,11 @@
+{
+  "type": "gascraft:synthesizing",
+  "gas": "gascraft:misted_tetrodotoxin_iii",
+  "input_gas": "gascraft:smoke",
+  "ingredient": {
+    "item": "gascraft:tetrodotoxin_pellet"
+  },
+  "minimum_tier": "netherite",
+  "reagent_charges": 3,
+  "reagent": "nether_star"
+}

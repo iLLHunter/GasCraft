@@ -1,0 +1,8 @@
+{
+  "type": "gascraft:synthesizing",
+  "gas": "gascraft:stun_gas",
+  "input_gas": "gascraft:smoke",
+  "ingredient": {
+    "item": "gascraft:flash_powder"
+  }
+}

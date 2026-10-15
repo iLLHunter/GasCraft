@@ -1,0 +1,18 @@
+{
+  "type": "gascraft:powder_mixing",
+  "pattern": [
+    "PP",
+    "PP"
+  ],
+  "key": {
+    "P": {
+      "item": "gascraft:powdered_tetrodotoxin"
+    }
+  },
+  "result": {
+    "id": "gascraft:powdered_tetrodotoxin_concentrated",
+    "count": 1
+  },
+  "processing_ticks": 200,
+  "energy_per_operation": 6400
+}

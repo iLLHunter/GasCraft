@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "neoforge:conditions": [{"type":"neoforge:mod_loaded","modid":"curios"}],
+  "result": {
+    "id": "gascraft:grenade_holder"
+  },
+  "pattern": [
+    "II#",
+    "##G",
+    "GGG"
+  ],
+  "key": {
+    "I": {
+      "tag": "c:ingots/iron"
+    },
+    "#": {
+      "tag": "c:leathers"
+    },
+    "G": {
+      "item": "gascraft:grenade_shell"
+    }
+  }
+}

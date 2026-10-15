@@ -1,0 +1,7 @@
+{
+  "type": "gascraft:fermenting",
+  "ingredient": {"item": "minecraft:vine"},
+  "result": {"id": "gascraft:fermented_vegetation", "count": 1},
+  "processing_ticks": 24000,
+  "energy_per_operation": 0
+}

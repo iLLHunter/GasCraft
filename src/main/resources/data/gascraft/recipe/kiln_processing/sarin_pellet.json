@@ -1,0 +1,13 @@
+{
+  "type": "gascraft:kiln_processing",
+  "ingredient": {
+    "item": "gascraft:sarin_pellet_composite"
+  },
+  "result": {
+    "id": "gascraft:sarin_pellet",
+    "count": 1
+  },
+  "processing_ticks": 1200,
+  "energy_per_operation": 38400,
+  "experience": 0
+}

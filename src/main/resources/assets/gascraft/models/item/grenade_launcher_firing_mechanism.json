@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "gascraft:item/grenade_launcher_firing_mechanism"
+  }
+}
