@@ -56,24 +56,12 @@ body:
     validations:
       required: true
 
-  - type: dropdown
-    id: loader
-    attributes:
-      label: Mod loader
-      options:
-        - NeoForge
-        - Forge
-        - Fabric
-        - Quilt
-        - Other / unsure
-    validations:
-      required: true
-
   - type: input
-    id: loader-version
+    id: neoforge-version
     attributes:
-      label: Mod loader version
-      placeholder: "e.g. NeoForge 21.1.x"
+      label: NeoForge version
+      description: Enter the installed NeoForge version, not the Minecraft version.
+      placeholder: "e.g. 21.1.x"
     validations:
       required: false
 
