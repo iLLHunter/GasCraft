@@ -1,0 +1,2 @@
+# Require contributors to choose an issue form; maintainers can still create blank issues.
+blank_issues_enabled: false

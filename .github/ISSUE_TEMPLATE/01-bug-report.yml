@@ -1,0 +1,109 @@
+name: Bug Report
+description: Report a problem with the Minecraft mod.
+title: "[Bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting a bug! Please search existing issues first.
+        Include exact versions and reproducible steps. If Minecraft crashed,
+        attach the crash report and relevant `latest.log` excerpts.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      description: Describe the problem and what you were doing when it occurred.
+      placeholder: "The mod does X when I try to ..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to reproduce
+      description: Describe how to reproduce the issue, preferably in a test world.
+      placeholder: |
+        1. Create or load a world with ...
+        2. Place/use/configure ...
+        3. Observe ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: What should happen instead?
+    validations:
+      required: true
+
+  - type: input
+    id: minecraft-version
+    attributes:
+      label: Minecraft version
+      placeholder: "e.g. 1.21.1"
+    validations:
+      required: true
+
+  - type: input
+    id: mod-version
+    attributes:
+      label: Mod version
+      description: Include the release version or development build/commit if applicable.
+      placeholder: "e.g. 1.0.0 or commit hash"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: loader
+    attributes:
+      label: Mod loader
+      options:
+        - NeoForge
+        - Forge
+        - Fabric
+        - Quilt
+        - Other / unsure
+    validations:
+      required: true
+
+  - type: input
+    id: loader-version
+    attributes:
+      label: Mod loader version
+      placeholder: "e.g. NeoForge 21.1.x"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: environment
+    attributes:
+      label: Where does the issue occur?
+      options:
+        - Singleplayer
+        - Dedicated server
+        - Multiplayer client connected to a server
+        - Both singleplayer and multiplayer
+        - Unknown
+    validations:
+      required: true
+
+  - type: textarea
+    id: other-mods
+    attributes:
+      label: Other mods, modpack, or configuration
+      description: Mention other mods that may be involved, the modpack/version, changed configs, or whether this also happens with just this mod and its dependencies.
+      placeholder: "Modpack, mod list, relevant configuration changes, or 'not tested'"
+    validations:
+      required: false
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs, crash reports, and screenshots
+      description: Drag and drop files, attach screenshots, or link to a paste of the relevant latest.log or crash report. Remove secrets or personal information before posting.
+      placeholder: "Links or relevant log excerpts, if available"
+    validations:
+      required: false
