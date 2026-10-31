@@ -1,0 +1,8 @@
+{
+  "neoforge:conditions": [{"type": "neoforge:mod_loaded", "modid": "culturaldelights"}],
+  "type": "gascraft:powderizing",
+  "ingredient": {"item": "gascraft:taco_chime_grande_box"},
+  "result": {"id": "gascraft:powdered_fart_gas", "count": 1},
+  "processing_ticks": 200,
+  "energy_per_operation": 6400
+}

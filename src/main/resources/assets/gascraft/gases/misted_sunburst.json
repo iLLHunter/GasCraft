@@ -1,0 +1,10 @@
+{
+  "gasType": "GAS",
+  "particleType": "SMOKE",
+  "color": "0x80fff130",
+  "canisterStripeColor": "0xfffff130",
+  "agents": [],
+  "tooltipLines": [
+    "tooltip.gascraft.misted_sunburst.summary"
+  ]
+}

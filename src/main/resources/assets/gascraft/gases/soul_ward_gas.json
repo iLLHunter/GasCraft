@@ -1,0 +1,10 @@
+{
+  "gasType": "GAS",
+  "particleType": "SMOKE",
+  "color": "0x2833e3e7",
+  "canisterStripeColor": "0xff33e3e7",
+  "agents": [],
+  "tooltipLines": [
+    "tooltip.gascraft.soul_ward_gas.summary"
+  ]
+}

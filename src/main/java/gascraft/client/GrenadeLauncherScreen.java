@@ -16,6 +16,7 @@ import net.minecraft.world.entity.player.Inventory;
 public final class GrenadeLauncherScreen extends AbstractContainerScreen<GrenadeLauncherMenu> {
     private boolean upgradesOpen;
     private Button returnButton;
+    private final ScreenLabels labels = new ScreenLabels();
     public boolean upgradesOpen() { return upgradesOpen; }
     public GrenadeLauncherScreen(GrenadeLauncherMenu menu, Inventory inventory, Component title) { super(menu, inventory, title); }
     private static Component text(String key, Object... args) { return Component.translatable("gui.gascraft.machine." + key, args); }
@@ -53,16 +54,18 @@ public final class GrenadeLauncherScreen extends AbstractContainerScreen<Grenade
         com.mojang.blaze3d.systems.RenderSystem.disableBlend();
     }
     @Override protected void renderLabels(GuiGraphics graphics, int mouseX, int mouseY) {
-        super.renderLabels(graphics, mouseX, mouseY);
-        graphics.drawString(font, Component.translatable("gui.gascraft.launcher.shot_cost", menu.shotCost()), 7, 65, 0xff404040, false);
+        labels.draw(graphics, font, title, titleLabelX, titleLabelY, 160);
+        labels.draw(graphics, font, playerInventoryTitle, inventoryLabelX, inventoryLabelY, 160);
+        labels.draw(graphics, font, Component.translatable("gui.gascraft.launcher.shot_cost", menu.shotCost()), 7, 65, 162);
         if (upgradesOpen) {
-            graphics.drawString(font, text("upgrades"), 190, 8, 0xff404040, false);
-            graphics.drawString(font, text("insert"), 190, 21, 0xff404040, false);
-            graphics.drawString(font, text("return"), 292, 21, 0xff404040, false);
-            graphics.drawString(font, text("efficiency_count", menu.efficiency(), GrenadeLauncherItem.MAX_EFFICIENCY), 190, 67, 0xff404040, false);
+            labels.draw(graphics, font, text("upgrades"), 190, 8, 136);
+            labels.draw(graphics, font, text("insert"), 190, 21, 94);
+            labels.draw(graphics, font, text("return"), 292, 21, 34);
+            labels.draw(graphics, font, text("efficiency_count", menu.efficiency(), GrenadeLauncherItem.MAX_EFFICIENCY), 190, 67, 96);
         }
     }
     @Override public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+        labels.begin(mouseX - leftPos, mouseY - topPos);
         returnButton.visible = upgradesOpen; returnButton.active = menu.canRemoveEfficiency();
         super.render(graphics, mouseX, mouseY, partialTick);
         MachineScreenIcons.upgrades(graphics, leftPos + 132, topPos + 18);
@@ -71,6 +74,7 @@ public final class GrenadeLauncherScreen extends AbstractContainerScreen<Grenade
             List.of(text("energy", menu.energy(), GrenadeLauncherItem.ENERGY_CAPACITY),
                 Component.translatable("gui.gascraft.launcher.shot_cost", menu.shotCost()),
                 Component.translatable("gui.gascraft.launcher.charge_rate", GrenadeLauncherItem.CHARGE_RATE)), Optional.empty(), mouseX, mouseY);
+        labels.renderTooltip(graphics, font, mouseX, mouseY);
     }
     @Override protected boolean hasClickedOutside(double mouseX, double mouseY, int left, int top, int button) {
         if (upgradesOpen && mouseX >= left + 182 && mouseX < left + 334 && mouseY >= top && mouseY < top + 90) return false;

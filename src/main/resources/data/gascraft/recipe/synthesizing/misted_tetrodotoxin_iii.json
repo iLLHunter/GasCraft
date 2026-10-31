@@ -3,7 +3,7 @@
   "gas": "gascraft:misted_tetrodotoxin_iii",
   "input_gas": "gascraft:smoke",
   "ingredient": {
-    "item": "gascraft:tetrodotoxin_pellet"
+    "item": "gascraft:misted_death_pellet"
   },
   "minimum_tier": "netherite",
   "reagent_charges": 3,

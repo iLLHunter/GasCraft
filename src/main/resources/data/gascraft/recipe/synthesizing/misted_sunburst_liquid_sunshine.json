@@ -1,0 +1,22 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "enderio"
+    },
+    {
+      "type": "gascraft:fluid_exists",
+      "fluid": "enderio:fluid_liquid_sunshine_still"
+    }
+  ],
+  "type": "gascraft:synthesizing",
+  "gas": "gascraft:misted_sunburst",
+  "input_gas": "gascraft:smoke",
+  "tank": {
+    "type": "fluid",
+    "id": "enderio:fluid_liquid_sunshine_still",
+    "amount": 3000
+  },
+  "minimum_tier": "diamond",
+  "reagent_charges": 0
+}

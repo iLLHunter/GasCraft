@@ -1,0 +1,21 @@
+{
+  "type": "gascraft:powder_mixing",
+  "pattern": [
+    "AB",
+    "BA"
+  ],
+  "key": {
+    "A": {
+      "item": "gascraft:powdered_end_stone"
+    },
+    "B": {
+      "item": "gascraft:powdered_ender_pearl"
+    }
+  },
+  "result": {
+    "id": "gascraft:powdered_void",
+    "count": 1
+  },
+  "processing_ticks": 200,
+  "energy_per_operation": 6400
+}

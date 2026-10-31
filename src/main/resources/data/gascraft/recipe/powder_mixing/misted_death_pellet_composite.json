@@ -1,0 +1,12 @@
+{
+  "type": "gascraft:powder_mixing",
+  "pattern": ["PCP", "CBC", "PCP"],
+  "key": {
+    "P": {"item": "gascraft:tetrodotoxin_pellet"},
+    "C": {"item": "gascraft:powdered_tetrodotoxin_concentrated"},
+    "B": {"item": "gascraft:toxic_binder"}
+  },
+  "result": {"id": "gascraft:misted_death_pellet_composite", "count": 1},
+  "processing_ticks": 200,
+  "energy_per_operation": 6400
+}

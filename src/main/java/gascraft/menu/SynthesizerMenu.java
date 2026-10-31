@@ -74,7 +74,7 @@ public final class SynthesizerMenu extends AbstractContainerMenu {
             case 0 -> machine.energy().stored(); case 1 -> synth.energyPerTick(); case 2 -> synth.charges(); case 3 -> synth.reservedTank();
             case 4 -> machine.upgrades().speed(); case 5 -> machine.upgrades().efficiency(); case 6 -> synth.activeMask(); case 7 -> synth.finishedMask();
             case 22 -> synth.reservedIngredients(); case 23 -> synth.reservedCharges();
-            case 24 -> synth.reagentType().equals("nether_star") ? 1 : 0;
+            case 24 -> SynthesizerMachine.reagentTypeId(synth.reagentType());
             default -> index < 14 ? machine.sides().mask(MachineSides.Face.values()[index - 8])
                 : (index - 14) / 2 >= groups() ? 0 : (index - 14) % 2 == 0 ? synth.progress((index - 14) / 2) : synth.totalTicks((index - 14) / 2);
         };
@@ -84,7 +84,7 @@ public final class SynthesizerMenu extends AbstractContainerMenu {
     public MachineBlockEntity machine() { return machine; }
     public int reservedIngredients() { return value(22); }
     public int reservedCharges() { return value(23); }
-    public String reagentType() { return value(24) == 1 ? "nether_star" : "diamond"; }
+    public String reagentType() { return SynthesizerMachine.reagentTypeFromId(value(24)); }
     public boolean canUseReagent(String type) { return charges() == 0 || reagentType().equals(type); }
     public boolean canDumpCharges() { return charges() > 0 && reservedCharges() == 0; }
     public MachineTank tank() { return machine.tank(); }

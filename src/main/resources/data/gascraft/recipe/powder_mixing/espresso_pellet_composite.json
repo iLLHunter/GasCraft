@@ -1,0 +1,31 @@
+{
+  "type": "gascraft:powder_mixing",
+  "pattern": [
+    "PPP",
+    "PCP",
+    "PPP"
+  ],
+  "key": {
+    "P": {
+      "item": "gascraft:powdered_espresso_concentrated"
+    },
+    "C": {
+      "item": "gascraft:composite_binder"
+    }
+  },
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "gascraft:espresso_ingredients"
+      }
+    }
+  ],
+  "result": {
+    "id": "gascraft:espresso_pellet_composite",
+    "count": 1
+  },
+  "processing_ticks": 200,
+  "energy_per_operation": 6400
+}

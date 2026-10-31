@@ -30,6 +30,12 @@ public final class GasCloudEntity extends Entity {
     private List<TimedCloudEffect> timedEffects = List.of();
     private int nextTimedEffect;
     private boolean releasePuffEmitted;
+    private final Set<UUID> fieldTriggered = new HashSet<>();
+    public gascraft.gas.GasFieldsContent.Profile fieldProfile() { return gascraft.gas.GasFieldsContent.profile(gasContents().id()); }
+    private static final gascraft.gas.GasFieldsContent.Profile VOID_VISUAL=new gascraft.gas.GasFieldsContent.Profile("voidrot_gas",0,0,40,0,16);
+    public gascraft.gas.GasFieldsContent.Profile visualProfile() { return gasContents().id().equals(GasCatalog.id("void_gas"))?VOID_VISUAL:fieldProfile(); }
+    public boolean fieldActive() { return fieldProfile()!=null && !isRemoved() && cloudAge()<160 && gascraft.gas.GasFieldsContent.available(gasContents().id()); }
+    public boolean triggerFieldOnce(LivingEntity entity) { return fieldTriggered.add(entity.getUUID()); }
     @FunctionalInterface public interface CloudParticleSpawner {
         void spawn(GasCloudEntity cloud, ColorParticleOption options, double x, double y, double z);
     }
@@ -48,6 +54,7 @@ public final class GasCloudEntity extends Entity {
         entityData.set(TIMED, !timedEffects.isEmpty());
         entityData.set(INSTANT_PUFF, timedEffects.stream().anyMatch(effect -> effect.type().equals("instant_potion")));
         entityData.set(DISPLAY_COLOR, gasContents().color());
+        if(fieldProfile()!=null) entityData.set(LIFETIME,160);
         long trigger = 0;
         for (var effect : timedEffects) {
             trigger += effect.delayTicks();
@@ -72,16 +79,23 @@ public final class GasCloudEntity extends Entity {
     public PotionContents potionContents() { return entityData.get(CONTENTS).getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY); }
     public int cloudAge() { return entityData.get(AGE); }
     public int cloudLifetime() { return entityData.get(LIFETIME); }
-    public boolean hasTimedEffects() { return entityData.get(TIMED); }
+    public boolean hasTimedEffects() { return entityData.get(TIMED) || fieldProfile()!=null; }
     public boolean instantPulse() { return entityData.get(INSTANT_PUFF); }
     public void onCloudReleased() {
+        if(!GasContainerItem.hasContents(entityData.get(CONTENTS)))return;
         if (level() instanceof ServerLevel server) {
             runTimedEffects(server);
             if (paralysisActive()) gascraft.gas.GasParalysis.refreshCloud(this);
+            gascraft.gas.GasOlfactory.release(this);
+            gascraft.gas.GasFields.release(this);
         }
     }
+    public boolean olfactoryActive() {
+        return GasContainerItem.hasContents(entityData.get(CONTENTS))&&!isRemoved() && cloudAge() < cloudLifetime() && entityData.get(FADE_START) < 0
+            && gasContents().agents().stream().anyMatch(agent -> agent.factory().equals("olfactory"));
+    }
     public boolean paralysisActive() {
-        if (isRemoved()) return false;
+        if (isRemoved()||!GasContainerItem.hasContents(entityData.get(CONTENTS))) return false;
         long trigger = 0;
         for (var effect : timedEffects) {
             trigger += effect.delayTicks();
@@ -91,6 +105,7 @@ public final class GasCloudEntity extends Entity {
     }
     /** The reachable footprint, independent of visual age or concentration. */
     public boolean gasAreaContains(Vec3 point) {
+        if(!gascraft.gas.GasChainControls.enabled(gasContents().id()))return false;
         int range = GascraftConfig.GAS_RANGE_BLOCKS.get();
         if (point.distanceToSqr(position()) >= range * range) return false;
         double distance = GascraftConfig.STRAIGHT_LINE_PROPAGATION.get() ? point.distanceTo(position()) : gasPathDistance(BlockPos.containing(point), range);
@@ -98,6 +113,7 @@ public final class GasCloudEntity extends Entity {
     }
     public int displayColor() { return hasTimedEffects() ? entityData.get(DISPLAY_COLOR) : gasContents().color(); }
     public float fadeOpacity() {
+        if(fieldProfile()!=null)return fieldProfile().opacity(cloudAge());
         int start = entityData.get(FADE_START), duration = entityData.get(FADE_DURATION);
         return start < 0 || duration == 0 ? 1 : Math.max(0, 1 - (cloudAge() - start) / (float)duration);
     }
@@ -109,6 +125,7 @@ public final class GasCloudEntity extends Entity {
         emitter = null;
     }
     public double gasConcentrationAt(Vec3 eye) {
+        if(!gascraft.gas.GasChainControls.enabled(gasContents().id()))return 0;
         int range = GascraftConfig.GAS_RANGE_BLOCKS.get();
         if (cloudAge() >= cloudLifetime() || eye.distanceToSqr(position()) >= range * range) return 0;
         double distance = GascraftConfig.STRAIGHT_LINE_PROPAGATION.get() ? eye.distanceTo(position()) : gasPathDistance(BlockPos.containing(eye), range);
@@ -137,8 +154,8 @@ public final class GasCloudEntity extends Entity {
     }
     @Override public void tick() {
         super.tick();
+        if(!GasContainerItem.hasContents(entityData.get(CONTENTS))){discard();return;}
         if (level() instanceof ServerLevel server) {
-            if (!GasContainerItem.hasContents(entityData.get(CONTENTS))) { discard(); return; }
             if (emitter != null) {
                 Entity source = server.getEntity(emitter);
                 if (source instanceof LivingEntity living && !living.isAlive()) detachEmitter(source);
@@ -148,6 +165,18 @@ public final class GasCloudEntity extends Entity {
             runTimedEffects(server);
             if (cloudAge() >= cloudLifetime()) discard();
             gascraft.gas.GasParalysis.refreshAffected(this);
+        } else if(visualProfile()!=null) {
+            if(!releasePuffEmitted || tickCount%5==0) {
+                var profile=visualProfile();
+                int amount=!releasePuffEmitted&&profile.expand()==0?profile.density()*4:profile.density();
+                releasePuffEmitted=true;
+                float radius=Math.max(1,GascraftConfig.GAS_RANGE_BLOCKS.get()-1)*Math.max(.02F,profile.radius(cloudAge()));
+                for(int i=0;i<amount;i++) {
+                    Vec3 offset=new Vec3(random.nextDouble()*2-1,random.nextDouble()*2-1,random.nextDouble()*2-1);
+                    if(offset.lengthSqr()>1)continue;
+                    clientParticleSpawner.spawn(this,ColorParticleOption.create(ModContent.SMOKE_PUFF_PARTICLE.get(),displayColor()),getX()+offset.x*radius,getY()+offset.y*radius,getZ()+offset.z*radius);
+                }
+            }
         } else if (instantPulse() ? !releasePuffEmitted : tickCount % 10 == 0) {
             releasePuffEmitted = true;
             int color = displayColor();
@@ -169,6 +198,8 @@ public final class GasCloudEntity extends Entity {
             switch (effect.type()) {
                 case "detonation" -> detonate(server, effect);
                 case "instant_potion" -> instantPotion(server, effect);
+                case "teleport" -> gascraft.gas.GasVoid.release(server,this);
+                case "shrinking", "enlarging" -> gascraft.gas.GasSizing.release(server,this,effect.type().equals("enlarging"),effect.durationTicks());
                 case "flash" -> gascraft.gas.GasFlash.release(server, this, effect.durationTicks());
                 case "paralysis" -> {} // Its active window is checked before each living entity tick.
                 case "melee_damage" -> meleeDamage(server, effect);
@@ -238,6 +269,7 @@ public final class GasCloudEntity extends Entity {
         tag.putInt("next_timed_effect", nextTimedEffect);
         tag.putInt("display_color", displayColor());
         tag.putInt("fade_start", entityData.get(FADE_START)); tag.putInt("fade_duration", entityData.get(FADE_DURATION));
+        var triggered=new net.minecraft.nbt.ListTag();for(UUID id:fieldTriggered)triggered.add(net.minecraft.nbt.StringTag.valueOf(id.toString()));tag.put("field_triggered",triggered);
         if (emitter != null) tag.putUUID("emitter_uuid", emitter);
     }
     @Override protected void readAdditionalSaveData(CompoundTag tag) {
@@ -251,5 +283,6 @@ public final class GasCloudEntity extends Entity {
         entityData.set(FADE_START, tag.contains("fade_start") ? tag.getInt("fade_start") : -1);
         entityData.set(FADE_DURATION, Math.max(0, tag.getInt("fade_duration")));
         emitter = tag.hasUUID("emitter_uuid") ? tag.getUUID("emitter_uuid") : null;
+        fieldTriggered.clear();for(var value:tag.getList("field_triggered",8))fieldTriggered.add(UUID.fromString(value.getAsString()));
     }
 }

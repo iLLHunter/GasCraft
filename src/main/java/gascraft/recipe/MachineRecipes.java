@@ -24,6 +24,7 @@ public final class MachineRecipes {
     public static final DeferredHolder<RecipeSerializer<?>, SingleInputProcessingRecipe.Serializer> FERMENTING_SERIALIZER = SERIALIZERS.register("fermenting", () -> new SingleInputProcessingRecipe.Serializer(SingleInputProcessingRecipe.Kind.FERMENTING));
     public static final DeferredHolder<RecipeSerializer<?>, SynthesizingRecipe.Serializer> SYNTHESIZING_SERIALIZER = SERIALIZERS.register("synthesizing", SynthesizingRecipe.Serializer::new);
     public static final DeferredHolder<RecipeSerializer<?>, MachineTierCraftingRecipe.Serializer> MACHINE_TIER_CRAFTING = SERIALIZERS.register("machine_tier_crafting", MachineTierCraftingRecipe.Serializer::new);
+    public static final DeferredHolder<RecipeSerializer<?>, ManualCraftingRecipe.Serializer> MANUAL_CRAFTING = SERIALIZERS.register("manual_crafting", ManualCraftingRecipe.Serializer::new);
 
     public static void register(IEventBus bus) { TYPES.register(bus); SERIALIZERS.register(bus); }
     private MachineRecipes() {}

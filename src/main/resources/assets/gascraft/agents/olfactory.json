@@ -1,0 +1,6 @@
+{
+  "factory": "olfactory",
+  "toxic": true,
+  "ignoreBreath": true,
+  "duration": 200
+}

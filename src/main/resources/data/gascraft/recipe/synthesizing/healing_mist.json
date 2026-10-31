@@ -3,8 +3,8 @@
   "gas": "gascraft:healing_mist",
   "input_gas": "gascraft:smoke",
   "ingredient": {
-    "item": "gascraft:healing_pellet"
+    "item": "gascraft:healing_agent_pellet"
   },
   "minimum_tier": "netherite",
-  "reagent_charges": 1
+  "reagent_charges": 3
 }

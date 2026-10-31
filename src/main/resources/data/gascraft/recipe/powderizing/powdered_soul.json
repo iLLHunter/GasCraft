@@ -1,0 +1,17 @@
+{
+  "type": "gascraft:powderizing",
+  "ingredient": [
+    {
+      "item": "minecraft:soul_sand"
+    },
+    {
+      "item": "minecraft:soul_soil"
+    }
+  ],
+  "result": {
+    "id": "gascraft:powdered_soul",
+    "count": 1
+  },
+  "processing_ticks": 200,
+  "energy_per_operation": 6400
+}

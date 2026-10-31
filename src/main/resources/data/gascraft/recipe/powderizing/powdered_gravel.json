@@ -1,0 +1,11 @@
+{
+  "type": "gascraft:powderizing",
+  "ingredient": {
+    "item": "minecraft:gravel"
+  },
+  "result": {
+    "id": "gascraft:powdered_gravel"
+  },
+  "processing_ticks": 200,
+  "energy_per_operation": 6400
+}

@@ -4,5 +4,6 @@
   "input_gas": "gascraft:tear_gas",
   "ingredient": {
     "item": "gascraft:tracking_powder"
-  }
+  },
+  "minimum_tier": "iron"
 }

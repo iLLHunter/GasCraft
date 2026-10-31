@@ -1,0 +1,18 @@
+{
+  "type": "gascraft:powder_mixing",
+  "pattern": [
+    "PP",
+    "PP"
+  ],
+  "key": {
+    "P": {
+      "item": "gascraft:powdered_sunshine"
+    }
+  },
+  "result": {
+    "id": "gascraft:powdered_sunshine_concentrated",
+    "count": 1
+  },
+  "processing_ticks": 200,
+  "energy_per_operation": 6400
+}

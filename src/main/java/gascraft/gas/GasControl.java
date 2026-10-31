@@ -35,12 +35,17 @@ public final class GasControl {
     public static boolean blocksTarget(LivingEntity entity, LivingEntity target) {
         if (target == null || !isNonBossControlTarget(entity) || GasExposure.exemptPlayer(entity)) return false;
         SicknessState eye = irritation(entity);
-        return irritationFromGas(eye, "mustard_gas") || target instanceof Player && (irritationFromGas(eye, "tear_gas") || irritationFromGas(eye, "raid_gas"));
+        return GasFields.blocksTarget(entity) || GasOlfactory.blocksTarget(entity) || irritationFromGas(eye, "mustard_gas") || target instanceof Player && (irritationFromGas(eye, "tear_gas") || irritationFromGas(eye, "raid_gas"));
     }
     public static void onGasTargetChange(LivingChangeTargetEvent event) {
         if (blocksTarget(event.getEntity(), event.getNewAboutToBeSetTarget())) event.setNewAboutToBeSetTarget(null);
+        else if (!event.getEntity().level().isClientSide && GasFields.cologneControls(event.getEntity())) {
+            var target=GasFields.cologneTarget(event.getEntity());
+            event.setNewAboutToBeSetTarget(blocksTarget(event.getEntity(),target)?null:target);
+        }
     }
     public static void clearGasControlEffects(LivingEntity entity) {
+        GasOlfactory.clear(entity);
         updateRaidGlow(entity, false);
         updateSpeed(entity.getAttribute(Attributes.MOVEMENT_SPEED), 0);
         updateSpeed(entity.getAttribute(Attributes.FLYING_SPEED), 0);
@@ -51,6 +56,7 @@ public final class GasControl {
         }
     }
     public static void tick(LivingEntity entity, boolean mustardDamageApplied) {
+        GasOlfactory.tick(entity);
         SicknessState eye = irritation(entity);
         boolean eligible = isNonBossControlTarget(entity) && !GasExposure.exemptPlayer(entity);
         boolean tear = eligible && (irritationFromGas(eye, "tear_gas") || irritationFromGas(eye, "raid_gas")), mustard = eligible && irritationFromGas(eye, "mustard_gas");

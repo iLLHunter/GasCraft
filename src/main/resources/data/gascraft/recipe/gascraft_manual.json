@@ -1,0 +1,6 @@
+{
+  "type": "gascraft:manual_crafting",
+  "category": "misc",
+  "ingredients": [{"item": "minecraft:book"}, {"item": "gascraft:grenade_diffuser"}],
+  "result": {"id": "gascraft:gascraft_manual", "count": 1}
+}

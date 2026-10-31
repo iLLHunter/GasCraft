@@ -25,7 +25,7 @@ public final class GasDefinitionLoader extends SimpleJsonResourceReloadListener 
     private GasDefinitionLoader(String kind) { super(GSON, "gascraft_" + kind); this.kind = kind; }
     public static void initialize() {
         baseGases = List.copyOf(GasCatalog.gasDefinitions()); baseMixes = List.copyOf(GasCatalog.brewingMixes());
-        for (String agent : List.of("heal", "lachrymator", "nerve", "pulmonary", "poison_i", "poison_ii", "poison_iii")) {
+        for (String agent : List.of("heal", "lachrymator", "nerve", "pulmonary", "poison_i", "poison_ii", "poison_iii", "olfactory")) {
             try (Reader reader = new InputStreamReader(Objects.requireNonNull(GasDefinitionLoader.class.getResourceAsStream("/assets/gascraft/agents/" + agent + ".json")))) {
                 AGENTS.put(GasCatalog.id(agent), JsonParser.parseReader(reader).getAsJsonObject());
             } catch (IOException e) { throw new UncheckedIOException(e); }

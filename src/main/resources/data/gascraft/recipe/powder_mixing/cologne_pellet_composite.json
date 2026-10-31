@@ -1,0 +1,22 @@
+{
+  "type": "gascraft:powder_mixing",
+  "pattern": [
+    "PPP",
+    "PCP",
+    "PPP"
+  ],
+  "key": {
+    "P": {
+      "item": "gascraft:powdered_cologne"
+    },
+    "C": {
+      "item": "gascraft:composite_binder"
+    }
+  },
+  "result": {
+    "id": "gascraft:cologne_pellet_composite",
+    "count": 1
+  },
+  "processing_ticks": 200,
+  "energy_per_operation": 6400
+}

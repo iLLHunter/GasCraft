@@ -1,0 +1,11 @@
+{
+  "type": "gascraft:synthesizing",
+  "gas": "gascraft:soul_ward_gas",
+  "input_gas": "gascraft:smoke",
+  "ingredient": {
+    "item": "gascraft:soul_ward_pellet"
+  },
+  "minimum_tier": "netherite",
+  "reagent": "ghast_tear",
+  "reagent_charges": 3
+}

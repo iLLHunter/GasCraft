@@ -1,0 +1,11 @@
+{
+  "gasType": "GAS",
+  "particleType": "SMOKE",
+  "color": "0x90e0b0ff",
+  "canisterStripeColor": "0xffe0b0ff",
+  "agents": [],
+  "tooltipLines": [
+    "tooltip.gascraft.boogie_gas.summary",
+    "tooltip.gascraft.boogie_gas.4"
+  ]
+}

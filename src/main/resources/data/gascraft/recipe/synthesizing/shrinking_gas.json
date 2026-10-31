@@ -1,0 +1,18 @@
+{
+  "type": "gascraft:synthesizing",
+  "gas": "gascraft:shrinking_gas",
+  "input": {
+    "item": "gascraft:empty_canister"
+  },
+  "ingredient": {
+    "item": "gascraft:shrinking_agent_pellet"
+  },
+  "tank": {
+    "type": "fluid",
+    "id": "minecraft:water",
+    "amount": 3000
+  },
+  "minimum_tier": "netherite",
+  "reagent": "shulker_shell",
+  "reagent_charges": 3
+}

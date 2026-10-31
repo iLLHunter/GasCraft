@@ -1,0 +1,21 @@
+{
+  "type": "gascraft:powder_mixing",
+  "pattern": [
+    "VVV",
+    "VBV",
+    "VVV"
+  ],
+  "key": {
+    "V": {
+      "item": "gascraft:powdered_void"
+    },
+    "B": {
+      "item": "gascraft:toxic_binder"
+    }
+  },
+  "result": {
+    "id": "gascraft:void_pellet_composite"
+  },
+  "processing_ticks": 200,
+  "energy_per_operation": 6400
+}

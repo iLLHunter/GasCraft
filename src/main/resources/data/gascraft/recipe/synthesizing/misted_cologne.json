@@ -1,0 +1,9 @@
+{
+  "type": "gascraft:synthesizing",
+  "gas": "gascraft:misted_cologne",
+  "input_gas": "gascraft:smoke",
+  "ingredient": {
+    "item": "gascraft:cologne_pellet"
+  },
+  "minimum_tier": "iron"
+}

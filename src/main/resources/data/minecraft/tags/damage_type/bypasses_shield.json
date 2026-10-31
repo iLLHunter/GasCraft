@@ -1,7 +1,1 @@
-{
-  "replace": false,
-  "values": [
-    "gascraft:neurotoxic_gas",
-    "gascraft:tetrodotoxin_melee"
-  ]
-}
+{"replace":false,"values":["gascraft:neurotoxic_gas","gascraft:tetrodotoxin_melee","gascraft:spectral"]}

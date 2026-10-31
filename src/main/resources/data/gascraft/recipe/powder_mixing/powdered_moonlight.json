@@ -1,0 +1,31 @@
+{
+  "type": "gascraft:powder_mixing",
+  "pattern": [
+    "PPP",
+    "PCP",
+    "PPP"
+  ],
+  "key": {
+    "P": {
+      "item": "gascraft:powdered_night"
+    },
+    "C": {
+      "tag": "c:nuggets/silver"
+    }
+  },
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:nuggets/silver"
+      }
+    }
+  ],
+  "result": {
+    "id": "gascraft:powdered_moonlight",
+    "count": 1
+  },
+  "processing_ticks": 200,
+  "energy_per_operation": 6400
+}

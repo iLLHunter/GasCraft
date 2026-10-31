@@ -1,0 +1,331 @@
+[
+  {
+    "id": "start",
+    "title": "manual.gascraft.start",
+    "paragraphs": [
+      "manual.gascraft.intro",
+      "manual.gascraft.default_recipes",
+      "manual.gascraft.basics",
+      "manual.gascraft.protection"
+    ]
+  },
+  {
+    "id": "generator",
+    "title": "block.gascraft.generator",
+    "machine": "GENERATOR",
+    "paragraphs": [
+      "manual.gascraft.generator"
+    ]
+  },
+  {
+    "id": "powderizer",
+    "title": "block.gascraft.powderizer",
+    "machine": "POWDERIZER",
+    "paragraphs": [
+      "manual.gascraft.powderizer"
+    ]
+  },
+  {
+    "id": "powder_mixer",
+    "title": "block.gascraft.powder_mixer",
+    "machine": "POWDER_MIXER",
+    "paragraphs": [
+      "manual.gascraft.powder_mixer"
+    ]
+  },
+  {
+    "id": "materials_kiln",
+    "title": "block.gascraft.materials_kiln",
+    "machine": "MATERIALS_KILN",
+    "paragraphs": [
+      "manual.gascraft.materials_kiln"
+    ]
+  },
+  {
+    "id": "fermenter",
+    "title": "block.gascraft.fermenter",
+    "machine": "FERMENTER",
+    "paragraphs": [
+      "manual.gascraft.fermenter"
+    ]
+  },
+  {
+    "id": "stone_synthesizer",
+    "title": "block.gascraft.stone_synthesizer",
+    "machine": "STONE_SYNTHESIZER",
+    "paragraphs": [
+      "manual.gascraft.synthesizer"
+    ]
+  },
+  {
+    "id": "iron_synthesizer",
+    "title": "block.gascraft.iron_synthesizer",
+    "machine": "IRON_SYNTHESIZER",
+    "paragraphs": [
+      "manual.gascraft.synthesizer"
+    ]
+  },
+  {
+    "id": "diamond_synthesizer",
+    "title": "block.gascraft.diamond_synthesizer",
+    "machine": "DIAMOND_SYNTHESIZER",
+    "paragraphs": [
+      "manual.gascraft.synthesizer"
+    ]
+  },
+  {
+    "id": "netherite_synthesizer",
+    "title": "block.gascraft.netherite_synthesizer",
+    "machine": "NETHERITE_SYNTHESIZER",
+    "paragraphs": [
+      "manual.gascraft.synthesizer"
+    ]
+  },
+  {
+    "id": "automation",
+    "title": "manual.gascraft.automation.title",
+    "paragraphs": [
+      "manual.gascraft.automation"
+    ]
+  },
+  {
+    "id": "reagents",
+    "title": "manual.gascraft.reagents.title",
+    "paragraphs": [
+      "manual.gascraft.reagents",
+      "manual.gascraft.reagent_types",
+      "manual.gascraft.reagent_switch"
+    ]
+  },
+  {
+    "id": "smoke",
+    "gas": "smoke",
+    "title": "gas.gascraft.smoke",
+    "paragraphs": [
+      "manual.gascraft.smoke"
+    ]
+  },
+  {
+    "id": "tear_gas",
+    "gas": "tear_gas",
+    "title": "gas.gascraft.tear_gas",
+    "paragraphs": [
+      "manual.gascraft.tear"
+    ]
+  },
+  {
+    "id": "pulmonary_agent",
+    "gas": "pulmonary_agent",
+    "title": "gas.gascraft.pulmonary_agent",
+    "paragraphs": [
+      "manual.gascraft.pulmonary"
+    ]
+  },
+  {
+    "id": "mustard_gas",
+    "gas": "mustard_gas",
+    "title": "gas.gascraft.mustard_gas",
+    "paragraphs": [
+      "manual.gascraft.mustard"
+    ]
+  },
+  {
+    "id": "sarin_gas",
+    "gas": "sarin_gas",
+    "title": "gas.gascraft.sarin_gas",
+    "paragraphs": [
+      "manual.gascraft.sarin"
+    ]
+  },
+  {
+    "id": "raid_gas",
+    "gas": "raid_gas",
+    "title": "gas.gascraft.raid_gas",
+    "paragraphs": [
+      "manual.gascraft.raid"
+    ]
+  },
+  {
+    "id": "regenerating_mist",
+    "gas": "regenerating_mist",
+    "title": "gas.gascraft.regenerating_mist",
+    "paragraphs": [
+      "manual.gascraft.regeneration"
+    ]
+  },
+  {
+    "id": "healing_mist",
+    "gas": "healing_mist",
+    "title": "gas.gascraft.healing_mist",
+    "paragraphs": [
+      "manual.gascraft.healing"
+    ]
+  },
+  {
+    "id": "misted_meat",
+    "gas": "misted_meat",
+    "title": "gas.gascraft.misted_meat",
+    "paragraphs": [
+      "manual.gascraft.meat"
+    ]
+  },
+  {
+    "id": "poison",
+    "gas": "poison_i",
+    "title": "manual.gascraft.poison.title",
+    "paragraphs": [
+      "manual.gascraft.poison"
+    ]
+  },
+  {
+    "id": "napalm",
+    "gas": "napalm",
+    "title": "gas.gascraft.napalm",
+    "paragraphs": [
+      "manual.gascraft.napalm"
+    ]
+  },
+  {
+    "id": "stun_gas",
+    "gas": "stun_gas",
+    "title": "gas.gascraft.stun_gas",
+    "paragraphs": [
+      "manual.gascraft.stun"
+    ]
+  },
+  {
+    "id": "tetrodotoxin",
+    "gas": "misted_tetrodotoxin_i",
+    "title": "manual.gascraft.tetro.title",
+    "paragraphs": [
+      "manual.gascraft.tetro"
+    ]
+  },
+  {
+    "id": "gravity_gas",
+    "gas": "gravity_gas",
+    "title": "gas.gascraft.gravity_gas",
+    "paragraphs": [
+      "manual.gascraft.gravity"
+    ]
+  },
+  {
+    "id": "misted_sunburst",
+    "gas": "misted_sunburst",
+    "title": "gas.gascraft.misted_sunburst",
+    "paragraphs": [
+      "manual.gascraft.sunburst",
+      "manual.gascraft.sunburst_undead"
+    ]
+  },
+  {
+    "id": "soul_ward_gas",
+    "gas": "soul_ward_gas",
+    "title": "gas.gascraft.soul_ward_gas",
+    "paragraphs": [
+      "manual.gascraft.soul"
+    ]
+  },
+  {
+    "id": "null_magic_gas",
+    "gas": "null_magic_gas",
+    "title": "gas.gascraft.null_magic_gas",
+    "paragraphs": [
+      "manual.gascraft.null"
+    ]
+  },
+  {
+    "id": "void_gas",
+    "gas": "void_gas",
+    "title": "gas.gascraft.void_gas",
+    "paragraphs": [
+      "manual.gascraft.void_pulse"
+    ]
+  },
+  {
+    "id": "voidrot_gas",
+    "gas": "voidrot_gas",
+    "title": "gas.gascraft.voidrot_gas",
+    "paragraphs": [
+      "manual.gascraft.void"
+    ]
+  },
+  {
+    "id": "misted_moonlight",
+    "gas": "misted_moonlight",
+    "title": "gas.gascraft.misted_moonlight",
+    "paragraphs": [
+      "manual.gascraft.moon"
+    ]
+  },
+  {
+    "id": "boogie_gas",
+    "gas": "boogie_gas",
+    "title": "gas.gascraft.boogie_gas",
+    "paragraphs": [
+      "manual.gascraft.boogie"
+    ]
+  },
+  {
+    "id": "espresso_cloud",
+    "gas": "espresso_cloud",
+    "title": "gas.gascraft.espresso_cloud",
+    "paragraphs": [
+      "manual.gascraft.espresso"
+    ]
+  },
+  {
+    "id": "chicken_gas",
+    "gas": "chicken_gas",
+    "title": "gas.gascraft.chicken_gas",
+    "paragraphs": [
+      "manual.gascraft.chicken"
+    ]
+  },
+  {
+    "id": "misted_cologne",
+    "gas": "misted_cologne",
+    "title": "gas.gascraft.misted_cologne",
+    "paragraphs": [
+      "manual.gascraft.cologne"
+    ]
+  },
+  {
+    "id": "taco_chime_gas",
+    "gas": "taco_chime_gas",
+    "title": "gas.gascraft.taco_chime_gas",
+    "paragraphs": [
+      "manual.gascraft.taco"
+    ]
+  },
+  {
+    "id": "taco_chime_grande_box",
+    "gas": "taco_chime_gas",
+    "title": "item.gascraft.taco_chime_grande_box",
+    "paragraphs": [
+      "manual.gascraft.meal",
+      "manual.gascraft.meal_roll",
+      "manual.gascraft.meal_fart"
+    ]
+  },
+  {
+    "id": "shrinking_gas",
+    "gas": "shrinking_gas",
+    "title": "gas.gascraft.shrinking_gas",
+    "paragraphs": [
+      "manual.gascraft.shrinking.1",
+      "manual.gascraft.shrinking.2",
+      "manual.gascraft.shrinking.3"
+    ]
+  },
+  {
+    "id": "enlarging_gas",
+    "gas": "enlarging_gas",
+    "title": "gas.gascraft.enlarging_gas",
+    "paragraphs": [
+      "manual.gascraft.enlarging.1",
+      "manual.gascraft.enlarging.2",
+      "manual.gascraft.enlarging.3"
+    ]
+  }
+]

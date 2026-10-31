@@ -18,8 +18,9 @@ public final class Gascraft {
         gascraft.machine.MachineContent.register(bus);
         if (net.neoforged.fml.ModList.get().isLoaded("mekanism")) gascraft.compat.MekanismChemicalCompat.register(bus);
         gascraft.recipe.MachineRecipes.register(bus);
-        container.registerConfig(ModConfig.Type.SERVER, GascraftConfig.SPEC);
-        container.registerConfig(ModConfig.Type.CLIENT, GascraftConfig.CLIENT_SPEC);
+        gascraft.recipe.RecipeConditions.register(bus);
+        container.registerConfig(ModConfig.Type.SERVER, GascraftConfig.SPEC, "gascraft/gascraft-server.toml");
+        container.registerConfig(ModConfig.Type.CLIENT, GascraftConfig.CLIENT_SPEC, "gascraft/gascraft-client.toml");
         bus.addListener(GasExposure::registerPayloads);
         bus.addListener(gascraft.gas.GasParalysis::registerPayloads);
         bus.addListener(gascraft.gas.GasFlash::registerPayloads);

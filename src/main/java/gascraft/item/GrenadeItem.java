@@ -53,7 +53,7 @@ public final class GrenadeItem extends GasContainerItem implements ProjectileIte
         GasCloudEntity cloud = new GasCloudEntity(level, stack, GascraftConfig.CLOUD_LIFETIME_TICKS.get());
         cloud.setPos(position);
         cloud.setEmitter(emitter);
-        if (!cloud.instantPulse()) level.sendParticles(net.minecraft.core.particles.ParticleTypes.LARGE_SMOKE, position.x, position.y, position.z, 20, .5, .5, .5, .2);
+        if (!cloud.instantPulse() && (cloud.displayColor() >>> 24) > 0) level.sendParticles(net.minecraft.core.particles.ParticleTypes.LARGE_SMOKE, position.x, position.y, position.z, 20, .5, .5, .5, .2);
         cloud.onCloudReleased();
         level.addFreshEntity(cloud);
         return cloud;

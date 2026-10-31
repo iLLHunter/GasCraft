@@ -1,0 +1,22 @@
+{
+  "type": "gascraft:powder_mixing",
+  "pattern": [
+    "AAA",
+    "AOA",
+    "AAA"
+  ],
+  "key": {
+    "A": {
+      "item": "gascraft:lachrymator_agent"
+    },
+    "O": {
+      "item": "minecraft:obsidian"
+    }
+  },
+  "result": {
+    "id": "minecraft:crying_obsidian",
+    "count": 1
+  },
+  "processing_ticks": 200,
+  "energy_per_operation": 6400
+}

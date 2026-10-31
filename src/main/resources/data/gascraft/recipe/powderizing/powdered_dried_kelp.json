@@ -1,0 +1,12 @@
+{
+  "type": "gascraft:powderizing",
+  "ingredient": {
+    "item": "minecraft:dried_kelp"
+  },
+  "result": {
+    "id": "gascraft:powdered_dried_kelp",
+    "count": 1
+  },
+  "processing_ticks": 200,
+  "energy_per_operation": 6400
+}

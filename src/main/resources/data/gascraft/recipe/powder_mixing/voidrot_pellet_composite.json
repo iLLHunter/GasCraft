@@ -1,0 +1,22 @@
+{
+  "type": "gascraft:powder_mixing",
+  "pattern": [
+    "PPP",
+    "PCP",
+    "PPP"
+  ],
+  "key": {
+    "P": {
+      "item": "gascraft:powdered_void_rot"
+    },
+    "C": {
+      "item": "gascraft:toxic_binder"
+    }
+  },
+  "result": {
+    "id": "gascraft:voidrot_pellet_composite",
+    "count": 1
+  },
+  "processing_ticks": 200,
+  "energy_per_operation": 6400
+}

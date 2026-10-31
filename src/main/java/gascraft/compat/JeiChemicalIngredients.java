@@ -11,6 +11,14 @@ import net.minecraft.tags.TagKey;
 
 /** Called only with Mekanism present; reuses its registered JEI ingredient identity and renderer. */
 public final class JeiChemicalIngredients {
+    private static List<ChemicalStack> hidden=List.of();
+    public static void updateHidden(IIngredientManager manager) {
+        manager.getIngredientTypeChecked(ChemicalStack.class).ifPresent(type->{
+            if(!hidden.isEmpty())manager.addIngredientsAtRuntime(type,hidden);
+            hidden=manager.getAllIngredients(type).stream().filter(stack->!gascraft.gas.GasFieldsContent.available(MekanismAPI.CHEMICAL_REGISTRY.getKey(stack.getChemical()))).toList();
+            if(!hidden.isEmpty())manager.removeIngredientsAtRuntime(type,hidden);
+        });
+    }
     public static List<ChemicalStack> stacks(SynthesizingRecipe.TankIngredient tank) {
         if (!tank.id().isEmpty()) return MekanismAPI.CHEMICAL_REGISTRY.getOptional(ResourceLocation.parse(tank.id()))
             .map(chemical -> List.of(new ChemicalStack(chemical, tank.amount()))).orElse(List.of());

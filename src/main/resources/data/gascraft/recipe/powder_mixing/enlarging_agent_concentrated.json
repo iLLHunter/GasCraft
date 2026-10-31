@@ -1,0 +1,22 @@
+{
+  "type": "gascraft:powder_mixing",
+  "pattern": [
+    "AAA",
+    "ACA",
+    "AAA"
+  ],
+  "key": {
+    "A": {
+      "item": "gascraft:enlarging_agent"
+    },
+    "C": {
+      "item": "gascraft:powdered_golden_carrot"
+    }
+  },
+  "result": {
+    "id": "gascraft:enlarging_agent_concentrated",
+    "count": 1
+  },
+  "processing_ticks": 200,
+  "energy_per_operation": 6400
+}

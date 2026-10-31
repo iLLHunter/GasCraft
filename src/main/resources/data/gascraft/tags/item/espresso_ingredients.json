@@ -1,0 +1,41 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "actuallyadditions:coffee_beans",
+      "required": false
+    },
+    {
+      "id": "productivetrees:roasted_coffee_bean",
+      "required": false
+    },
+    {
+      "id": "coffee_delight:coffee_beans",
+      "required": false
+    },
+    {
+      "id": "coffee_delight:coffee_beans_cooked",
+      "required": false
+    },
+    {
+      "id": "coffee_delight:coffee_flour",
+      "required": false
+    },
+    {
+      "id": "roasters_delight:unroasted_coffee_bean",
+      "required": false
+    },
+    {
+      "id": "roasters_delight:roasted_coffee_bean",
+      "required": false
+    },
+    {
+      "id": "roasters_delight:ground_coffee",
+      "required": false
+    },
+    {
+      "id": "roasters_delight:instant_coffee_powder",
+      "required": false
+    }
+  ]
+}

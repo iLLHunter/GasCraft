@@ -1,0 +1,11 @@
+{
+  "type": "gascraft:synthesizing",
+  "gas": "gascraft:void_gas",
+  "input_gas": "gascraft:smoke",
+  "ingredient": {
+    "item": "gascraft:void_pellet"
+  },
+  "minimum_tier": "netherite",
+  "reagent": "eye_of_ender",
+  "reagent_charges": 3
+}

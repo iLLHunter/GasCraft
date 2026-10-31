@@ -1,0 +1,9 @@
+{
+  "type": "gascraft:synthesizing",
+  "gas": "gascraft:misted_sunburst",
+  "input_gas": "gascraft:smoke",
+  "ingredient": {
+    "item": "gascraft:sunburst_pellet"
+  },
+  "minimum_tier": "diamond"
+}

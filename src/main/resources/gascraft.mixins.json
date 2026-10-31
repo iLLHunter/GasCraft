@@ -1,0 +1,24 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "gascraft.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "plugin": "gascraft.mixin.OptionalMagicMixinPlugin",
+  "mixins": [
+    "GasCraftingRecipeMixin",
+    "GasRecipeManagerMixin",
+    "EntityTeleportMixin",
+    "PlayerConnectionTeleportMixin",
+    "PlayerRespawnMixin",
+    "IllagerSpellMixin",
+    "MagicItemMixin",
+    "IronCasterMixin",
+    "LivingEffectsMixin",
+    "GravityFlyingMixin",
+    "ServerPlayerTeleportMixin",
+    "IllagerCasterMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

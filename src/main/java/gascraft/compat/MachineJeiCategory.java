@@ -1,6 +1,7 @@
 package gascraft.compat;
 
 import gascraft.ModContent;
+import gascraft.client.ScreenLabels;
 import gascraft.gas.GasCatalog;
 import gascraft.machine.*;
 import gascraft.recipe.*;
@@ -64,7 +65,7 @@ public final class MachineJeiCategory implements IRecipeCategory<MachineRecipeCa
     public boolean available(MachineRecipeCatalog.Entry entry) {
         if (entry.synthesizing() == null) return entry.inputs().stream().allMatch(input -> input == Ingredient.EMPTY || available(input));
         var recipe = entry.synthesizing();
-        if (!GasCatalog.contains(recipe.gas()) || entry.canisters().isEmpty() || !available(recipe.ingredient())) return false;
+        if (!GasCatalog.contains(recipe.gas()) || entry.canisters().isEmpty() || recipe.requiresIngredient()&&!available(recipe.ingredient())) return false;
         var tank = recipe.tank();
         return tank.amount() == 0 || tank.type().equals("fluid") && !fluids(tank).isEmpty()
             || tank.type().equals("chemical") && ModList.get().isLoaded("mekanism") && JeiChemicalIngredients.available(tank, ingredients);
@@ -85,7 +86,7 @@ public final class MachineJeiCategory implements IRecipeCategory<MachineRecipeCa
                 builder.addOutputSlot(174 + i * 20, 18).addItemStack(entry.result(level)).setStandardSlotBackground().setSlotName("output_" + i);
             }
             builder.createFocusLink(bases.toArray(mezz.jei.api.gui.builder.IIngredientAcceptor<?>[]::new));
-            builder.addInputSlot(4, 50).addIngredients(recipe.ingredient()).setStandardSlotBackground().setSlotName("ingredient");
+            if(recipe.requiresIngredient())builder.addInputSlot(4, 50).addIngredients(recipe.ingredient()).setStandardSlotBackground().setSlotName("ingredient");
             var tank = recipe.tank();
             if (tank.amount() > 0) {
                 var slot = builder.addInputSlot(64, 50).setStandardSlotBackground().setSlotName("tank");
@@ -110,35 +111,46 @@ public final class MachineJeiCategory implements IRecipeCategory<MachineRecipeCa
                 kind == MachineKind.POWDER_MIXER ? 24 : 18).addItemStack(output).setOutputSlotBackground().setSlotName("output");
         }
     }
-    private void label(GuiGraphics graphics, Component label, int x, int y) { graphics.drawString(Minecraft.getInstance().font, label, x, y, 0xff404040, false); }
-    @Override public void draw(MachineRecipeCatalog.Entry entry, IRecipeSlotsView slots, GuiGraphics graphics, double mouseX, double mouseY) {
+    private record Label(Component text, int x, int y, int width) {}
+    private List<Label> labels(MachineRecipeCatalog.Entry entry) {
+        var labels = new ArrayList<Label>();
         if (kind.isSynthesizer()) {
             var recipe = entry.synthesizing();
-            label(graphics, text("canisters"), 4, 5); label(graphics, text("output"), 174, 5); arrow.draw(graphics, 98, 19);
-            label(graphics, text("ingredient"), 4, 39);
-            if (recipe.tank().amount() > 0) { label(graphics, text("tank"), 64, 39); label(graphics, Component.literal(number(recipe.tank().amount()) + " mB"), 60, 69); }
-            if (recipe.reagentCharges() > 0) { label(graphics, text("reagent"), 118, 39); label(graphics, text("charges", recipe.reagentCharges()), 112, 69); }
-            label(graphics, text("minimum_tier", text("tier." + recipe.minimumTier())), 4, 82);
+            labels.add(new Label(text("canisters"), 4, 5, 166)); labels.add(new Label(text("output"), 174, 5, 60));
+            labels.add(new Label(recipe.requiresIngredient()?text("ingredient"):Component.translatable("manual.gascraft.empty_slot"), 4, 39, recipe.tank().amount() > 0 ? 56 : recipe.reagentCharges() > 0 ? 110 : 230));
+            if (recipe.tank().amount() > 0) {
+                labels.add(new Label(text("tank"), 64, 39, recipe.reagentCharges() > 0 ? 50 : 170));
+                labels.add(new Label(Component.literal(number(recipe.tank().amount()) + " mB"), 60, 69, recipe.reagentCharges() > 0 ? 48 : 174));
+            }
+            if (recipe.reagentCharges() > 0) { labels.add(new Label(text("reagent"), 118, 39, 116)); labels.add(new Label(text("charges", recipe.reagentCharges()), 112, 69, 122)); }
+            labels.add(new Label(text("minimum_tier", text("tier." + recipe.minimumTier())), 4, 82, 230));
             int y = 96;
             for (var tier : TIERS) if (recipe.tierAllows(tier)) {
-                label(graphics, text("tier_stats", text("tier." + tier.name().replace("_SYNTHESIZER", "").toLowerCase(Locale.ROOT)),
-                    seconds(tier.baseProcessingTicks()), number(tier.baseProcessingTicks() * 32L)), 4, y); y += 12;
+                labels.add(new Label(text("tier_stats", text("tier." + tier.name().replace("_SYNTHESIZER", "").toLowerCase(Locale.ROOT)),
+                    seconds(tier.baseProcessingTicks()), number(tier.baseProcessingTicks() * 32L)), 4, y, 230)); y += 12;
             }
         } else {
-            arrow.draw(graphics, kind == MachineKind.POWDER_MIXER ? 90 : 76, kind == MachineKind.POWDER_MIXER ? 25 : 19);
             int y = kind == MachineKind.POWDER_MIXER ? 66 : 46;
-            label(graphics, text("time", seconds(entry.ticks())), 4, y);
+            labels.add(new Label(text("time", seconds(entry.ticks())), 4, y, 178));
+            if(entry.mixing()!=null&&entry.mixing().unorderedSquare())labels.add(new Label(Component.translatable("manual.gascraft.square_any_order"),4,y+38,178));
             if (kind == MachineKind.FERMENTER) {
-                label(graphics, text("whole_stack"), 4, y + 14); label(graphics, text("sky_time", seconds((entry.ticks() + 1) / 2)), 4, y + 28);
+                labels.add(new Label(text("whole_stack"), 4, y + 14, 178)); labels.add(new Label(text("sky_time", seconds((entry.ticks() + 1) / 2)), 4, y + 28, 178));
             } else {
                 int rate = kind == MachineKind.GENERATOR ? 32 : ProcessingBalance.energyPerTick(entry.ticks(), entry.energy(), 0, 0);
-                label(graphics, text(kind == MachineKind.GENERATOR ? "generation" : "rate", rate), 4, y + 12);
-                label(graphics, text(kind == MachineKind.GENERATOR ? "generated_total" : "total", number(kind == MachineKind.GENERATOR ? entry.fuelTicks() * 32L : rate * (long)entry.ticks())), 4, y + 24);
+                labels.add(new Label(text(kind == MachineKind.GENERATOR ? "generation" : "rate", rate), 4, y + 12, 178));
+                labels.add(new Label(text(kind == MachineKind.GENERATOR ? "generated_total" : "total", number(kind == MachineKind.GENERATOR ? entry.fuelTicks() * 32L : rate * (long)entry.ticks())), 4, y + 24, 178));
             }
         }
-        label(graphics, Component.literal("?"), getWidth() - 8, getHeight() - 11);
+        return labels;
+    }
+    @Override public void draw(MachineRecipeCatalog.Entry entry, IRecipeSlotsView slots, GuiGraphics graphics, double mouseX, double mouseY) {
+        if (kind.isSynthesizer()) arrow.draw(graphics, 98, 19);
+        else arrow.draw(graphics, kind == MachineKind.POWDER_MIXER ? 90 : 76, kind == MachineKind.POWDER_MIXER ? 25 : 19);
+        for (var label : labels(entry)) ScreenLabels.drawBounded(graphics, Minecraft.getInstance().font, label.text(), label.x(), label.y(), label.width());
+        graphics.drawString(Minecraft.getInstance().font, "?", getWidth() - 8, getHeight() - 11, 0xff404040, false);
     }
     @Override public List<Component> getTooltipStrings(MachineRecipeCatalog.Entry entry, IRecipeSlotsView slots, double x, double y) {
+        for (var label : labels(entry)) if (ScreenLabels.overflowsAt(Minecraft.getInstance().font, label.text(), label.x(), label.y(), label.width(), x, y)) return List.of(label.text());
         if (x < getWidth() - 14 || y < getHeight() - 17) return List.of();
         if (kind == MachineKind.FERMENTER) return List.of(text("fermenter_help"), text("sky_help"));
         if (kind == MachineKind.GENERATOR) return List.of(text("generator_help"));

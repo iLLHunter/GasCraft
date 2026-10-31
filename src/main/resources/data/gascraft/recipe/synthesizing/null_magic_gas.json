@@ -1,0 +1,9 @@
+{
+  "type": "gascraft:synthesizing",
+  "gas": "gascraft:null_magic_gas",
+  "input_gas": "gascraft:smoke",
+  "ingredient": {
+    "item": "gascraft:null_magic_pellet"
+  },
+  "minimum_tier": "diamond"
+}

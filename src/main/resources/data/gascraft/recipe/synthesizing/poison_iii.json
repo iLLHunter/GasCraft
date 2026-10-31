@@ -4,5 +4,6 @@
   "input_gas": "gascraft:smoke",
   "ingredient": {
     "item": "gascraft:poison_pellet"
-  }
+  },
+  "minimum_tier": "diamond"
 }

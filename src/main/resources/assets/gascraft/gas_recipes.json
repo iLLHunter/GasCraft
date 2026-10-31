@@ -1,14 +1,5 @@
 [
   {
-    "gas": "gascraft:misted_meat",
-    "input": {
-      "gas": "gascraft:smoke"
-    },
-    "ingredient": {
-      "item": "gascraft:powdered_protein"
-    }
-  },
-  {
     "gas": "gascraft:pulmonary_agent",
     "input": {
       "gas": "gascraft:smoke"

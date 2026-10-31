@@ -1,0 +1,19 @@
+{
+  "gasType": "GAS",
+  "color": "0xFF704020",
+  "particleType": "SMOKE",
+  "agents": [
+    {
+      "agent": "gascraft:olfactory",
+      "potency": 1
+    }
+  ],
+  "tooltipLines": [],
+  "timedEffects": [
+    {
+      "delayTicks": 100,
+      "type": "fade",
+      "durationTicks": 40
+    }
+  ]
+}

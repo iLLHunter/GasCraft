@@ -1,0 +1,28 @@
+{
+  "type": "gascraft:powder_mixing",
+  "pattern": [
+    "AB",
+    "CD"
+  ],
+  "key": {
+    "A": {
+      "item": "gascraft:powdered_red_mushroom"
+    },
+    "B": {
+      "item": "gascraft:powdered_turtle_scute"
+    },
+    "C": {
+      "item": "minecraft:bone_meal"
+    },
+    "D": {
+      "item": "minecraft:sugar"
+    }
+  },
+  "result": {
+    "id": "gascraft:enlarging_base",
+    "count": 1
+  },
+  "processing_ticks": 200,
+  "energy_per_operation": 6400,
+  "unordered_square": true
+}

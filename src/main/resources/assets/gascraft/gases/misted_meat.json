@@ -1,6 +1,6 @@
 {
   "gasType": "SMOKE",
-  "color": "0xFFFFFFFF",
+  "color": "0x00ffffff",
   "canisterStripeColor": "0xECCCCC",
   "particleType": "MISTED_MEAT",
   "agents": [

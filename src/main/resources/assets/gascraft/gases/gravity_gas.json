@@ -1,0 +1,10 @@
+{
+  "gasType": "GAS",
+  "particleType": "SMOKE",
+  "color": "0xe8101014",
+  "canisterStripeColor": "0xff101014",
+  "agents": [],
+  "tooltipLines": [
+    "tooltip.gascraft.gravity_gas.summary"
+  ]
+}

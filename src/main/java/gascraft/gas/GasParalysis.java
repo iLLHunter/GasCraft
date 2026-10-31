@@ -26,7 +26,6 @@ import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 @EventBusSubscriber(modid=Gascraft.MOD_ID)
 public final class GasParalysis {
     private static final String PREVIOUS_AI = "gascraft:paralysis_previous_no_ai";
-    private static final String PREVIOUS_GRAVITY = "gascraft:paralysis_previous_no_gravity";
     private static final Map<LivingEntity, Vec3> ANCHORS = new WeakHashMap<>();
     public static volatile boolean clientParalyzed;
     public record Payload(boolean paralyzed) implements CustomPacketPayload {
@@ -50,13 +49,12 @@ public final class GasParalysis {
         if (entity.level().isClientSide) return entity instanceof Player && clientParalyzed;
         hold(entity); // Restore packet-driven movement before testing whether the cloud still contains its anchor.
         boolean active=entity.isAlive() && (entity instanceof Mob || entity instanceof Player)
-            && (released!=null && eligible(entity,released) || entity.level().getEntitiesOfClass(GasCloudEntity.class,
+            && (GasFields.paralyzed(entity) || released!=null && eligible(entity,released) || entity.level().getEntitiesOfClass(GasCloudEntity.class,
                 entity.getBoundingBox().inflate(GascraftConfig.GAS_RANGE_BLOCKS.get())).stream().anyMatch(cloud->eligible(entity,cloud)));
         boolean previous=ANCHORS.containsKey(entity);
         if (active) {
             ANCHORS.putIfAbsent(entity,entity.position());
-            if (!entity.getPersistentData().contains(PREVIOUS_GRAVITY)) entity.getPersistentData().putBoolean(PREVIOUS_GRAVITY,entity.isNoGravity());
-            entity.setNoGravity(true);
+            GasGravity.hold(entity,"paralysis",true);
             if (!previous) entity.hurtMarked=true; // Synchronize the initial zero velocity as well as frozen gravity.
             if (entity instanceof Mob mob) {
                 if (!mob.getPersistentData().contains(PREVIOUS_AI)) mob.getPersistentData().putBoolean(PREVIOUS_AI,mob.isNoAi());
@@ -75,17 +73,14 @@ public final class GasParalysis {
         if (anchor==null) return;
         if (entity.position().distanceToSqr(anchor)>0.000001) {
             if (entity instanceof ServerPlayer player && player.connection!=null)
-                player.connection.teleport(anchor.x,anchor.y,anchor.z,player.getYRot(),player.getXRot());
+                GasTeleports.correct(()->player.connection.teleport(anchor.x,anchor.y,anchor.z,player.getYRot(),player.getXRot()));
             else entity.setPos(anchor);
         }
         entity.setDeltaMovement(Vec3.ZERO);
     }
     private static void restore(LivingEntity entity) {
         ANCHORS.remove(entity);
-        if (entity.getPersistentData().contains(PREVIOUS_GRAVITY)) {
-            entity.setNoGravity(entity.getPersistentData().getBoolean(PREVIOUS_GRAVITY));
-            entity.getPersistentData().remove(PREVIOUS_GRAVITY);
-        }
+        GasGravity.hold(entity,"paralysis",false);
         if (entity instanceof Mob mob && mob.getPersistentData().contains(PREVIOUS_AI)) {
             mob.setNoAi(mob.getPersistentData().getBoolean(PREVIOUS_AI));
             mob.getPersistentData().remove(PREVIOUS_AI);
@@ -121,7 +116,7 @@ public final class GasParalysis {
     @SubscribeEvent public static void entityInteract(PlayerInteractEvent.EntityInteract event) { interact(event); }
     @SubscribeEvent public static void specificInteract(PlayerInteractEvent.EntityInteractSpecific event) { interact(event); }
     @SubscribeEvent public static void breakBlock(BlockEvent.BreakEvent event) { if(refresh(event.getPlayer())) event.setCanceled(true); }
-    @SubscribeEvent public static void death(LivingDeathEvent event) {
+    @SubscribeEvent(priority=EventPriority.LOWEST) public static void death(LivingDeathEvent event) {
         restore(event.getEntity());
         if(event.getEntity() instanceof ServerPlayer player && player.connection!=null) PacketDistributor.sendToPlayer(player,new Payload(false));
     }

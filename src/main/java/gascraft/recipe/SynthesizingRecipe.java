@@ -61,7 +61,7 @@ public record SynthesizingRecipe(ResourceLocation gas, Ingredient ingredient, In
         if (!inputPotion.isEmpty()) ResourceLocation.parse(inputPotion);
         if (!List.of("stone", "iron", "diamond", "netherite").contains(minimumTier) || reagentCharges < 0)
             throw new IllegalArgumentException("Invalid Synthesizer tier or reagent charges");
-        if (!List.of("diamond", "nether_star").contains(reagent)) throw new IllegalArgumentException("Unknown Synthesizer reagent");
+        if (!SynthesizerMachine.validReagentType(reagent)) throw new IllegalArgumentException("Unknown Synthesizer reagent");
     }
     public int tier() { return List.of("stone", "iron", "diamond", "netherite").indexOf(minimumTier); }
     public boolean tierAllows(MachineKind kind) {
@@ -74,8 +74,10 @@ public record SynthesizingRecipe(ResourceLocation gas, Ingredient ingredient, In
             .map(potion -> stack.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY).is(potion)).orElse(false));
     }
     @Override public boolean matches(Input inputs, Level level) {
-        return GasCatalog.contains(gas) && ingredient.test(inputs.ingredient()) && inputs.canisters().size() == 3 && inputs.canisters().stream().allMatch(this::baseMatches);
+        return GasCatalog.contains(gas) && ingredientMatches(inputs.ingredient()) && inputs.canisters().size() == 3 && inputs.canisters().stream().allMatch(this::baseMatches);
     }
+    public boolean requiresIngredient(){return !ingredient.isEmpty();}
+    public boolean ingredientMatches(ItemStack stack){return requiresIngredient()?ingredient.test(stack):stack.isEmpty();}
     @Override public ItemStack assemble(Input inputs, HolderLookup.Provider registries) { return getResultItem(registries); }
     @Override public ItemStack getResultItem(HolderLookup.Provider registries) { return GasCanisterItem.createFilledCanister(gas); }
     @Override public boolean canCraftInDimensions(int width, int height) { return width * height >= 4; }
@@ -93,11 +95,11 @@ public record SynthesizingRecipe(ResourceLocation gas, Ingredient ingredient, In
             ? Ingredient.of(BuiltInRegistries.ITEM.get(ResourceLocation.parse(mix.inputItem()))) : Ingredient.EMPTY;
         return new SynthesizingRecipe(mix.result(), ingredient, input, mix.inputGas(), mundane ? "" : mix.inputPotion(),
             mundane ? new TankIngredient("fluid", "minecraft:water", "", sarin ? 3_000 : 600) : TankIngredient.EMPTY,
-            sarin ? "netherite" : "stone", sarin ? 3 : 0);
+            sarin ? "netherite" : mix.result().equals(GasCatalog.id("mustard_gas")) ? "iron" : "stone", sarin ? 3 : 0);
     }
     public static final MapCodec<SynthesizingRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
         ResourceLocation.CODEC.fieldOf("gas").forGetter(SynthesizingRecipe::gas),
-        Ingredient.CODEC_NONEMPTY.fieldOf("ingredient").forGetter(SynthesizingRecipe::ingredient),
+        Ingredient.CODEC.optionalFieldOf("ingredient",Ingredient.EMPTY).forGetter(SynthesizingRecipe::ingredient),
         Ingredient.CODEC.optionalFieldOf("input", Ingredient.EMPTY).forGetter(SynthesizingRecipe::input),
         Codec.STRING.optionalFieldOf("input_gas", "").forGetter(SynthesizingRecipe::inputGas),
         Codec.STRING.optionalFieldOf("input_potion", "").forGetter(SynthesizingRecipe::inputPotion),

@@ -15,6 +15,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 public final class PowderizerRecipeDiscovery {
     public static Optional<SingleInputProcessingRecipe> findRecipe(ItemStack input) {
         if (input.isEmpty()) return Optional.empty();
+        if(gascraft.gas.GasFieldsContent.musicDisc(input)) return Optional.of(new SingleInputProcessingRecipe(SingleInputProcessingRecipe.Kind.POWDERIZING,Ingredient.of(input.getItem()),new ItemStack(gascraft.gas.GasFieldsContent.ITEMS.get("powdered_funk").get()),200,6400));
         if (BuiltInRegistries.ITEM.getKey(input.getItem()).equals(ResourceLocation.withDefaultNamespace("potent_sulfur"))) {
             int ticks = MachineKind.POWDERIZER.baseProcessingTicks();
             return Optional.of(new SingleInputProcessingRecipe(SingleInputProcessingRecipe.Kind.POWDERIZING,

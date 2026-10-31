@@ -1,0 +1,25 @@
+{
+  "type": "gascraft:powder_mixing",
+  "pattern": [
+    "CSC",
+    "SIS",
+    "CSC"
+  ],
+  "key": {
+    "C": {
+      "item": "minecraft:clay"
+    },
+    "S": {
+      "item": "minecraft:sand"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "result": {
+    "id": "gascraft:powdered_null_magic",
+    "count": 1
+  },
+  "processing_ticks": 200,
+  "energy_per_operation": 6400
+}

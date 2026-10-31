@@ -45,6 +45,7 @@ public final class MachineRecipeTransfer {
     }
     public static Plan plan(AbstractContainerMenu menu, Player player, MachineRecipeCatalog.Entry recipe) {
         if (!menu.getCarried().isEmpty()) return failure("cursor");
+        if(!gascraft.gas.GasChainControls.itemAllowed(recipe.result(player.level())))return failure("items");
         var planner = new Planner(menu, player);
         if (menu instanceof ProcessingMachineMenu processing) {
             if (recipe.kind() != processing.kind()) return failure("wrong_machine");
@@ -57,7 +58,8 @@ public final class MachineRecipeTransfer {
                 Predicate<ItemStack> matches = stack -> ingredient.test(stack)
                     && (filter.isEmpty() || ItemStack.isSameItemSameComponents(filter, stack));
                 boolean preferIronDust = processing.kind() == MachineKind.POWDER_MIXER
-                    && recipe.result(player.level()).is(ModContent.FLASH_POWDER.get()) && (i == 1 || i == 7);
+                    && (recipe.result(player.level()).is(ModContent.FLASH_POWDER.get()) && (i == 1 || i == 7)
+                        ||recipe.result(player.level()).is(gascraft.gas.GasFieldsContent.ITEMS.get("powdered_gravity").get())&&ingredient.test(new ItemStack(ModContent.POWDERED_IRON.get())));
                 if (!planner.fill(i, 1, matches, stack -> !preferIronDust || !stack.is(ModContent.POWDERED_IRON.get())))
                     return failure(filter.isEmpty() ? "items" : "filters");
             }
@@ -85,7 +87,8 @@ public final class MachineRecipeTransfer {
                 if (!planner.fill(slot, 1, matches)) return failure("items");
                 existingBase = planner.targets.getOrDefault(slot, menu.slots.get(slot).getItem());
             }
-            if (!planner.fill(0, synth.reservedIngredients() + 1, operation.ingredient()::test)) return failure("items");
+            if(operation.requiresIngredient()){if (!planner.fill(0, synth.reservedIngredients() + 1, operation.ingredient()::test)) return failure("items");}
+            else if(menu.slots.get(0).hasItem())return failure("occupied");
             if (operation.reagentCharges() > 0) {
                 if (!synth.canUseReagent(operation.reagent())) return failure("reagent");
                 int needed = Math.max(0, operation.reagentCharges() - (synth.charges() - synth.reservedCharges()));

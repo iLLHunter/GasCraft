@@ -1,0 +1,18 @@
+{
+  "type": "gascraft:synthesizing",
+  "gas": "gascraft:misted_moonlight",
+  "input_gas": "gascraft:smoke",
+  "ingredient": {
+    "item": "gascraft:misted_moonlight_pellet"
+  },
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:nuggets/silver"
+      }
+    }
+  ],
+  "minimum_tier": "diamond"
+}

@@ -18,6 +18,7 @@ public final class ClientEffects {
     private static int width, height;
     private static double flashStart;
     private static int flashDuration;
+    private static int flashHold;
     public static void flash(GasFlash.Payload payload) {
         Minecraft mc = Minecraft.getInstance();
         if (mc.level == null || payload.durationTicks() <= 0) return;
@@ -26,10 +27,11 @@ public final class ClientEffects {
         if (payload.screen() && mc.player != null && mc.player.isAlive()) {
             flashStart = mc.level.getGameTime() + mc.getTimer().getGameTimeDeltaPartialTick(false);
             flashDuration = payload.durationTicks();
+            flashHold = payload.holdTicks();
         }
     }
     public static float flashOpacity(double gameTime) {
-        return flashDuration <= 0 ? 0 : (float)Math.clamp(1 - (gameTime - flashStart) / flashDuration, 0, 1);
+        return flashDuration <= 0 ? 0 : (float)Math.clamp(1 - Math.max(0,gameTime-flashStart-flashHold) / Math.max(1,flashDuration-flashHold), 0, 1);
     }
     @SubscribeEvent public static void flashOverlay(RenderGuiEvent.Post event) {
         Minecraft mc = Minecraft.getInstance();
@@ -68,6 +70,7 @@ public final class ClientEffects {
         record Appearance(GasCatalog.GasDefinition gas, int color) {}
         java.util.Map<Appearance,Double> concentrations=new java.util.LinkedHashMap<>();
         for (GasCloudEntity cloud : mc.level.getEntitiesOfClass(GasCloudEntity.class,mc.player.getBoundingBox().inflate(GascraftConfig.GAS_RANGE_BLOCKS.get()))) {
+            if(cloud.gasContents().id().equals(GasCatalog.id("voidrot_gas"))||cloud.gasContents().id().equals(GasCatalog.id("void_gas")))continue;
             double concentration=cloud.gasConcentrationAt(mc.player.position()) * cloud.fadeOpacity();
             if (concentration>0) concentrations.merge(new Appearance(cloud.gasContents(),cloud.displayColor()),concentration,Math::max);
         }

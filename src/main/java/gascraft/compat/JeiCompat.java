@@ -27,6 +27,8 @@ public final class JeiCompat implements IModPlugin {
     private final Map<MachineKind, MachineJeiCategory> categories = new LinkedHashMap<>();
     private final Map<MachineKind, List<MachineRecipeCatalog.Entry>> displayed = new LinkedHashMap<>();
     private IJeiRuntime runtime;
+    private List<ItemStack> conditionallyHidden=List.of();
+    private List<RecipeHolder<CraftingRecipe>> craftingPreviews=List.of();
     public JeiCompat() {
         gascraft.gas.GasDefinitionSync.clientCatalogChanged = () -> Minecraft.getInstance().execute(this::refreshMachines);
     }
@@ -76,12 +78,31 @@ public final class JeiCompat implements IModPlugin {
         if (sides) areas.add(new Rect2i(left + 182, top + 106, sideWidth, 116));
         return areas;
     }
-    @Override public void onRuntimeAvailable(IJeiRuntime runtime) { this.runtime = runtime; }
+    @Override public void onRuntimeAvailable(IJeiRuntime runtime) {
+        this.runtime = runtime;
+        var manager = runtime.getIngredientManager();
+        var hidden = manager.getAllIngredients(mezz.jei.api.constants.VanillaTypes.ITEM_STACK).stream().filter(gascraft.gas.GasFieldsContent::hiddenForClient).toList();
+        if (!hidden.isEmpty()) manager.removeIngredientsAtRuntime(mezz.jei.api.constants.VanillaTypes.ITEM_STACK, hidden);
+        conditionallyHidden=hidden;
+        if(net.neoforged.fml.ModList.get().isLoaded("mekanism"))JeiChemicalIngredients.updateHidden(manager);
+    }
     @Override public void onRuntimeUnavailable() { runtime = null; }
-    private void refreshMachines() {
+    @SuppressWarnings("unchecked") private void refreshMachines() {
         var level = Minecraft.getInstance().level;
         if (runtime == null || level == null) return;
+        var ingredients=runtime.getIngredientManager();
+        if(!conditionallyHidden.isEmpty())ingredients.addIngredientsAtRuntime(mezz.jei.api.constants.VanillaTypes.ITEM_STACK,conditionallyHidden);
+        conditionallyHidden=ingredients.getAllIngredients(mezz.jei.api.constants.VanillaTypes.ITEM_STACK).stream().filter(gascraft.gas.GasFieldsContent::hiddenForClient).toList();
+        if(!conditionallyHidden.isEmpty())ingredients.removeIngredientsAtRuntime(mezz.jei.api.constants.VanillaTypes.ITEM_STACK,conditionallyHidden);
+        if(net.neoforged.fml.ModList.get().isLoaded("mekanism"))JeiChemicalIngredients.updateHidden(ingredients);
         var manager = runtime.getRecipeManager();
+        var controlled=new ArrayList<>(craftingPreviews);
+        for(var holder:level.getRecipeManager().getRecipes())if(holder.value() instanceof CraftingRecipe&&net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(holder.value().getResultItem(level.registryAccess()).getItem()).getNamespace().equals("gascraft"))controlled.add((RecipeHolder<CraftingRecipe>)(RecipeHolder<?>)holder);
+        var shown=controlled.stream().filter(r->gascraft.gas.GasChainControls.itemAllowed(r.value().getResultItem(level.registryAccess()))).toList();
+        var removed=controlled.stream().filter(r->!gascraft.gas.GasChainControls.itemAllowed(r.value().getResultItem(level.registryAccess()))).toList();
+        manager.hideRecipes(RecipeTypes.CRAFTING,removed);manager.addRecipes(RecipeTypes.CRAFTING,shown);manager.unhideRecipes(RecipeTypes.CRAFTING,shown);
+        var manualRecipes=level.getRecipeManager().getAllRecipesFor(net.minecraft.world.item.crafting.RecipeType.CRAFTING).stream().filter(r->r.value().getResultItem(level.registryAccess()).is(ModContent.GASCRAFT_MANUAL.get())).toList();
+        if(gascraft.GascraftConfig.clientManualEnabled()){manager.addRecipes(RecipeTypes.CRAFTING,manualRecipes);manager.unhideRecipes(RecipeTypes.CRAFTING,manualRecipes);}else manager.hideRecipes(RecipeTypes.CRAFTING,manualRecipes);
         for (var kind : MachineJeiCategory.KINDS) {
             var type = MachineJeiCategory.type(kind);
             manager.hideRecipes(type, displayed.getOrDefault(kind, List.of()));
@@ -109,6 +130,7 @@ public final class JeiCompat implements IModPlugin {
         }
         List<RecipeHolder<CraftingRecipe>> crafting=new ArrayList<>();
         for (var gas:GasCatalog.gasDefinitions()) {
+            if(!GasCatalog.contains(gas.id()))continue;
             ItemStack canister=gascraft.item.GasCanisterItem.createFilledCanister(gas.id()), output=GasContainerItem.createFilledContainer(ModContent.CHEMICAL_GRENADE.get(),gas.id());
             crafting.add(createCraftingPreview("canister_empty/" + gas.id().getNamespace() + "/" + gas.id().getPath(), new ItemStack(ModContent.EMPTY_CANISTER.get()), DataComponentIngredient.of(false,canister)));
             for (Item container:List.of(ModContent.GRENADE_DIFFUSER.get(),ModContent.GRENADE_SHELL.get())) {
@@ -116,7 +138,7 @@ public final class JeiCompat implements IModPlugin {
             }
         }
         ItemStack shell=new ItemStack(ModContent.GRENADE_SHELL.get()); ItemStack grenade_diffuser=new ItemStack(ModContent.GRENADE_DIFFUSER.get()); crafting.add(createCraftingPreview("grenade_recycle",grenade_diffuser,DataComponentIngredient.of(false,shell)));
-        registration.addRecipes(RecipeTypes.CRAFTING,crafting);
+        craftingPreviews=List.copyOf(crafting);registration.addRecipes(RecipeTypes.CRAFTING,crafting);
     }
     private static RecipeHolder<CraftingRecipe> createCraftingPreview(String id,ItemStack output,Ingredient... inputs) {
         return new RecipeHolder<>(GasCatalog.id(id),new ShapelessRecipe("gascraft",CraftingBookCategory.MISC,output,NonNullList.of(Ingredient.EMPTY,inputs)) {

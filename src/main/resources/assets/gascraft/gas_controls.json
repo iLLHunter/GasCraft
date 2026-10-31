@@ -1,0 +1,237 @@
+[
+  {
+    "gas": "boogie_gas",
+    "key": "disableBoogieGas",
+    "name": "Boogie Gas"
+  },
+  {
+    "gas": "chicken_gas",
+    "key": "disableChickenGas",
+    "name": "Chicken Gas"
+  },
+  {
+    "gas": "colored_smoke_black",
+    "key": "disableBlackSmoke",
+    "name": "Black Smoke"
+  },
+  {
+    "gas": "colored_smoke_blue",
+    "key": "disableBlueSmoke",
+    "name": "Blue Smoke"
+  },
+  {
+    "gas": "colored_smoke_brown",
+    "key": "disableBrownSmoke",
+    "name": "Brown Smoke"
+  },
+  {
+    "gas": "colored_smoke_cyan",
+    "key": "disableCyanSmoke",
+    "name": "Cyan Smoke"
+  },
+  {
+    "gas": "colored_smoke_gray",
+    "key": "disableGraySmoke",
+    "name": "Gray Smoke"
+  },
+  {
+    "gas": "colored_smoke_green",
+    "key": "disableGreenSmoke",
+    "name": "Green Smoke"
+  },
+  {
+    "gas": "colored_smoke_light_blue",
+    "key": "disableLightBlueSmoke",
+    "name": "Light Blue Smoke"
+  },
+  {
+    "gas": "colored_smoke_light_gray",
+    "key": "disableLightGraySmoke",
+    "name": "Light Gray Smoke"
+  },
+  {
+    "gas": "colored_smoke_lime",
+    "key": "disableLimeSmoke",
+    "name": "Lime Smoke"
+  },
+  {
+    "gas": "colored_smoke_magenta",
+    "key": "disableMagentaSmoke",
+    "name": "Magenta Smoke"
+  },
+  {
+    "gas": "colored_smoke_orange",
+    "key": "disableOrangeSmoke",
+    "name": "Orange Smoke"
+  },
+  {
+    "gas": "colored_smoke_pink",
+    "key": "disablePinkSmoke",
+    "name": "Pink Smoke"
+  },
+  {
+    "gas": "colored_smoke_purple",
+    "key": "disablePurpleSmoke",
+    "name": "Purple Smoke"
+  },
+  {
+    "gas": "colored_smoke_red",
+    "key": "disableRedSmoke",
+    "name": "Red Smoke"
+  },
+  {
+    "gas": "colored_smoke_white",
+    "key": "disableWhiteSmoke",
+    "name": "White Smoke"
+  },
+  {
+    "gas": "colored_smoke_yellow",
+    "key": "disableYellowSmoke",
+    "name": "Yellow Smoke"
+  },
+  {
+    "gas": "enlarging_gas",
+    "key": "disableEnlargingGas",
+    "name": "Enlarging Gas"
+  },
+  {
+    "gas": "espresso_cloud",
+    "key": "disableEspressoCloud",
+    "name": "Espresso Cloud"
+  },
+  {
+    "gas": "gravity_gas",
+    "key": "disableGravityGas",
+    "name": "Gravity Gas"
+  },
+  {
+    "gas": "healing_mist",
+    "key": "disableHealingMist",
+    "name": "Healing Mist"
+  },
+  {
+    "gas": "misted_cologne",
+    "key": "disableMistedCologne",
+    "name": "Misted Cologne"
+  },
+  {
+    "gas": "misted_meat",
+    "key": "disableMistedMeat",
+    "name": "Misted Meat"
+  },
+  {
+    "gas": "misted_moonlight",
+    "key": "disableMistedMoonlight",
+    "name": "Misted Moonlight"
+  },
+  {
+    "gas": "misted_sunburst",
+    "key": "disableMistedSunburst",
+    "name": "Misted Sunburst"
+  },
+  {
+    "gas": "misted_tetrodotoxin_i",
+    "key": "disableMistedTetrodotoxinI",
+    "name": "Misted Tetrodotoxin I"
+  },
+  {
+    "gas": "misted_tetrodotoxin_ii",
+    "key": "disableMistedTetrodotoxinII",
+    "name": "Misted Tetrodotoxin II"
+  },
+  {
+    "gas": "misted_tetrodotoxin_iii",
+    "key": "disableMistedDeath",
+    "name": "Misted Death (Tetrodotoxin III)"
+  },
+  {
+    "gas": "mustard_gas",
+    "key": "disableMustardGas",
+    "name": "Mustard Gas"
+  },
+  {
+    "gas": "napalm",
+    "key": "disableNapalm",
+    "name": "Napalm"
+  },
+  {
+    "gas": "null_magic_gas",
+    "key": "disableNullMagicGas",
+    "name": "Null Magic Gas"
+  },
+  {
+    "gas": "poison_i",
+    "key": "disablePoisonI",
+    "name": "Poison I"
+  },
+  {
+    "gas": "poison_ii",
+    "key": "disablePoisonII",
+    "name": "Poison II"
+  },
+  {
+    "gas": "poison_iii",
+    "key": "disablePoisonIII",
+    "name": "Poison III"
+  },
+  {
+    "gas": "pulmonary_agent",
+    "key": "disablePulmonaryAgent",
+    "name": "Pulmonary Agent"
+  },
+  {
+    "gas": "raid_gas",
+    "key": "disableRaidGas",
+    "name": "Raid Gas"
+  },
+  {
+    "gas": "regenerating_mist",
+    "key": "disableRegeneratingMist",
+    "name": "Regenerating Mist"
+  },
+  {
+    "gas": "sarin_gas",
+    "key": "disableSarin",
+    "name": "Sarin"
+  },
+  {
+    "gas": "shrinking_gas",
+    "key": "disableShrinkingGas",
+    "name": "Shrinking Gas"
+  },
+  {
+    "gas": "smoke",
+    "key": "disableSmoke",
+    "name": "Smoke"
+  },
+  {
+    "gas": "soul_ward_gas",
+    "key": "disableSoulWardGas",
+    "name": "Soul Ward Gas"
+  },
+  {
+    "gas": "stun_gas",
+    "key": "disableStunGas",
+    "name": "Stun Gas"
+  },
+  {
+    "gas": "taco_chime_gas",
+    "key": "disableTacoChimeGas",
+    "name": "Taco Chime Gas"
+  },
+  {
+    "gas": "tear_gas",
+    "key": "disableTearGas",
+    "name": "Tear Gas"
+  },
+  {
+    "gas": "void_gas",
+    "key": "disableVoidGas",
+    "name": "Void Gas"
+  },
+  {
+    "gas": "voidrot_gas",
+    "key": "disableVoidrotGas",
+    "name": "Voidrot Gas"
+  }
+]

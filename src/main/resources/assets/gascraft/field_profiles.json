@@ -1,0 +1,82 @@
+[
+  {
+    "gas": "gravity_gas",
+    "expand": 0,
+    "hold": 0,
+    "fade": 0,
+    "contract": 160,
+    "density": 16
+  },
+  {
+    "gas": "misted_sunburst",
+    "expand": 0,
+    "hold": 0,
+    "fade": 160,
+    "contract": 0,
+    "density": 8
+  },
+  {
+    "gas": "soul_ward_gas",
+    "expand": 0,
+    "hold": 120,
+    "fade": 40,
+    "contract": 0,
+    "density": 5
+  },
+  {
+    "gas": "null_magic_gas",
+    "expand": 40,
+    "hold": 0,
+    "fade": 120,
+    "contract": 0,
+    "density": 7
+  },
+  {
+    "gas": "voidrot_gas",
+    "expand": 60,
+    "hold": 0,
+    "fade": 100,
+    "contract": 0,
+    "density": 16
+  },
+  {
+    "gas": "misted_moonlight",
+    "expand": 100,
+    "hold": 0,
+    "fade": 60,
+    "contract": 0,
+    "density": 7
+  },
+  {
+    "gas": "boogie_gas",
+    "expand": 20,
+    "hold": 120,
+    "fade": 20,
+    "contract": 0,
+    "density": 10
+  },
+  {
+    "gas": "espresso_cloud",
+    "expand": 20,
+    "hold": 120,
+    "fade": 20,
+    "contract": 0,
+    "density": 8
+  },
+  {
+    "gas": "chicken_gas",
+    "expand": 100,
+    "hold": 0,
+    "fade": 60,
+    "contract": 0,
+    "density": 8
+  },
+  {
+    "gas": "misted_cologne",
+    "expand": 0,
+    "hold": 120,
+    "fade": 40,
+    "contract": 0,
+    "density": 4
+  }
+]

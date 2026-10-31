@@ -13,11 +13,12 @@ import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 /** A release-time world flash and a separately protected screen flash. */
 public final class GasFlash {
     public static Consumer<Payload> clientHandler = payload -> {};
-    public record Payload(double x, double y, double z, int durationTicks, boolean screen) implements CustomPacketPayload {
+    public record Payload(double x, double y, double z, int durationTicks, boolean screen, int holdTicks) implements CustomPacketPayload {
+        public Payload(double x,double y,double z,int durationTicks,boolean screen){this(x,y,z,durationTicks,screen,0);}
         public static final Type<Payload> TYPE = new Type<>(GasCatalog.id("gas_flash"));
         public static final StreamCodec<RegistryFriendlyByteBuf, Payload> CODEC = StreamCodec.composite(
             ByteBufCodecs.DOUBLE, Payload::x, ByteBufCodecs.DOUBLE, Payload::y, ByteBufCodecs.DOUBLE, Payload::z,
-            ByteBufCodecs.VAR_INT, Payload::durationTicks, ByteBufCodecs.BOOL, Payload::screen, Payload::new);
+            ByteBufCodecs.VAR_INT, Payload::durationTicks, ByteBufCodecs.BOOL, Payload::screen,ByteBufCodecs.VAR_INT,Payload::holdTicks, Payload::new);
         @Override public Type<Payload> type() { return TYPE; }
     }
     public static void registerPayloads(RegisterPayloadHandlersEvent event) {
@@ -30,6 +31,9 @@ public final class GasFlash {
     public static void release(ServerLevel level, GasCloudEntity cloud, int durationTicks) {
         for (var player : level.players()) if (player.distanceToSqr(cloud) <= 256 * 256)
             PacketDistributor.sendToPlayer(player, new Payload(cloud.getX(), cloud.getY(), cloud.getZ(), durationTicks, affectsScreen(player, cloud)));
+    }
+    public static void sunburst(net.minecraft.server.level.ServerPlayer player,GasCloudEntity cloud) {
+        PacketDistributor.sendToPlayer(player,new Payload(cloud.getX(),cloud.getY(),cloud.getZ(),50,true,10));
     }
     private GasFlash() {}
 }

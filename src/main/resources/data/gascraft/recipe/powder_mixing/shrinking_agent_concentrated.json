@@ -1,0 +1,19 @@
+{
+  "type": "gascraft:powder_mixing",
+  "pattern": [
+    "AAA",
+    "AAA",
+    "AAA"
+  ],
+  "key": {
+    "A": {
+      "item": "gascraft:shrinking_agent"
+    }
+  },
+  "result": {
+    "id": "gascraft:shrinking_agent_concentrated",
+    "count": 1
+  },
+  "processing_ticks": 200,
+  "energy_per_operation": 6400
+}

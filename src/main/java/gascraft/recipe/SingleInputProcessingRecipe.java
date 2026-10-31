@@ -46,8 +46,8 @@ public final class SingleInputProcessingRecipe implements Recipe<SingleRecipeInp
     public int processingTicks() { return processingTicks; }
     public int energyPerOperation() { return energyPerOperation; }
     public float experience() { return experience; }
-    @Override public boolean matches(SingleRecipeInput input, Level level) { return ingredient.test(input.item()); }
-    @Override public ItemStack assemble(SingleRecipeInput input, HolderLookup.Provider registries) { return result.copy(); }
+    @Override public boolean matches(SingleRecipeInput input, Level level) { return gascraft.gas.GasChainControls.itemAllowed(result)&&ingredient.test(input.item()); }
+    @Override public ItemStack assemble(SingleRecipeInput input, HolderLookup.Provider registries) { return gascraft.gas.GasChainControls.itemAllowed(result)?result.copy():ItemStack.EMPTY; }
     @Override public ItemStack getResultItem(HolderLookup.Provider registries) { return result.copy(); }
     @Override public boolean canCraftInDimensions(int width, int height) { return width * height >= 1; }
     @Override public NonNullList<Ingredient> getIngredients() { return NonNullList.of(Ingredient.EMPTY, ingredient); }

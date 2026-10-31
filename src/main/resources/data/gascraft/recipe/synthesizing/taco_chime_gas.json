@@ -1,0 +1,15 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "culturaldelights"
+    }
+  ],
+  "type": "gascraft:synthesizing",
+  "gas": "gascraft:taco_chime_gas",
+  "input_gas": "gascraft:smoke",
+  "ingredient": {
+    "item": "gascraft:taco_chime_gas_pellet"
+  },
+  "minimum_tier": "iron"
+}

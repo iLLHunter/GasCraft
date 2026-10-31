@@ -3,6 +3,7 @@
   "gas": "gascraft:misted_tetrodotoxin_i",
   "input_gas": "gascraft:smoke",
   "ingredient": {
-    "item": "gascraft:powdered_tetrodotoxin"
-  }
+    "item": "gascraft:powdered_tetrodotoxin_concentrated"
+  },
+  "minimum_tier": "iron"
 }

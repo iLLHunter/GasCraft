@@ -1,0 +1,12 @@
+{
+  "type": "gascraft:fermenting",
+  "ingredient": {
+    "item": "gascraft:shrinking_base"
+  },
+  "result": {
+    "id": "gascraft:shrinking_agent",
+    "count": 1
+  },
+  "processing_ticks": 24000,
+  "energy_per_operation": 0
+}

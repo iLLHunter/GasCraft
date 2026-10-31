@@ -37,13 +37,17 @@ public final class GasCatalog {
     private static final GasDefinition EMPTY = new GasDefinition(id("empty_contents"), false, 0, 0, List.of());
     public static ResourceLocation id(String path) { return ResourceLocation.fromNamespaceAndPath("gascraft", path); }
     public static GasDefinition gasDefinition(ResourceLocation id) { return GASES.getOrDefault(id, EMPTY); }
-    public static boolean contains(ResourceLocation id) { return id != null && !id.equals(EMPTY.id()) && GASES.containsKey(id); }
+    public static boolean contains(ResourceLocation id) { return id != null && !id.equals(EMPTY.id()) && GASES.containsKey(id) && GasFieldsContent.available(id); }
     public static Collection<GasDefinition> gasDefinitions() { return Collections.unmodifiableCollection(GASES.values()); }
     public static List<BrewingMix> brewingMixes() { return Collections.unmodifiableList(MIXES); }
 
     public static synchronized void initialize() {
         if (!GASES.isEmpty()) return;
-        for (String name : List.of("smoke", "tear_gas", "pulmonary_agent", "mustard_gas", "regenerating_mist", "healing_mist", "raid_gas", "misted_meat", "poison_i", "poison_ii", "poison_iii", "napalm", "stun_gas", "misted_tetrodotoxin_i", "misted_tetrodotoxin_ii", "misted_tetrodotoxin_iii")) {
+        // Void is a release pulse with a two-second visual fade, rather than an eight-second field.
+        var voidJson=readBuiltinDefinition("gases/void_gas.json").getAsJsonObject();
+        GASES.put(id("void_gas"),new GasDefinition(id("void_gas"),false,(int)Long.decode(voidJson.get("color").getAsString()).longValue(),(int)Long.decode(voidJson.get("canisterStripeColor").getAsString()).longValue(),List.of(),"SMOKE",List.of("tooltip.gascraft.void_gas.summary"),false,TimedCloudEffect.parseEffects(voidJson)));
+        for (String name : List.of("smoke", "tear_gas", "pulmonary_agent", "mustard_gas", "regenerating_mist", "healing_mist", "raid_gas", "misted_meat", "poison_i", "poison_ii", "poison_iii", "napalm", "stun_gas", "misted_tetrodotoxin_i", "misted_tetrodotoxin_ii", "misted_tetrodotoxin_iii", "taco_chime_gas", "shrinking_gas", "enlarging_gas")) {
+            if (name.equals("taco_chime_gas") && !gascraft.compat.CulturalDelightsCompat.loaded()) continue;
             JsonObject json = readBuiltinDefinition("gases/" + name + ".json").getAsJsonObject();
             List<AgentDefinition> agents = new ArrayList<>();
             if (json.has("agents")) for (JsonElement element : json.getAsJsonArray("agents")) {
@@ -60,6 +64,11 @@ public final class GasCatalog {
             GASES.put(id(name), new GasDefinition(id(name), smoke, color, canisterStripeColor, List.copyOf(agents), json.has("particleType") ? jsonStringOrEmpty(json, "particleType") : smoke ? "SMOKE" : "GAS", List.copyOf(tooltip), false, TimedCloudEffect.parseEffects(json)));
         }
         GASES.put(id("sarin_gas"), new GasDefinition(id("sarin_gas"), false, 0xffffff, 0xffffff, List.of(parseAgentDefinition("nerve", readBuiltinDefinition("agents/nerve.json").getAsJsonObject(), 0.8F))));
+        for(var profile:GasFieldsContent.PROFILES) {
+            JsonObject json=readBuiltinDefinition("gases/"+profile.gas()+".json").getAsJsonObject();
+            List<String> tooltip=new ArrayList<>();json.getAsJsonArray("tooltipLines").forEach(line->tooltip.add(line.getAsString()));
+            GASES.put(id(profile.gas()),new GasDefinition(id(profile.gas()),false,(int)Long.decode(json.get("color").getAsString()).longValue(),(int)Long.decode(json.get("canisterStripeColor").getAsString()).longValue(),List.of(),"SMOKE",List.copyOf(tooltip),false));
+        }
         for (DyeColor color : DyeColor.values()) {
             ResourceLocation key = id("colored_smoke_" + color.getName());
             GASES.put(key, new GasDefinition(key, true, color.getTextureDiffuseColor(), color.getTextureDiffuseColor(), List.of()));

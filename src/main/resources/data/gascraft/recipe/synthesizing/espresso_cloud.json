@@ -1,0 +1,17 @@
+{
+  "type": "gascraft:synthesizing",
+  "gas": "gascraft:espresso_cloud",
+  "input_gas": "gascraft:smoke",
+  "ingredient": {
+    "item": "gascraft:espresso_pellet"
+  },
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "gascraft:espresso_ingredients"
+      }
+    }
+  ]
+}

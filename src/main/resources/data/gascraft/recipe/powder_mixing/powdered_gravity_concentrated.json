@@ -1,0 +1,25 @@
+{
+  "type": "gascraft:powder_mixing",
+  "pattern": [
+    "OIO",
+    "ICI",
+    "OIO"
+  ],
+  "key": {
+    "O": {
+      "item": "minecraft:obsidian"
+    },
+    "I": {
+      "item": "gascraft:powdered_gravity"
+    },
+    "C": {
+      "item": "minecraft:compass"
+    }
+  },
+  "result": {
+    "id": "gascraft:powdered_gravity_concentrated",
+    "count": 1
+  },
+  "processing_ticks": 200,
+  "energy_per_operation": 6400
+}

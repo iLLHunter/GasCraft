@@ -1,0 +1,11 @@
+{
+  "type": "gascraft:synthesizing",
+  "gas": "gascraft:gravity_gas",
+  "input_gas": "gascraft:smoke",
+  "ingredient": {
+    "item": "gascraft:gravity_pellet"
+  },
+  "minimum_tier": "netherite",
+  "reagent": "nether_star",
+  "reagent_charges": 3
+}

@@ -1,0 +1,20 @@
+{
+  "type": "gascraft:powder_mixing",
+  "pattern": [
+    "IG",
+    "GI"
+  ],
+  "key": {
+    "I": {
+      "tag": "c:dusts/iron"
+    },
+    "G": {
+      "item": "gascraft:powdered_gravel"
+    }
+  },
+  "result": {
+    "id": "gascraft:powdered_gravity"
+  },
+  "processing_ticks": 200,
+  "energy_per_operation": 6400
+}

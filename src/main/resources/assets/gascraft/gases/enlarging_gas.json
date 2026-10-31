@@ -1,0 +1,21 @@
+{
+  "gasType": "GAS",
+  "particleType": "GAS",
+  "color": "0xf49a32",
+  "canisterStripeColor": "0xfff49a32",
+  "agents": [],
+  "tooltipLines": [
+    "tooltip.gascraft.enlarging_gas.summary"
+  ],
+  "timedEffects": [
+    {
+      "delayTicks": 0,
+      "type": "enlarging",
+      "durationTicks": 12000
+    },
+    {
+      "delayTicks": 0,
+      "type": "end"
+    }
+  ]
+}

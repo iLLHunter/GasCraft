@@ -1,0 +1,21 @@
+{
+  "type": "gascraft:powderizing",
+  "ingredient": {
+    "tag": "gascraft:espresso_ingredients"
+  },
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "gascraft:espresso_ingredients"
+      }
+    }
+  ],
+  "result": {
+    "id": "gascraft:powdered_espresso",
+    "count": 1
+  },
+  "processing_ticks": 200,
+  "energy_per_operation": 6400
+}

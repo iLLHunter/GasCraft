@@ -1,0 +1,10 @@
+{
+  "gasType": "GAS",
+  "particleType": "SMOKE",
+  "color": "0xf00b020f",
+  "canisterStripeColor": "0xff0b020f",
+  "agents": [],
+  "tooltipLines": [
+    "tooltip.gascraft.voidrot_gas.summary"
+  ]
+}

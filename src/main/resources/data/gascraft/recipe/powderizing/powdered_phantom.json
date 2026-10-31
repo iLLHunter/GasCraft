@@ -1,0 +1,21 @@
+{
+  "type": "gascraft:powderizing",
+  "ingredient": {
+    "item": "minecraft:phantom_membrane"
+  },
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:nuggets/silver"
+      }
+    }
+  ],
+  "result": {
+    "id": "gascraft:powdered_phantom",
+    "count": 1
+  },
+  "processing_ticks": 200,
+  "energy_per_operation": 6400
+}

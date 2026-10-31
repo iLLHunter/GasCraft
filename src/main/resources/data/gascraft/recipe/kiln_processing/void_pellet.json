@@ -1,0 +1,11 @@
+{
+  "type": "gascraft:kiln_processing",
+  "ingredient": {
+    "item": "gascraft:void_pellet_composite"
+  },
+  "result": {
+    "id": "gascraft:void_pellet"
+  },
+  "processing_ticks": 1200,
+  "energy_per_operation": 38400
+}

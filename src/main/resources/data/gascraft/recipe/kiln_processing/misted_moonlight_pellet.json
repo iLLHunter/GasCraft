@@ -1,0 +1,21 @@
+{
+  "type": "gascraft:kiln_processing",
+  "ingredient": {
+    "item": "gascraft:misted_moonlight_pellet_composite"
+  },
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:nuggets/silver"
+      }
+    }
+  ],
+  "result": {
+    "id": "gascraft:misted_moonlight_pellet",
+    "count": 1
+  },
+  "processing_ticks": 1200,
+  "energy_per_operation": 38400
+}

@@ -1,0 +1,10 @@
+{
+  "gasType": "GAS",
+  "particleType": "SMOKE",
+  "color": "0x7089a8cb",
+  "canisterStripeColor": "0xff89a8cb",
+  "agents": [],
+  "tooltipLines": [
+    "tooltip.gascraft.misted_moonlight.summary"
+  ]
+}

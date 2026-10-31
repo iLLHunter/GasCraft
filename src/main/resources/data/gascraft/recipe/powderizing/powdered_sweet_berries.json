@@ -1,0 +1,12 @@
+{
+  "type": "gascraft:powderizing",
+  "ingredient": {
+    "item": "minecraft:sweet_berries"
+  },
+  "result": {
+    "id": "gascraft:powdered_sweet_berries",
+    "count": 1
+  },
+  "processing_ticks": 200,
+  "energy_per_operation": 6400
+}

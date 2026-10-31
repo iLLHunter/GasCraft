@@ -1,0 +1,12 @@
+{
+  "type": "gascraft:fermenting",
+  "ingredient": {
+    "item": "gascraft:powdered_cologne_base"
+  },
+  "result": {
+    "id": "gascraft:powdered_cologne",
+    "count": 1
+  },
+  "processing_ticks": 24000,
+  "energy_per_operation": 0
+}

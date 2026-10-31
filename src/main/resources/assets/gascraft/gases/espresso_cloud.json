@@ -1,0 +1,10 @@
+{
+  "gasType": "GAS",
+  "particleType": "SMOKE",
+  "color": "0x9074462c",
+  "canisterStripeColor": "0xff74462c",
+  "agents": [],
+  "tooltipLines": [
+    "tooltip.gascraft.espresso_cloud.summary"
+  ]
+}

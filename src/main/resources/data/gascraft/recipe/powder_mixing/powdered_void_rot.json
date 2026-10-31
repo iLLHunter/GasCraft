@@ -1,0 +1,22 @@
+{
+  "type": "gascraft:powder_mixing",
+  "pattern": [
+    "PPP",
+    "PCP",
+    "PPP"
+  ],
+  "key": {
+    "P": {
+      "item": "gascraft:powdered_void"
+    },
+    "C": {
+      "item": "gascraft:powdered_fermented_spider_eye"
+    }
+  },
+  "result": {
+    "id": "gascraft:powdered_void_rot",
+    "count": 1
+  },
+  "processing_ticks": 200,
+  "energy_per_operation": 6400
+}

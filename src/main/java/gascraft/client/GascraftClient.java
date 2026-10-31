@@ -38,11 +38,13 @@ public final class GascraftClient {
         event.enqueueWork(() -> {
             GasCloudEntity.clientParticleSpawner = GasSmokeParticle::emit;
             GasFlash.clientHandler = ClientEffects::flash;
+            GascraftManualItem.clientOpener = ManualBook::open;
             ItemProperties.register(ModContent.CHEMICAL_GRENADE.get(), GasCatalog.id("gas_type"), (stack, level, entity, seed) -> GasContainerItem.containedGas(stack).smoke() ? 1 : 0);
             ItemProperties.register(ModContent.CHEMICAL_GRENADE.get(), GasCatalog.id("pin_removed"), (stack, level, entity, seed) -> stack.getOrDefault(ModContent.PIN_REMOVED, false) || entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1 : 0);
         });
     }
     @SubscribeEvent public static void registerGasContainerColors(RegisterColorHandlersEvent.Item event) {
+        for(var material:GasFieldsContent.MATERIALS) event.register((stack,layer)->layer==0?material.color()|0xff000000:-1,GasFieldsContent.ITEMS.get(material.name()).get());
         var containers = new java.util.ArrayList<net.minecraft.world.item.Item>();
         ModContent.CANISTERS.values().forEach(item -> containers.add(item.get()));
         containers.add(ModContent.CUSTOM_GAS_CANISTER.get());

@@ -1,0 +1,9 @@
+{
+  "type": "gascraft:synthesizing",
+  "gas": "gascraft:chicken_gas",
+  "input_gas": "gascraft:smoke",
+  "ingredient": {
+    "item": "gascraft:chicken_pellet"
+  },
+  "minimum_tier": "iron"
+}

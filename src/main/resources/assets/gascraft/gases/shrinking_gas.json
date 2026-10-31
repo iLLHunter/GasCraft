@@ -1,0 +1,21 @@
+{
+  "gasType": "GAS",
+  "particleType": "GAS",
+  "color": "0x25d9dc",
+  "canisterStripeColor": "0xff25d9dc",
+  "agents": [],
+  "tooltipLines": [
+    "tooltip.gascraft.shrinking_gas.summary"
+  ],
+  "timedEffects": [
+    {
+      "delayTicks": 0,
+      "type": "shrinking",
+      "durationTicks": 12000
+    },
+    {
+      "delayTicks": 0,
+      "type": "end"
+    }
+  ]
+}

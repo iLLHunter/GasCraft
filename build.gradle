@@ -14,13 +14,31 @@ repositories {
     maven { url = 'https://maven.blamejared.com/' }
 }
 dependencies {
+    if (providers.gradleProperty('withEnderIO').isPresent()) {
+        runtimeOnly files('research/test-mods/enderio-8.2.11-beta.jar')
+    }
+    if (providers.gradleProperty('withFieldExtras').isPresent()) {
+        runtimeOnly files(['malum-1.21.1-1.8.2.jar','lodestone-1.21.1-1.8.2.jar','productivetrees-1.21.1-1.0.0.jar','coffee_delight-1.4.1.jar','roasters_delight-1.0.0.1.jar'].collect { "research/ftb-evolution-1.40.1-reference-mods/${it}" })
+    }
+    if (providers.gradleProperty('withFieldMagic').isPresent()) {
+        runtimeOnly files(['ars_nouveau-1.21.1-5.13.0.jar','irons_spellbooks-1.21.1-3.16.2.jar','RootsClassic-1.21.1-1.5.7.jar','forbidden_arcanus-2.6.1.jar','valhelsia_core-neoforge-1.21.1-1.1.5.jar','geckolib-neoforge-1.21.1-4.9.2.jar','irons_lib-1.21.1-2.1.0.jar','player-animation-lib-forge-2.0.4+1.21.1.jar'].collect { "research/ftb-evolution-1.40.1-reference-mods/${it}" })
+    }
+    if (providers.gradleProperty('withFieldIngredients').isPresent()) {
+        runtimeOnly files('research/ftb-evolution-1.40.1-reference-mods/actuallyadditions-1.3.26+mc1.21.1.jar', 'research/ftb-evolution-1.40.1-reference-mods/ImmersiveEngineering-1.21.1-12.4.2-194.jar', 'research/ftb-evolution-1.40.1-reference-mods/RootsClassic-1.21.1-1.5.7.jar')
+    }
+    if (providers.gradleProperty('withCulturalDelights').isPresent()) {
+        runtimeOnly files('research/test-mods/culturaldelights-1.21.1-0.19.5.jar', 'research/test-mods/FarmersDelight-1.21.1-1.3.4.jar')
+    }
     compileOnly 'mekanism:Mekanism:1.21.1-10.7.19.85:api'
     if (providers.gradleProperty('withMekanism').isPresent()) runtimeOnly 'mekanism:Mekanism:1.21.1-10.7.19.85'
     compileOnly 'top.theillusivec4.curios:curios-neoforge:9.5.1+1.21.1:api'
     compileOnly 'mezz.jei:jei-1.21.1-neoforge-api:19.27.0.340'
     if (!providers.gradleProperty('withoutOptionalMods').isPresent()) {
         if (!providers.gradleProperty('withoutCurios').isPresent()) runtimeOnly 'top.theillusivec4.curios:curios-neoforge:9.5.1+1.21.1'
-        runtimeOnly 'mezz.jei:jei-1.21.1-neoforge:19.27.0.340'
+        if (!providers.gradleProperty('withoutJei').isPresent()) {
+            if (providers.gradleProperty('jeiRuntimeJar').isPresent()) runtimeOnly files(providers.gradleProperty('jeiRuntimeJar').get())
+            else runtimeOnly 'mezz.jei:jei-1.21.1-neoforge:19.27.0.340'
+        }
     }
 }
 
@@ -82,7 +100,9 @@ neoForge {
         }
         worldLifecycle {
             client()
-            gameDirectory = file('runs/world-lifecycle')
+            gameDirectory = file("runs/${providers.gradleProperty('worldLifecycleProfile').getOrElse('world-lifecycle')}")
+            systemProperty 'gascraft.singleplayerJei', providers.gradleProperty('singleplayerJei').getOrElse('false')
+            systemProperty 'gascraft.singleplayerCreative', providers.gradleProperty('singleplayerCreative').getOrElse('false')
             sourceSet = sourceSets.worldLifecycleTest
             loadedMods = [mods.gascraft_world_tests]
             programArguments.addAll('--username', 'GasLifecycle', '--width', '960', '--height', '540')
@@ -108,7 +128,7 @@ neoForge {
         }
         gameTestServer {
             type = 'gameTestServer'
-            gameDirectory = file('runs/gameTest')
+            gameDirectory = file(providers.gradleProperty('fieldTestProfile').map { "runs/fields-${it}" }.getOrElse('runs/gameTest'))
             sourceSet = sourceSets.gameTest
             loadedMods = [mods.gascraft, mods.gascraft_tests]
             systemProperty 'neoforge.enabledGameTestNamespaces', 'gascraft'
@@ -120,6 +140,32 @@ neoForge {
             loadedMods = [mods.gascraft, mods.gascraft_tests]
             systemProperty 'gascraft.clientSmoke', 'true'
             programArguments.addAll('--username', 'GascraftSmoke', '--width', '960', '--height', '540')
+        }
+        tacoChimeClientSmoke {
+            client()
+            gameDirectory = file("runs/taco-chime-client-${providers.gradleProperty('tacoChimeProfile').getOrElse('review')}")
+            sourceSet = sourceSets.gameTest
+            loadedMods = [mods.gascraft, mods.gascraft_tests]
+            systemProperty 'gascraft.tacoChimeClientSmoke', 'true'
+            programArguments.addAll('--username', 'TacoChimeReview', '--width', '1280', '--height', '720')
+        }
+        manualReview {
+            client()
+            gameDirectory = file("runs/manual-${providers.gradleProperty('manualProfile').getOrElse('review')}")
+            sourceSet = sourceSets.gameTest
+            loadedMods = [mods.gascraft, mods.gascraft_tests]
+            systemProperty 'gascraft.manualReview', 'true'
+            systemProperty 'gascraft.manualLocales', providers.gradleProperty('manualLocales').getOrElse('')
+            systemProperty 'gascraft.manualTopic', providers.gradleProperty('manualTopic').getOrElse('reagents')
+            programArguments.addAll('--username', 'GasManual', '--width', '1280', '--height', '720')
+        }
+        localizationReview {
+            client()
+            gameDirectory = file("runs/localization-${providers.gradleProperty('localizationProfile').getOrElse('review')}")
+            sourceSet = sourceSets.gameTest
+            loadedMods = [mods.gascraft, mods.gascraft_tests]
+            systemProperty 'gascraft.localizationReview', 'true'
+            programArguments.addAll('--username', 'GasLocalization', '--width', '1280', '--height', '720')
         }
         napalmClientSmoke {
             client()
@@ -204,14 +250,14 @@ tasks.register('stageMachineMultiplayerJar') {
 tasks.register('stageWorldLifecycleJar', Copy) {
     if (!providers.gradleProperty('worldLifecycleJar').isPresent()) dependsOn tasks.named('jar')
     from(providers.gradleProperty('worldLifecycleJar').map { file(it) }.orElse(tasks.named('jar', Jar).flatMap { it.archiveFile }.map { it.asFile }))
-    into('runs/world-lifecycle/mods')
+    into("runs/${providers.gradleProperty('worldLifecycleProfile').getOrElse('world-lifecycle')}/mods")
     rename { 'gascraft-under-test.jar' }
 }
 tasks.named('runWorldLifecycle') { dependsOn 'stageWorldLifecycleJar' }
 
 tasks.register('silenceTestNarrators') {
     doLast {
-        ['runs/client', 'runs/client-smoke', 'runs/napalm-client-smoke', 'runs/progression-client-smoke', 'runs/tetrodotoxin-client-smoke', 'runs/machine-client-smoke', 'runs/jei-machine-smoke', 'runs/client-death-smoke', 'runs/client-gameplay', 'runs/world-lifecycle'].each { directory ->
+        ["runs/taco-chime-client-${providers.gradleProperty('tacoChimeProfile').getOrElse('review')}", 'runs/client', 'runs/client-smoke', "runs/localization-${providers.gradleProperty('localizationProfile').getOrElse('review')}", 'runs/napalm-client-smoke', 'runs/progression-client-smoke', 'runs/tetrodotoxin-client-smoke', 'runs/machine-client-smoke', 'runs/jei-machine-smoke', 'runs/client-death-smoke', 'runs/client-gameplay', "runs/${providers.gradleProperty('worldLifecycleProfile').getOrElse('world-lifecycle')}"].each { directory ->
             def settings = file("${directory}/options.txt")
             settings.parentFile.mkdirs()
             def content = settings.exists() ? settings.getText('UTF-8') : ''
@@ -224,7 +270,7 @@ tasks.register('silenceTestNarrators') {
         }
     }
 }
-['runClient', 'runClientSmoke', 'runNapalmClientSmoke', 'runProgressionClientSmoke', 'runTetrodotoxinClientSmoke', 'runMachineClientSmoke', 'runJeiMachineSmoke', 'runClientDeathSmoke', 'runClientGameplay', 'runWorldLifecycle'].each { name ->
+['runTacoChimeClientSmoke', 'runClient', 'runClientSmoke', 'runLocalizationReview', 'runNapalmClientSmoke', 'runProgressionClientSmoke', 'runTetrodotoxinClientSmoke', 'runMachineClientSmoke', 'runJeiMachineSmoke', 'runClientDeathSmoke', 'runClientGameplay', 'runWorldLifecycle'].each { name ->
     tasks.named(name) { dependsOn 'silenceTestNarrators' }
 }
 

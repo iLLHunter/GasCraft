@@ -1,0 +1,356 @@
+[
+  {
+    "name": "powdered_gravity_concentrated",
+    "gas": "gravity_gas",
+    "color": 1052692,
+    "texture": "field_concentrate_base"
+  },
+  {
+    "name": "gravity_pellet_composite",
+    "gas": "gravity_gas",
+    "color": 1052692,
+    "texture": "field_composite_base"
+  },
+  {
+    "name": "gravity_pellet",
+    "gas": "gravity_gas",
+    "color": 1052692,
+    "texture": "field_pellet_base"
+  },
+  {
+    "name": "powdered_sunshine",
+    "gas": "misted_sunburst",
+    "color": 16777215,
+    "texture": "powdered_sunshine"
+  },
+  {
+    "name": "powdered_sunshine_concentrated",
+    "gas": "misted_sunburst",
+    "color": 16773424,
+    "texture": "field_concentrate_base"
+  },
+  {
+    "name": "sunburst_pellet_composite",
+    "gas": "misted_sunburst",
+    "color": 16773424,
+    "texture": "field_composite_base"
+  },
+  {
+    "name": "sunburst_pellet",
+    "gas": "misted_sunburst",
+    "color": 16773424,
+    "texture": "field_pellet_base"
+  },
+  {
+    "name": "powdered_soul",
+    "gas": "soul_ward_gas",
+    "color": 16777215,
+    "texture": "powdered_soul"
+  },
+  {
+    "name": "powdered_soul_concentrated",
+    "gas": "soul_ward_gas",
+    "color": 3400679,
+    "texture": "field_concentrate_base"
+  },
+  {
+    "name": "soul_ward_pellet_composite",
+    "gas": "soul_ward_gas",
+    "color": 3400679,
+    "texture": "field_composite_base"
+  },
+  {
+    "name": "soul_ward_pellet",
+    "gas": "soul_ward_gas",
+    "color": 3400679,
+    "texture": "field_pellet_base"
+  },
+  {
+    "name": "powdered_null_magic",
+    "gas": "null_magic_gas",
+    "color": 16777215,
+    "texture": "powdered_null_magic"
+  },
+  {
+    "name": "powdered_null_magic_concentrated",
+    "gas": "null_magic_gas",
+    "color": 12961738,
+    "texture": "field_concentrate_base"
+  },
+  {
+    "name": "null_magic_pellet_composite",
+    "gas": "null_magic_gas",
+    "color": 12961738,
+    "texture": "field_composite_base"
+  },
+  {
+    "name": "null_magic_pellet",
+    "gas": "null_magic_gas",
+    "color": 12961738,
+    "texture": "field_pellet_base"
+  },
+  {
+    "name": "powdered_end_stone",
+    "gas": "voidrot_gas",
+    "color": 16777215,
+    "texture": "powdered_end_stone"
+  },
+  {
+    "name": "powdered_ender_pearl",
+    "gas": "voidrot_gas",
+    "color": 16777215,
+    "texture": "powdered_ender_pearl"
+  },
+  {
+    "name": "powdered_void",
+    "gas": "voidrot_gas",
+    "color": 16777215,
+    "texture": "powdered_void"
+  },
+  {
+    "name": "powdered_void_rot",
+    "gas": "voidrot_gas",
+    "color": 16777215,
+    "texture": "powdered_void_rot"
+  },
+  {
+    "name": "voidrot_pellet_composite",
+    "gas": "voidrot_gas",
+    "color": 16777215,
+    "texture": "voidrot_pellet_composite"
+  },
+  {
+    "name": "voidrot_pellet",
+    "gas": "voidrot_gas",
+    "color": 16777215,
+    "texture": "voidrot_pellet"
+  },
+  {
+    "name": "powdered_phantom",
+    "gas": "misted_moonlight",
+    "color": 16777215,
+    "texture": "powdered_phantom"
+  },
+  {
+    "name": "powdered_night",
+    "gas": "misted_moonlight",
+    "color": 16777215,
+    "texture": "powdered_night"
+  },
+  {
+    "name": "powdered_moonlight",
+    "gas": "misted_moonlight",
+    "color": 16777215,
+    "texture": "powdered_moonlight"
+  },
+  {
+    "name": "misted_moonlight_pellet_composite",
+    "gas": "misted_moonlight",
+    "color": 9021643,
+    "texture": "field_composite_base"
+  },
+  {
+    "name": "misted_moonlight_pellet",
+    "gas": "misted_moonlight",
+    "color": 9021643,
+    "texture": "field_pellet_base"
+  },
+  {
+    "name": "powdered_funk",
+    "gas": "boogie_gas",
+    "color": 16777215,
+    "texture": "powdered_funk"
+  },
+  {
+    "name": "powdered_espresso",
+    "gas": "espresso_cloud",
+    "color": 16777215,
+    "texture": "powdered_espresso"
+  },
+  {
+    "name": "powdered_espresso_concentrated",
+    "gas": "espresso_cloud",
+    "color": 7620140,
+    "texture": "field_concentrate_base"
+  },
+  {
+    "name": "espresso_pellet_composite",
+    "gas": "espresso_cloud",
+    "color": 7620140,
+    "texture": "field_composite_base"
+  },
+  {
+    "name": "espresso_pellet",
+    "gas": "espresso_cloud",
+    "color": 7620140,
+    "texture": "field_pellet_base"
+  },
+  {
+    "name": "powdered_chicken",
+    "gas": "chicken_gas",
+    "color": 16777215,
+    "texture": "powdered_chicken"
+  },
+  {
+    "name": "powdered_chicken_concentrated",
+    "gas": "chicken_gas",
+    "color": 16769255,
+    "texture": "field_concentrate_base"
+  },
+  {
+    "name": "chicken_pellet_composite",
+    "gas": "chicken_gas",
+    "color": 16769255,
+    "texture": "field_composite_base"
+  },
+  {
+    "name": "chicken_pellet",
+    "gas": "chicken_gas",
+    "color": 16769255,
+    "texture": "field_pellet_base"
+  },
+  {
+    "name": "powdered_sweet_berries",
+    "gas": "misted_cologne",
+    "color": 16777215,
+    "texture": "powdered_sweet_berries"
+  },
+  {
+    "name": "powdered_cologne_base",
+    "gas": "misted_cologne",
+    "color": 16777215,
+    "texture": "powdered_cologne_base"
+  },
+  {
+    "name": "powdered_cologne",
+    "gas": "misted_cologne",
+    "color": 16777215,
+    "texture": "powdered_cologne"
+  },
+  {
+    "name": "cologne_pellet_composite",
+    "gas": "misted_cologne",
+    "color": 4003930,
+    "texture": "field_composite_base"
+  },
+  {
+    "name": "cologne_pellet",
+    "gas": "misted_cologne",
+    "color": 4003930,
+    "texture": "field_pellet_base"
+  },
+  {
+    "name": "powdered_gravel",
+    "gas": "gravity_gas",
+    "color": 16777215,
+    "texture": "powdered_gravel"
+  },
+  {
+    "name": "powdered_gravity",
+    "gas": "gravity_gas",
+    "color": 16777215,
+    "texture": "powdered_gravity"
+  },
+  {
+    "name": "void_pellet_composite",
+    "gas": "void_gas",
+    "color": 16777215,
+    "texture": "void_pellet_composite"
+  },
+  {
+    "name": "void_pellet",
+    "gas": "void_gas",
+    "color": 16777215,
+    "texture": "void_pellet"
+  },
+  {
+    "name": "powdered_dried_kelp",
+    "gas": "shrinking_gas",
+    "color": 16777215,
+    "texture": "powdered_dried_kelp"
+  },
+  {
+    "name": "powdered_brown_mushroom",
+    "gas": "shrinking_gas",
+    "color": 16777215,
+    "texture": "powdered_brown_mushroom"
+  },
+  {
+    "name": "powdered_red_mushroom",
+    "gas": "enlarging_gas",
+    "color": 16777215,
+    "texture": "powdered_red_mushroom"
+  },
+  {
+    "name": "powdered_turtle_scute",
+    "gas": "enlarging_gas",
+    "color": 16777215,
+    "texture": "powdered_turtle_scute"
+  },
+  {
+    "name": "powdered_golden_carrot",
+    "gas": "enlarging_gas",
+    "color": 16777215,
+    "texture": "powdered_golden_carrot"
+  },
+  {
+    "name": "shrinking_base",
+    "gas": "shrinking_gas",
+    "color": 16777215,
+    "texture": "shrinking_base"
+  },
+  {
+    "name": "shrinking_agent",
+    "gas": "shrinking_gas",
+    "color": 16777215,
+    "texture": "shrinking_agent"
+  },
+  {
+    "name": "shrinking_agent_concentrated",
+    "gas": "shrinking_gas",
+    "color": 16777215,
+    "texture": "shrinking_agent_concentrated"
+  },
+  {
+    "name": "shrinking_agent_pellet_composite",
+    "gas": "shrinking_gas",
+    "color": 16777215,
+    "texture": "shrinking_agent_pellet_composite"
+  },
+  {
+    "name": "shrinking_agent_pellet",
+    "gas": "shrinking_gas",
+    "color": 16777215,
+    "texture": "shrinking_agent_pellet"
+  },
+  {
+    "name": "enlarging_base",
+    "gas": "enlarging_gas",
+    "color": 16777215,
+    "texture": "enlarging_base"
+  },
+  {
+    "name": "enlarging_agent",
+    "gas": "enlarging_gas",
+    "color": 16777215,
+    "texture": "enlarging_agent"
+  },
+  {
+    "name": "enlarging_agent_concentrated",
+    "gas": "enlarging_gas",
+    "color": 16777215,
+    "texture": "enlarging_agent_concentrated"
+  },
+  {
+    "name": "enlarging_agent_pellet_composite",
+    "gas": "enlarging_gas",
+    "color": 16777215,
+    "texture": "enlarging_agent_pellet_composite"
+  },
+  {
+    "name": "enlarging_agent_pellet",
+    "gas": "enlarging_gas",
+    "color": 16777215,
+    "texture": "enlarging_agent_pellet"
+  }
+]

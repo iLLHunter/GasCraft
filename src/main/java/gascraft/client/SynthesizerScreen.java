@@ -18,6 +18,7 @@ public final class SynthesizerScreen extends AbstractContainerScreen<Synthesizer
     private boolean upgradesOpen, sidesOpen;
     private Button speedButton, efficiencyButton, dumpButton, chargeDumpButton;
     private final List<Button> sideButtons = new ArrayList<>();
+    private final ScreenLabels labels = new ScreenLabels();
     public SynthesizerScreen(SynthesizerMenu menu, Inventory inventory, Component title) { super(menu, inventory, title); imageWidth = 176; imageHeight = 222; inventoryLabelY = 132; }
     public boolean upgradesOpen() { return upgradesOpen; } public boolean sidesOpen() { return sidesOpen; }
     private static Component text(String key, Object... args) { return Component.translatable("gui.gascraft.machine." + key, args); }
@@ -75,7 +76,7 @@ public final class SynthesizerScreen extends AbstractContainerScreen<Synthesizer
         inputIcon(graphics, new net.minecraft.world.item.ItemStack(ModContent.POWDERED_SMOKE.get()), 32);
         inputIcon(graphics, new net.minecraft.world.item.ItemStack(ModContent.EMPTY_CANISTER.get()), 72);
         if (menu.kind().hasReagentSlot()) {
-            inputIcon(graphics, new net.minecraft.world.item.ItemStack(menu.reagentType().equals("nether_star") ? net.minecraft.world.item.Items.NETHER_STAR : net.minecraft.world.item.Items.DIAMOND), 112);
+            inputIcon(graphics, new net.minecraft.world.item.ItemStack(SynthesizerMachine.reagentItem(menu.reagentType())), 112);
             graphics.fill(leftPos + 130, topPos + 30, leftPos + 132, topPos + 46, 0xff373737);
             int chargeHeight = (int)Math.min(16L, 16L * menu.charges() / SynthesizerMachine.REAGENT_CHARGES);
             graphics.fill(leftPos + 130, topPos + 46 - chargeHeight, leftPos + 132, topPos + 46, 0xff68a04d);
@@ -94,27 +95,35 @@ public final class SynthesizerScreen extends AbstractContainerScreen<Synthesizer
         graphics.pose().popPose();
     }
     @Override protected void renderLabels(GuiGraphics graphics, int mouseX, int mouseY) {
-        super.renderLabels(graphics, mouseX, mouseY);
-        graphics.drawString(font, text("rate", menu.displayRate()), 7, 124, 0xff404040, false);
+        labels.draw(graphics, font, title, titleLabelX, titleLabelY, menu.kind().maxSpeedUpgrades() > 0 ? 122 : 143);
+        labels.draw(graphics, font, playerInventoryTitle, inventoryLabelX, inventoryLabelY, 140);
+        labels.draw(graphics, font, text("rate", menu.displayRate()), 7, 124, 162);
         if (upgradesOpen) {
-            graphics.drawString(font, text("upgrades"), 190, 8, 0xff404040, false); graphics.drawString(font, text("insert"), 190, 21, 0xff404040, false); graphics.drawString(font, text("return"), 292, 21, 0xff404040, false);
-            graphics.drawString(font, text("speed_count", menu.speed(), menu.kind().maxSpeedUpgrades()), 190, 63, 0xff404040, false);
-            graphics.drawString(font, text("efficiency_count", menu.efficiency(), menu.kind().maxEfficiencyUpgrades()), 190, 85, 0xff404040, false);
+            labels.draw(graphics, font, text("upgrades"), 190, 8, 136); labels.draw(graphics, font, text("insert"), 190, 21, 94); labels.draw(graphics, font, text("return"), 292, 21, 34);
+            labels.draw(graphics, font, text("speed_count", menu.speed(), menu.kind().maxSpeedUpgrades()), 190, 63, 96);
+            labels.draw(graphics, font, text("efficiency_count", menu.efficiency(), menu.kind().maxEfficiencyUpgrades()), 190, 85, 96);
         }
         if (sidesOpen) {
-            graphics.drawString(font, text("sides"), 190, 110, 0xff404040, false);
-            String[] headings = {"FE", "In", "Out", "Can", "Tank", "Reag"};
-            for (int col = 0; col < headings.length; col++) if (col != 5 || menu.kind().hasReagentSlot()) graphics.drawString(font, headings[col], 242 + col * 28, 121, 0xff404040, false);
-            for (var face : MachineSides.Face.values()) graphics.drawString(font, text("face." + face.name().toLowerCase(Locale.ROOT)), 190, 136 + face.ordinal() * 13, 0xff404040, false);
+            labels.draw(graphics, font, text("sides"), 190, 110, 220);
+            Component[] headings = {Component.literal("FE"), text("in"), text("out"), text("heading.canister"), text("heading.tank"), text("heading.reagent")};
+            for (int col = 0; col < headings.length; col++) if (col != 5 || menu.kind().hasReagentSlot()) labels.draw(graphics, font, headings[col], 242 + col * 28, 121, 26);
+            for (var face : MachineSides.Face.values()) labels.draw(graphics, font, text("face." + face.name().toLowerCase(Locale.ROOT)), 190, 136 + face.ordinal() * 13, 48);
         }
     }
     @Override public void render(GuiGraphics graphics, int mouseX, int mouseY, float tick) {
+        labels.begin(mouseX - leftPos, mouseY - topPos);
         speedButton.visible = efficiencyButton.visible = upgradesOpen;
         speedButton.active = menu.canRemove(ProcessingUpgradeItem.Kind.SPEED); efficiencyButton.active = menu.canRemove(ProcessingUpgradeItem.Kind.EFFICIENCY); dumpButton.active = menu.canDump() && !menu.tank().empty();
         if (chargeDumpButton != null) chargeDumpButton.active = menu.canDumpCharges();
         for (var face : MachineSides.Face.values()) for (var route : MachineSides.Route.values()) {
             Button button = sideButtons.get(face.ordinal() * 6 + route.ordinal());
-            button.visible = sidesOpen && (route != MachineSides.Route.REAGENT || menu.kind().hasReagentSlot()); button.setMessage(text(menu.enabled(face, route) ? "on" : "off"));
+            button.visible = sidesOpen && (route != MachineSides.Route.REAGENT || menu.kind().hasReagentSlot());
+            var state = text(menu.enabled(face, route) ? "on" : "off");
+            if (!button.getMessage().equals(state)) {
+                button.setMessage(state);
+                var help = text("route." + route.name().toLowerCase(Locale.ROOT));
+                button.setTooltip(Tooltip.create(font.width(state) > button.getWidth() - 4 ? state.copy().append("\n").append(help) : help));
+            }
         }
         super.render(graphics, mouseX, mouseY, tick);
         if (menu.kind().maxSpeedUpgrades() > 0) MachineScreenIcons.upgrades(graphics, leftPos + 132, topPos + titleLabelY);
@@ -122,12 +131,13 @@ public final class SynthesizerScreen extends AbstractContainerScreen<Synthesizer
         renderTooltip(graphics, mouseX, mouseY);
         if (isHovering(7, 30, 14, 92, mouseX, mouseY)) graphics.renderTooltip(font, List.of(text("energy", menu.energy(), menu.kind().energyCapacity()), text("rate", menu.displayRate()), text("batch_rate", menu.configuredBatchRate())), Optional.empty(), mouseX, mouseY);
         if (menu.kind().hasReagentSlot() && isHovering(130, 30, 2, 16, mouseX, mouseY)) graphics.renderTooltip(font,
-            List.of(new net.minecraft.world.item.ItemStack(menu.reagentType().equals("nether_star") ? net.minecraft.world.item.Items.NETHER_STAR : net.minecraft.world.item.Items.DIAMOND).getHoverName(),
+            List.of(new net.minecraft.world.item.ItemStack(SynthesizerMachine.reagentItem(menu.reagentType())).getHoverName(),
                 text("reagent_charges", menu.charges())), Optional.empty(), mouseX, mouseY);
         if (upgradesOpen && menu.active() && isHovering(193, 31, 18, 18, mouseX, mouseY)) graphics.renderTooltip(font, text("upgrade_lock"), mouseX, mouseY);
         if (isHovering(151, 48, 18, 74, mouseX, mouseY)) graphics.renderTooltip(font, List.of(tankName(), text("tank_amount", menu.tank().amount(), menu.tank().capacity())), Optional.empty(), mouseX, mouseY);
         String[] inputs = {"route.ingredient", "route.canister", "route.reagent"};
         for (int i = 0; i < (menu.kind().hasReagentSlot() ? 3 : 2); i++) if (isHovering(menu.slots.get(i).x, 30, 16, 16, mouseX, mouseY) && !menu.slots.get(i).hasItem()) graphics.renderTooltip(font, text(inputs[i]), mouseX, mouseY);
+        labels.renderTooltip(graphics, font, mouseX, mouseY);
     }
     @Override protected boolean hasClickedOutside(double mouseX, double mouseY, int left, int top, int button) {
         if (upgradesOpen && mouseX >= left + 182 && mouseX < left + 334 && mouseY >= top && mouseY < top + 104) return false;

@@ -18,7 +18,7 @@ public final class GasDefinitionSync {
         public JsonElement serialize(ResourceLocation id, java.lang.reflect.Type type, JsonSerializationContext context) { return new JsonPrimitive(id.toString()); }
         public ResourceLocation deserialize(JsonElement json, java.lang.reflect.Type type, JsonDeserializationContext context) { return ResourceLocation.parse(json.getAsString()); }
     }
-    private record Snapshot(List<GasCatalog.GasDefinition> gases, List<GasCatalog.BrewingMix> mixes) {}
+    private record Snapshot(List<GasCatalog.GasDefinition> gases, List<GasCatalog.BrewingMix> mixes,Boolean useManual,List<ResourceLocation> disabledGases,List<ResourceLocation> disabledMaterials) {}
     public record CatalogPayload(String definitions) implements CustomPacketPayload {
         public static final Type<CatalogPayload> TYPE = new Type<>(GasCatalog.id("gas_definition_snapshot"));
         public static final StreamCodec<RegistryFriendlyByteBuf, CatalogPayload> CODEC = StreamCodec.composite(ByteBufCodecs.stringUtf8(1048576), CatalogPayload::definitions, CatalogPayload::new);
@@ -35,16 +35,20 @@ public final class GasDefinitionSync {
         var registrar = event.registrar("1");
         registrar.playToClient(CatalogPayload.TYPE, CatalogPayload.CODEC, (payload, context) -> context.enqueueWork(() -> {
             Snapshot snapshot = GSON.fromJson(payload.definitions(), Snapshot.class); GasCatalog.replaceGases(snapshot.gases()); GasCatalog.replaceMixes(snapshot.mixes());
+            GasChainControls.acceptClient(snapshot.disabledGases()==null?List.of():snapshot.disabledGases(),snapshot.disabledMaterials()==null?List.of():snapshot.disabledMaterials());
+            gascraft.GascraftConfig.CLIENT_USE_MANUAL=snapshot.useManual()==null?true:snapshot.useManual();
             clientCatalogChanged.run();
         }));
         registrar.playToClient(SicknessPayload.TYPE, SicknessPayload.CODEC, (payload, context) -> context.enqueueWork(() -> clientSickness = payload.effects()));
     }
     public static void sync(OnDatapackSyncEvent event) {
+        if(event.getPlayer()==null)GasChainControls.refreshRecipes(event.getPlayerList().getServer());
         if (event.getPlayer() != null) sendCatalog(event.getPlayer());
         else for (ServerPlayer player : event.getPlayerList().getPlayers()) sendCatalog(player);
     }
     public static void sendCatalog(ServerPlayer player) {
-        PacketDistributor.sendToPlayer(player, new CatalogPayload(GSON.toJson(new Snapshot(List.copyOf(GasCatalog.gasDefinitions()), GasCatalog.brewingMixes()))));
+        var state=GasChainControls.serverState();
+        PacketDistributor.sendToPlayer(player, new CatalogPayload(GSON.toJson(new Snapshot(List.copyOf(GasCatalog.gasDefinitions()), GasCatalog.brewingMixes(),gascraft.GascraftConfig.manualEnabled(),List.copyOf(state.gases()),List.copyOf(state.materials())))));
     }
     private GasDefinitionSync() {}
 }

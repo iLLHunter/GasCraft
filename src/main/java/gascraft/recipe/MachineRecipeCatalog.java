@@ -87,7 +87,7 @@ public final class MachineRecipeCatalog {
                     entries.add(new Entry(generatedId("powderizing", item), kind, recipe, null, null, ItemStack.EMPTY, 0)));
             }
         }
-        return entries.stream().sorted(Comparator.comparing(entry -> entry.id().toString())).toList();
+        return entries.stream().filter(entry->gascraft.gas.GasChainControls.itemAllowed(entry.result(level))).sorted(Comparator.comparing(entry -> entry.id().toString())).toList();
     }
     private static ResourceLocation generatedId(String category, Item item) {
         var id = BuiltInRegistries.ITEM.getKey(item);

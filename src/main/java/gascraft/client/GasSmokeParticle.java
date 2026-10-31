@@ -10,6 +10,8 @@ public final class GasSmokeParticle extends TextureSheetParticle {
     private final float maximumAlpha;
     private float normalAlpha;
     private gascraft.entity.GasCloudEntity sourceCloud;
+    private net.minecraft.world.phys.Vec3 fieldOffset;
+    private int fieldColor;
     public static void emit(gascraft.entity.GasCloudEntity cloud, ColorParticleOption options, double x, double y, double z) {
         var previous = emittingCloud;
         emittingCloud = cloud;
@@ -34,6 +36,28 @@ public final class GasSmokeParticle extends TextureSheetParticle {
         if (age++ >= lifetime) { normalAlpha *= .99F; if (normalAlpha <= .01F) remove(); }
         else normalAlpha = sourceCloud != null && sourceCloud.instantPulse() ? 1 : Math.min(age / 50F * (sourceCloud == null ? maximumAlpha : 1), 1);
         alpha = normalAlpha;
+        if(sourceCloud!=null&&sourceCloud.visualProfile()!=null) {
+            var profile=sourceCloud.visualProfile();
+            if(fieldOffset==null) {
+                fieldOffset=new net.minecraft.world.phys.Vec3(x-sourceCloud.getX(),y-sourceCloud.getY(),z-sourceCloud.getZ()).scale(1/Math.max(.02F,profile.radius(sourceCloud.cloudAge())));
+                lifetime=25;quadSize=profile.gas().equals("misted_cologne")?2:4;
+                if(profile.gas().equals("boogie_gas"))quadSize=random.nextBoolean()?.18F:2F;
+                fieldColor=java.awt.Color.HSBtoRGB(random.nextFloat(),.8F,1F);
+            }
+            float radius=profile.radius(sourceCloud.cloudAge());
+            double angle=profile.gas().equals("voidrot_gas")?(sourceCloud.cloudAge()+age)*.025:0;
+            var offset=fieldOffset.yRot((float)angle).scale(radius);
+            setPos(sourceCloud.getX()+offset.x,sourceCloud.getY()+offset.y,sourceCloud.getZ()+offset.z);
+            int color=sourceCloud.displayColor();
+            if(profile.gas().equals("boogie_gas"))color=(color&0xff000000)|(fieldColor&0xffffff);
+            if(profile.gas().equals("voidrot_gas")&&fieldColor%5==0)color=(color&0xff000000)|0xb500da;
+            if(profile.gas().equals("misted_moonlight"))color=(color&0xff000000)|(age%10<3?0xe8efff:0x9aaecb);
+            setColor((color>>16&255)/255F,(color>>8&255)/255F,(color&255)/255F);
+            alpha=(color>>>24)/255F*sourceCloud.fadeOpacity()*Math.min(1,(lifetime-age)/5F);
+            if(profile.gas().equals("boogie_gas"))alpha*=.35F+.65F*(float)Math.abs(Math.sin(age*.7+fieldColor));
+            if(age>=lifetime)remove();
+            return;
+        }
         if (sourceCloud != null) {
             int color = sourceCloud.displayColor();
             setColor((color >> 16 & 255) / 255F, (color >> 8 & 255) / 255F, (color & 255) / 255F);
@@ -45,6 +69,7 @@ public final class GasSmokeParticle extends TextureSheetParticle {
         if (onGround) { xd *= .7; zd *= .7; }
     }
     @Override public ParticleRenderType getRenderType() { return ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT; }
+    @Override protected int getLightColor(float partialTick) { return sourceCloud!=null&&sourceCloud.fieldProfile()!=null&&sourceCloud.fieldProfile().gas().equals("boogie_gas")?0xf000f0:super.getLightColor(partialTick); }
     public record Provider(SpriteSet sprites) implements ParticleProvider<ColorParticleOption> {
         @Override public Particle createParticle(ColorParticleOption options, ClientLevel level, double x, double y, double z, double dx, double dy, double dz) {
             var particle = new GasSmokeParticle(level, x, y, z, options, sprites);

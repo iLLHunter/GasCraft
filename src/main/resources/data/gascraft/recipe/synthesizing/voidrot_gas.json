@@ -1,0 +1,11 @@
+{
+  "type": "gascraft:synthesizing",
+  "gas": "gascraft:voidrot_gas",
+  "input_gas": "gascraft:smoke",
+  "ingredient": {
+    "item": "gascraft:voidrot_pellet"
+  },
+  "minimum_tier": "netherite",
+  "reagent": "crying_obsidian",
+  "reagent_charges": 3
+}

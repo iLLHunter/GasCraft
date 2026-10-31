@@ -7,12 +7,13 @@ import java.util.*;
 public record TimedCloudEffect(int delayTicks, String type, float damage, int fireTicks, int knockbackLevel, int color, int durationTicks, String potion, int amplifier) {
     public TimedCloudEffect {
         potion = potion == null ? "" : potion;
-        if (delayTicks < 0 || !List.of("detonation", "color", "fade", "instant_potion", "paralysis", "melee_damage", "flash", "end").contains(type)
+        if (delayTicks < 0 || !List.of("detonation", "color", "fade", "instant_potion", "paralysis", "melee_damage", "flash", "end", "teleport", "shrinking", "enlarging").contains(type)
             || !Float.isFinite(damage) || damage < 0 || fireTicks < 0 || knockbackLevel < 0 || durationTicks < 0 || amplifier < 0)
             throw new IllegalArgumentException("Invalid timed cloud effect");
         if (type.equals("fade") && durationTicks == 0) throw new IllegalArgumentException("A cloud fade needs a positive durationTicks");
         if (type.equals("paralysis") && durationTicks == 0) throw new IllegalArgumentException("Paralysis needs a positive durationTicks");
         if (type.equals("flash") && durationTicks == 0) throw new IllegalArgumentException("A flash needs a positive durationTicks");
+        if ((type.equals("shrinking")||type.equals("enlarging"))&&durationTicks==0)throw new IllegalArgumentException("A size pulse needs a positive durationTicks");
         if (type.equals("instant_potion")) net.minecraft.resources.ResourceLocation.parse(potion);
     }
     public TimedCloudEffect(int delayTicks, String type, float damage, int fireTicks, int knockbackLevel, int color, int durationTicks) {

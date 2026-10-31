@@ -1,0 +1,10 @@
+{
+  "gasType": "GAS",
+  "particleType": "SMOKE",
+  "color": "0x90ffe0e7",
+  "canisterStripeColor": "0xffffe0e7",
+  "agents": [],
+  "tooltipLines": [
+    "tooltip.gascraft.chicken_gas.summary"
+  ]
+}

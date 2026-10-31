@@ -1,0 +1,28 @@
+{
+  "type": "gascraft:powder_mixing",
+  "pattern": [
+    "AB",
+    "CD"
+  ],
+  "key": {
+    "A": {
+      "item": "gascraft:powdered_fermented_spider_eye"
+    },
+    "B": {
+      "item": "gascraft:powdered_dried_kelp"
+    },
+    "C": {
+      "item": "gascraft:powdered_brown_mushroom"
+    },
+    "D": {
+      "item": "minecraft:rabbit_hide"
+    }
+  },
+  "result": {
+    "id": "gascraft:shrinking_base",
+    "count": 1
+  },
+  "processing_ticks": 200,
+  "energy_per_operation": 6400,
+  "unordered_square": true
+}

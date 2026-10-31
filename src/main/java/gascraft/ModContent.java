@@ -52,6 +52,7 @@ public final class ModContent {
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<net.minecraft.world.item.component.ItemContainerContents>> LAUNCHER_UPGRADES = COMPONENTS.registerComponentType("launcher_upgrades", builder -> builder.persistent(net.minecraft.world.item.component.ItemContainerContents.CODEC).networkSynchronized(net.minecraft.world.item.component.ItemContainerContents.STREAM_CODEC));
     public static final DeferredItem<Item> FLESH_ASH = ITEMS.registerSimpleItem("flesh_ash");
     public static final DeferredItem<Item> GRENADE_DIFFUSER = ITEMS.registerSimpleItem("grenade_diffuser");
+    public static final DeferredItem<GascraftManualItem> GASCRAFT_MANUAL = ITEMS.registerItem("gascraft_manual", GascraftManualItem::new);
     public static final DeferredItem<Item> GRENADE_SHELL = ITEMS.registerSimpleItem("grenade_shell", new Item.Properties().craftRemainder(Items.GLASS_BOTTLE));
     public static final DeferredItem<GascraftArmorItem> GAS_MASK = ITEMS.registerItem("gas_mask", properties -> new GascraftArmorItem(ArmorItem.Type.HELMET, properties.durability(55), "gas_mask"));
     public static final java.util.Map<ResourceLocation, DeferredItem<GasCanisterItem>> CANISTERS = registerCanisters();
@@ -62,32 +63,40 @@ public final class ModContent {
     public static final DeferredItem<Item> GRENADE_LAUNCHER_BARREL = ITEMS.registerSimpleItem("grenade_launcher_barrel");
     public static final DeferredItem<Item> GRENADE_LAUNCHER_TRIGGER = ITEMS.registerSimpleItem("grenade_launcher_trigger");
     public static final DeferredItem<Item> GRENADE_LAUNCHER_FIRING_MECHANISM = ITEMS.registerSimpleItem("grenade_launcher_firing_mechanism");
-    public static final DeferredItem<Item> GRENADE_HOLDER = ITEMS.registerSimpleItem("grenade_holder", new Item.Properties().stacksTo(1));
+    public static final DeferredItem<GrenadeBeltItem> GRENADE_HOLDER = ITEMS.registerItem("grenade_holder", GrenadeBeltItem::new);
     public static final DeferredItem<Item> POWDERED_SMOKE = ITEMS.registerSimpleItem("powdered_smoke");
+    public static final DeferredItem<TacoChimeGrandeBoxItem> TACO_CHIME_GRANDE_BOX = ITEMS.registerItem("taco_chime_grande_box", TacoChimeGrandeBoxItem::new);
+    public static final DeferredItem<Item> POWDERED_FART_GAS = ITEMS.registerSimpleItem("powdered_fart_gas");
+    public static final DeferredItem<Item> POWDERED_FART_GAS_CONCENTRATED = ITEMS.registerSimpleItem("powdered_fart_gas_concentrated");
+    public static final DeferredItem<Item> TACO_CHIME_GAS_PELLET_COMPOSITE = ITEMS.registerSimpleItem("taco_chime_gas_pellet_composite");
+    public static final DeferredItem<Item> TACO_CHIME_GAS_PELLET = ITEMS.registerSimpleItem("taco_chime_gas_pellet");
     public static final DeferredItem<Item> POWDERED_POISON = ITEMS.registerSimpleItem("powdered_poison");
     public static final DeferredItem<Item> POWDERED_POISON_CONCENTRATED = ITEMS.registerSimpleItem("powdered_poison_concentrated");
     public static final DeferredItem<Item> POISON_PELLET_COMPOSITE = ITEMS.registerSimpleItem("poison_pellet_composite");
     public static final DeferredItem<Item> POISON_PELLET = ITEMS.registerSimpleItem("poison_pellet");
     public static final DeferredItem<Item> POWDERED_GLISTERING_MELON = ITEMS.registerSimpleItem("powdered_glistering_melon");
     public static final DeferredItem<Item> POWDERED_GLISTERING_MELON_CONCENTRATED = ITEMS.registerSimpleItem("powdered_glistering_melon_concentrated");
-    public static final DeferredItem<Item> HEALING_MIST_PELLET_COMPOSITE = ITEMS.registerSimpleItem("healing_mist_pellet_composite");
-    public static final DeferredItem<Item> HEALING_PELLET = ITEMS.registerSimpleItem("healing_pellet");
+    public static final DeferredItem<Item> HEALING_AGENT_PELLET_COMPOSITE = ITEMS.registerSimpleItem("healing_agent_pellet_composite");
+    public static final DeferredItem<Item> HEALING_AGENT_PELLET = ITEMS.registerSimpleItem("healing_agent_pellet");
     public static final DeferredItem<Item> TRACKING_POWDER = ITEMS.registerSimpleItem("tracking_powder");
     public static final DeferredItem<Item> POWDERED_TETRODOTOXIN = ITEMS.registerSimpleItem("powdered_tetrodotoxin");
     public static final DeferredItem<Item> POWDERED_TETRODOTOXIN_CONCENTRATED = ITEMS.registerSimpleItem("powdered_tetrodotoxin_concentrated");
     public static final DeferredItem<Item> TETRODOTOXIN_PELLET_COMPOSITE = ITEMS.registerSimpleItem("tetrodotoxin_pellet_composite");
     public static final DeferredItem<Item> TETRODOTOXIN_PELLET = ITEMS.registerSimpleItem("tetrodotoxin_pellet");
+    public static final DeferredItem<Item> MISTED_DEATH_PELLET_COMPOSITE = ITEMS.registerSimpleItem("misted_death_pellet_composite");
+    public static final DeferredItem<Item> MISTED_DEATH_PELLET = ITEMS.registerSimpleItem("misted_death_pellet");
     public static final DeferredItem<Item> NAPALM = ITEMS.registerSimpleItem("napalm");
     public static final DeferredItem<Item> REGENERATION_AGENT = ITEMS.registerSimpleItem("regeneration_agent");
     public static final DeferredItem<Item> REGENERATION_AGENT_CONCENTRATED = ITEMS.registerSimpleItem("regeneration_agent_concentrated");
     public static final DeferredItem<Item> REGENERATION_AGENT_PELLET_COMPOSITE = ITEMS.registerSimpleItem("regeneration_agent_pellet_composite");
     public static final DeferredItem<Item> REGENERATION_AGENT_PELLET = ITEMS.registerSimpleItem("regeneration_agent_pellet");
     public static final DeferredItem<Item> LACHRYMATOR_AGENT = ITEMS.registerSimpleItem("lachrymator_agent");
+    public static final DeferredItem<Item> POWDERED_FERMENTED_SPIDER_EYE = ITEMS.registerSimpleItem("powdered_fermented_spider_eye");
     public static final DeferredItem<Item> POWDERED_PROTEIN = ITEMS.registerSimpleItem("powdered_protein");
     public static final DeferredItem<Item> TOXIC_BINDER = ITEMS.registerSimpleItem("toxic_binder");
     public static final DeferredItem<Item> COMPOSITE_BINDER = ITEMS.registerSimpleItem("composite_binder");
     public static final DeferredItem<Item> FERMENTED_VEGETATION = ITEMS.registerSimpleItem("fermented_vegetation");
-    public static final DeferredItem<Item> EMPTY_CANISTER = ITEMS.registerSimpleItem("empty_canister", new Item.Properties().stacksTo(64));
+    public static final DeferredItem<Item> EMPTY_CANISTER = ITEMS.registerItem("empty_canister", properties -> new NonEnchantableItem(properties.stacksTo(64)));
     public static final DeferredItem<ProcessingUpgradeItem> PROCESSING_SPEED_UPGRADE = ITEMS.registerItem("processing_speed_upgrade", properties -> new ProcessingUpgradeItem(ProcessingUpgradeItem.Kind.SPEED, properties));
     public static final DeferredItem<ProcessingUpgradeItem> PROCESSING_EFFICIENCY_UPGRADE = ITEMS.registerItem("processing_efficiency_upgrade", properties -> new ProcessingUpgradeItem(ProcessingUpgradeItem.Kind.EFFICIENCY, properties));
     public static final DeferredItem<Item> SULFUR = ITEMS.registerSimpleItem("sulfur");
@@ -102,16 +111,24 @@ public final class ModContent {
     public static final DeferredHolder<RecipeSerializer<?>, SimpleCraftingRecipeSerializer<GasContainerCraftingRecipe>> GAS_CONTAINER_CRAFTING = SERIALIZERS.register("gas_container_crafting", () -> new SimpleCraftingRecipeSerializer<>(GasContainerCraftingRecipe::new));
     public static final DeferredHolder<MobEffect, MobEffect> CHEMICAL_EYE_IRRITATION = EFFECTS.register("chemical_eye_irritation", () -> new GasSicknessEffect(0xaacccc));
     public static final DeferredHolder<MobEffect, MobEffect> NERVE_AGENT_EXPOSURE = EFFECTS.register("nerve_agent_exposure", () -> new GasSicknessEffect(0xeeeeee));
+    public static final DeferredHolder<MobEffect, MobEffect> SOUL_WARD = EFFECTS.register("soul_ward", () -> new gascraft.gas.GasFieldIndicator(true,0x33e3e7));
+    public static final DeferredHolder<MobEffect, MobEffect> VULNERABILITY = EFFECTS.register("vulnerability", () -> new gascraft.gas.GasFieldIndicator(false,0x9b55ce));
+    public static final DeferredHolder<MobEffect, MobEffect> NULL_MAGIC = EFFECTS.register("null_magic", () -> new gascraft.gas.GasFieldIndicator(false,0xbebebe));
+    public static final DeferredHolder<MobEffect, MobEffect> VOIDROT = EFFECTS.register("voidrot", () -> new gascraft.gas.GasFieldIndicator(false,0xad00cd));
+    public static final DeferredHolder<MobEffect, MobEffect> SHRINKING = EFFECTS.register("shrinking", () -> new GasSicknessEffect(0x25d9dc));
+    public static final DeferredHolder<MobEffect, MobEffect> ENLARGING = EFFECTS.register("enlarging", () -> new gascraft.gas.GasFieldIndicator(true,0xf49a32));
     static {
         TABS.register("gascraft", () -> CreativeModeTab.builder().title(Component.translatable("item_group.gascraft")).icon(() -> new ItemStack(CHEMICAL_GRENADE.get())).displayItems((parameters, output) -> {
-            ITEMS.getEntries().forEach(item -> { if (!(item.get() instanceof GasCanisterItem) && item.get() != CHEMICAL_GRENADE.get() && (item.get()!=GRENADE_HOLDER.get() || net.neoforged.fml.ModList.get().isLoaded("curios"))) output.accept(item.get()); });
+            ITEMS.getEntries().forEach(item -> { if (!(item.get() instanceof GasCanisterItem) && item.get() != CHEMICAL_GRENADE.get() && !gascraft.gas.GasFieldsContent.hiddenForClient(new ItemStack(item.get())) && (item.get()!=GRENADE_HOLDER.get() || net.neoforged.fml.ModList.get().isLoaded("curios"))) output.accept(item.get()); });
             for (GasCatalog.GasDefinition gas : GasCatalog.gasDefinitions()) {
+                if (!gascraft.gas.GasFieldsContent.available(gas.id())) continue;
                 output.accept(GasCanisterItem.createFilledCanister(gas.id()));
                 output.accept(GasContainerItem.createFilledContainer(CHEMICAL_GRENADE.get(), gas.id()));
             }
         }).build());
     }
     public static void register(IEventBus bus) {
+        gascraft.gas.GasFieldsContent.register(ITEMS);
         COMPONENTS.register(bus); ATTRIBUTES.register(bus); ARMOR_MATERIALS.register(bus); ITEMS.register(bus); ENTITIES.register(bus); SERIALIZERS.register(bus); MENUS.register(bus); EFFECTS.register(bus); PARTICLES.register(bus); TABS.register(bus);
         bus.addListener((net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent event) -> event.registerItem(
             net.neoforged.neoforge.capabilities.Capabilities.EnergyStorage.ITEM,
@@ -130,6 +147,7 @@ public final class ModContent {
         event.enqueueWork(() -> net.neoforged.neoforge.common.NeoForge.EVENT_BUS.post(new gascraft.api.event.GasAgentRegistrationEvent()));
         event.enqueueWork(gascraft.gas.GasDefinitionLoader::initialize);
         event.enqueueWork(gascraft.compat.AccessoryCompat::initialize);
+        event.enqueueWork(gascraft.compat.GasMagicCompat::initialize);
         event.enqueueWork(() -> net.minecraft.world.level.block.DispenserBlock.registerBehavior(CHEMICAL_GRENADE.get(), new ProjectileDispenseBehavior(CHEMICAL_GRENADE.get()) {
             @Override public ItemStack execute(net.minecraft.core.dispenser.BlockSource source, ItemStack stack) {
                 return GasContainerItem.hasContents(stack) ? super.execute(source, stack) : stack;
@@ -138,6 +156,11 @@ public final class ModContent {
     }
     private static java.util.Map<ResourceLocation, DeferredItem<GasCanisterItem>> registerCanisters() {
         var items = new java.util.LinkedHashMap<ResourceLocation, DeferredItem<GasCanisterItem>>();
+        for(var profile : gascraft.gas.GasFieldsContent.PROFILES) registerCanister(items, profile.gas());
+        registerCanister(items, "taco_chime_gas");
+        registerCanister(items, "void_gas");
+        registerCanister(items, "shrinking_gas");
+        registerCanister(items, "enlarging_gas");
         for (String name : java.util.List.of("smoke", "tear_gas", "pulmonary_agent", "mustard_gas", "regenerating_mist", "healing_mist", "raid_gas", "misted_meat", "sarin_gas", "poison_i", "poison_ii", "poison_iii", "napalm", "stun_gas", "misted_tetrodotoxin_i", "misted_tetrodotoxin_ii", "misted_tetrodotoxin_iii")) registerCanister(items, name);
         for (DyeColor color : DyeColor.values()) registerCanister(items, "colored_smoke_" + color.getName());
         return java.util.Collections.unmodifiableMap(items);

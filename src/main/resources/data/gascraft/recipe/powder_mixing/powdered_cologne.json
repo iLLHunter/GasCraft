@@ -1,0 +1,22 @@
+{
+  "type": "gascraft:powder_mixing",
+  "pattern": [
+    "PPP",
+    "PCP",
+    "PPP"
+  ],
+  "key": {
+    "P": {
+      "item": "gascraft:powdered_sweet_berries"
+    },
+    "C": {
+      "item": "minecraft:honey_bottle"
+    }
+  },
+  "result": {
+    "id": "gascraft:powdered_cologne_base",
+    "count": 1
+  },
+  "processing_ticks": 200,
+  "energy_per_operation": 6400
+}

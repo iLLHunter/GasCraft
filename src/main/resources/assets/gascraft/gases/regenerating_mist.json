@@ -6,5 +6,6 @@
       "agent": "gascraft:heal",
       "potency": 1.0
     }
-  ]
+  ],
+  "timedEffects": [{"delayTicks": 400, "type": "end"}]
 }

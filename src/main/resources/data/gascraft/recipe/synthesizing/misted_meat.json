@@ -1,0 +1,17 @@
+{
+  "type": "gascraft:synthesizing",
+  "gas": "gascraft:misted_meat",
+  "input": {
+    "item": "gascraft:empty_canister"
+  },
+  "tank": {
+    "type": "fluid",
+    "id": "minecraft:water",
+    "amount": 3000
+  },
+  "ingredient": {
+    "item": "gascraft:powdered_protein"
+  },
+  "minimum_tier": "stone",
+  "reagent_charges": 0
+}

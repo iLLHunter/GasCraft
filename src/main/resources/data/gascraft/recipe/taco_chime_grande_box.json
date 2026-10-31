@@ -1,0 +1,12 @@
+{
+  "neoforge:conditions": [{"type": "neoforge:mod_loaded", "modid": "culturaldelights"}],
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {"item": "culturaldelights:beef_burrito"},
+    {"item": "culturaldelights:chicken_taco"},
+    {"item": "culturaldelights:fish_taco"},
+    {"item": "culturaldelights:pork_wrap"}
+  ],
+  "result": {"id": "gascraft:taco_chime_grande_box", "count": 1}
+}

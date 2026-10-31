@@ -18,6 +18,7 @@ import net.neoforged.neoforge.items.*;
 /** Groups of three staged canisters share inputs while reserving resources for every paid operation. */
 public final class SynthesizerMachine {
     public static final int REAGENT_CHARGES = 12;
+    private static final List<String> REAGENT_TYPES = List.of("diamond", "nether_star", "ghast_tear", "crying_obsidian", "eye_of_ender", "shulker_shell");
     public static final int INGREDIENT = 0, CANISTER = 1, REAGENT = 2, WORKING = 3;
     private final MachineBlockEntity owner;
     private final ItemStackHandler inventory;
@@ -37,7 +38,7 @@ public final class SynthesizerMachine {
             @Override public boolean isItemValid(int slot, ItemStack stack) {
                 if (stack.isEmpty()) return false;
                 if (slot == INGREDIENT) return active() ? sameIngredient(stack) : recipes().stream().anyMatch(recipe -> recipe.tierAllows(owner.kind()) && recipe.ingredient().test(stack));
-                if (slot == REAGENT) return owner.kind().hasReagentSlot() && (diamond(stack) || stack.is(Items.NETHER_STAR))
+                if (slot == REAGENT) return owner.kind().hasReagentSlot() && REAGENT_TYPES.stream().anyMatch(type -> reagentMatches(type, stack))
                     && (charges == 0 || reagentMatches(reagentType, stack));
                 if (!canister(stack)) return false;
                 if (slot == CANISTER) return true;
@@ -57,8 +58,8 @@ public final class SynthesizerMachine {
     public String reagentType() {
         if (charges > 0) return reagentType;
         ItemStack stack = inventory.getStackInSlot(REAGENT);
-        if (!stack.isEmpty()) return stack.is(Items.NETHER_STAR) ? "nether_star" : "diamond";
-        return recipes().stream().filter(recipe -> recipe.reagentCharges() > 0 && recipe.ingredient().test(inventory.getStackInSlot(INGREDIENT)))
+        if (!stack.isEmpty()) return REAGENT_TYPES.stream().filter(type -> reagentMatches(type, stack)).findFirst().orElse("diamond");
+        return recipes().stream().filter(recipe -> recipe.reagentCharges() > 0 && recipe.ingredientMatches(inventory.getStackInSlot(INGREDIENT)))
             .map(SynthesizingRecipe::reagent).findFirst().orElse("diamond");
     }
     public boolean canDumpCharges() { return charges > 0 && reservedCharges() == 0; }
@@ -73,7 +74,7 @@ public final class SynthesizerMachine {
     public int activeMask() { int mask = 0; for (int i = 0; i < groups(); i++) if (batches[i] != null) mask |= 1 << i; return mask; }
     public int finishedMask() { int mask = 0; for (int i = 0; i < groups(); i++) if (finished[i]) mask |= 1 << i; return mask; }
     public int energyPerTick() { return Arrays.stream(batches).filter(Objects::nonNull).mapToInt(work -> work.rate).sum(); }
-    public int reservedIngredients() { return (int)Arrays.stream(batches).filter(Objects::nonNull).count(); }
+    public int reservedIngredients() { return (int)Arrays.stream(batches).filter(Objects::nonNull).filter(w->!w.ingredient.isEmpty()).count(); }
     public int reservedTank() { return Arrays.stream(batches).filter(Objects::nonNull).mapToInt(work -> work.tankAmount).sum(); }
     public int reservedCharges() { return Arrays.stream(batches).filter(Objects::nonNull).mapToInt(work -> work.charges).sum(); }
     public boolean locked(int slot) {
@@ -83,9 +84,24 @@ public final class SynthesizerMachine {
     }
     public static boolean diamond(ItemStack stack) { return stack.is(Items.DIAMOND)
         || stack.is(TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("c", "dusts/diamond"))); }
-    public static boolean reagentMatches(String type, ItemStack stack) { return type.equals("nether_star") ? stack.is(Items.NETHER_STAR) : diamond(stack); }
+    public static boolean validReagentType(String type) { return REAGENT_TYPES.contains(type); }
+    public static int reagentTypeId(String type) { return Math.max(0, REAGENT_TYPES.indexOf(type)); }
+    public static String reagentTypeFromId(int id) { return REAGENT_TYPES.get(id >= 0 && id < REAGENT_TYPES.size() ? id : 0); }
+    public static Item reagentItem(String type) {
+        return switch (type) {
+            case "nether_star" -> Items.NETHER_STAR;
+            case "ghast_tear" -> Items.GHAST_TEAR;
+            case "crying_obsidian" -> Items.CRYING_OBSIDIAN;
+            case "eye_of_ender" -> Items.ENDER_EYE;
+            case "shulker_shell" -> Items.SHULKER_SHELL;
+            default -> Items.DIAMOND;
+        };
+    }
+    public static boolean reagentMatches(String type, ItemStack stack) {
+        return validReagentType(type) && (type.equals("diamond") ? diamond(stack) : stack.is(reagentItem(type)));
+    }
     public static List<ItemStack> reagentItems(String type) {
-        if (type.equals("nether_star")) return List.of(new ItemStack(Items.NETHER_STAR));
+        if (!type.equals("diamond")) return validReagentType(type) ? List.of(new ItemStack(reagentItem(type))) : List.of();
         var items = new ArrayList<ItemStack>(); items.add(new ItemStack(Items.DIAMOND));
         Arrays.stream(net.minecraft.world.item.crafting.Ingredient.of(TagKey.create(Registries.ITEM,
             ResourceLocation.fromNamespaceAndPath("c", "dusts/diamond"))).getItems()).filter(SynthesizerMachine::diamond).forEach(items::add);
@@ -138,7 +154,7 @@ public final class SynthesizerMachine {
         var input = new SynthesizingRecipe.Input(groupItems(group), inventory.getStackInSlot(INGREDIENT));
         for (var recipe : recipes) {
             if (!recipe.tierAllows(owner.kind()) || !recipe.matches(input, owner.getLevel()) || !recipe.tank().matches(owner.tank())) continue;
-            if (input.ingredient().getCount() <= reservedIngredients() || owner.tank().amount() - reservedTank() < recipe.tank().amount()) continue;
+            if (recipe.requiresIngredient()&&input.ingredient().getCount() <= reservedIngredients() || owner.tank().amount() - reservedTank() < recipe.tank().amount()) continue;
             if (recipe.reagentCharges() > 0 && !canUseReagent(recipe.reagent())) continue;
             int needed = Math.max(0, recipe.reagentCharges() - (charges - reservedCharges()));
             int reagents = (int)((needed + (long)REAGENT_CHARGES - 1) / REAGENT_CHARGES);
@@ -159,6 +175,7 @@ public final class SynthesizerMachine {
         return charges >= reservedCharges() && (work.charges == 0 || reagentType.equals(work.reagent));
     }
     public void tick() {
+        for(int group=0;group<groups();group++)if(batches[group]!=null&&!gascraft.gas.GasChainControls.itemAllowed(batches[group].result)){batches[group]=null;owner.setChanged();}
         stage();
         List<SynthesizingRecipe> recipes = recipes();
         boolean running = false;
@@ -187,10 +204,12 @@ public final class SynthesizerMachine {
     private void complete(int group, Work work) {
         internalChange = true;
         try {
-            ItemStack input = inventory.getStackInSlot(INGREDIENT).copy(); input.shrink(1);
-            ItemStack remainder = work.ingredient.getCraftingRemainingItem();
-            if (!remainder.isEmpty()) input = input.isEmpty() ? remainder : input.copyWithCount(input.getCount() + remainder.getCount());
-            inventory.setStackInSlot(INGREDIENT, input);
+            if (!work.ingredient.isEmpty()) {
+                ItemStack input = inventory.getStackInSlot(INGREDIENT).copy(); input.shrink(1);
+                ItemStack remainder = work.ingredient.getCraftingRemainingItem();
+                if (!remainder.isEmpty()) input = input.isEmpty() ? remainder : input.copyWithCount(input.getCount() + remainder.getCount());
+                inventory.setStackInSlot(INGREDIENT, input);
+            }
             charges -= work.charges;
             batches[group] = null; finished[group] = true;
             for (int i = 0; i < 3; i++) inventory.setStackInSlot(WORKING + group * 3 + i, work.result.copy());
@@ -222,7 +241,7 @@ public final class SynthesizerMachine {
     }
     public void load(HolderLookup.Provider registries, CompoundTag tag) {
         inventory.deserializeNBT(registries, tag.getCompound("inventory")); charges = Math.max(0, tag.getInt("charges"));
-        reagentType = tag.getString("reagent_type").equals("nether_star") ? "nether_star" : "diamond";
+        reagentType = validReagentType(tag.getString("reagent_type")) ? tag.getString("reagent_type") : "diamond";
         ListTag work = tag.getList("batches", Tag.TAG_COMPOUND); byte[] outputs = tag.getByteArray("finished");
         for (int group = 0; group < groups(); group++) {
             batches[group] = group < work.size() ? Work.load(registries, work.getCompound(group)) : null;
@@ -245,6 +264,7 @@ public final class SynthesizerMachine {
         private CompoundTag save(HolderLookup.Provider registries) {
             CompoundTag tag = new CompoundTag(); ListTag bases = new ListTag(); canisters.forEach(stack -> bases.add(stack.saveOptional(registries))); tag.put("canisters", bases);
             tag.put("ingredient", ingredient.saveOptional(registries)); tag.put("result", result.saveOptional(registries));
+            tag.putBoolean("requires_ingredient",!ingredient.isEmpty());
             tag.putInt("tank_amount", tankAmount); tag.put("fluid", fluid.saveOptional(registries)); if (chemical != null) tag.putString("chemical", chemical.toString());
             tag.putString("reagent", reagent);
             tag.putInt("charges", charges); tag.putInt("ticks", ticks); tag.putInt("rate", rate); tag.putInt("progress", progress); return tag;
@@ -252,11 +272,11 @@ public final class SynthesizerMachine {
         private static Work load(HolderLookup.Provider registries, CompoundTag tag) {
             ListTag bases = tag.getList("canisters", Tag.TAG_COMPOUND);
             ItemStack input = ItemStack.parseOptional(registries, tag.getCompound("ingredient")), output = ItemStack.parseOptional(registries, tag.getCompound("result"));
-            if (bases.size() != 3 || input.isEmpty() || output.isEmpty() || tag.getInt("ticks") < 1 || tag.getInt("rate") < 1) return null;
+            if (bases.size() != 3 || input.isEmpty()&&(!tag.contains("requires_ingredient",Tag.TAG_BYTE)||tag.getBoolean("requires_ingredient")) || output.isEmpty() || tag.getInt("ticks") < 1 || tag.getInt("rate") < 1) return null;
             List<ItemStack> canisters = new ArrayList<>(); for (int i = 0; i < 3; i++) canisters.add(ItemStack.parseOptional(registries, bases.getCompound(i)));
             Work work = new Work(canisters, input, output, Math.max(0, tag.getInt("tank_amount")), FluidStack.parseOptional(registries, tag.getCompound("fluid")),
                 tag.contains("chemical", Tag.TAG_STRING) ? ResourceLocation.tryParse(tag.getString("chemical")) : null, Math.max(0, tag.getInt("charges")),
-                tag.getString("reagent").equals("nether_star") ? "nether_star" : "diamond", tag.getInt("ticks"), tag.getInt("rate"));
+                validReagentType(tag.getString("reagent")) ? tag.getString("reagent") : "diamond", tag.getInt("ticks"), tag.getInt("rate"));
             work.progress = Math.clamp(tag.getInt("progress"), 0, work.ticks - 1); return work;
         }
     }

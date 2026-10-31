@@ -1,0 +1,21 @@
+{
+  "gasType": "GAS",
+  "particleType": "SMOKE",
+  "color": "0xf00b020f",
+  "canisterStripeColor": "0xff0b020f",
+  "agents": [],
+  "tooltipLines": [
+    "tooltip.gascraft.void_gas.summary"
+  ],
+  "timedEffects": [
+    {
+      "delayTicks": 0,
+      "type": "teleport"
+    },
+    {
+      "delayTicks": 0,
+      "type": "fade",
+      "durationTicks": 40
+    }
+  ]
+}

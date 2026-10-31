@@ -17,6 +17,7 @@ import net.minecraft.world.entity.player.Inventory;
 public final class ProcessingMachineScreen extends AbstractContainerScreen<ProcessingMachineMenu> {
     private Button speedButton, efficiencyButton, clearButton;
     private final List<Button> sideButtons = new ArrayList<>();
+    private final ScreenLabels labels = new ScreenLabels();
     private boolean upgradesOpen, sidesOpen;
     public boolean upgradesOpen() { return upgradesOpen; }
     public boolean sidesOpen() { return sidesOpen; }
@@ -45,6 +46,7 @@ public final class ProcessingMachineScreen extends AbstractContainerScreen<Proce
         efficiencyButton.setTooltip(Tooltip.create(text("return_efficiency")));
         if (menu.kind() == MachineKind.POWDER_MIXER)
             clearButton = addRenderableWidget(Button.builder(text("clear_filters"), button -> send(2)).bounds(leftPos + 58, topPos + 94, 86, 17).build());
+        if (clearButton != null) clearButton.setTooltip(Tooltip.create(text("clear_filters")));
         for (var face : MachineSides.Face.values()) for (int col = 0; col < 3; col++) {
             var route = MachineSides.Route.values()[col];
             Button button = addRenderableWidget(Button.builder(Component.empty(), pressed -> send(ProcessingMachineMenu.sideButton(face, route)))
@@ -87,35 +89,43 @@ public final class ProcessingMachineScreen extends AbstractContainerScreen<Proce
         graphics.fill(leftPos + x, topPos + 53, leftPos + x + width, topPos + 61, 0xff68a04d);
     }
     @Override protected void renderLabels(GuiGraphics graphics, int mouseX, int mouseY) {
-        super.renderLabels(graphics, mouseX, mouseY);
+        labels.draw(graphics, font, title, titleLabelX, titleLabelY, menu.kind().maxSpeedUpgrades() > 0 || menu.kind().maxEfficiencyUpgrades() > 0 ? 122 : 143);
+        labels.draw(graphics, font, playerInventoryTitle, inventoryLabelX, inventoryLabelY, 160);
         if (upgradesOpen) {
-        graphics.drawString(font, text("upgrades"), 190, 8, 0xff404040, false);
-        graphics.drawString(font, text("insert"), 190, 21, 0xff404040, false);
-        graphics.drawString(font, text("return"), 292, 21, 0xff404040, false);
-        graphics.drawString(font, text("speed_count", menu.speed(), menu.kind().maxSpeedUpgrades()), 190, 63, 0xff404040, false);
-        graphics.drawString(font, text("efficiency_count", menu.efficiency(), menu.kind().maxEfficiencyUpgrades()), 190, 85, 0xff404040, false);
+        labels.draw(graphics, font, text("upgrades"), 190, 8, 136);
+        labels.draw(graphics, font, text("insert"), 190, 21, 94);
+        labels.draw(graphics, font, text("return"), 292, 21, 34);
+        labels.draw(graphics, font, text("speed_count", menu.speed(), menu.kind().maxSpeedUpgrades()), 190, 63, 96);
+        labels.draw(graphics, font, text("efficiency_count", menu.efficiency(), menu.kind().maxEfficiencyUpgrades()), 190, 85, 96);
         }
         if (sidesOpen) {
-        graphics.drawString(font, text("sides"), 190, 110, 0xff404040, false);
+        labels.draw(graphics, font, text("sides"), 190, 110, 136);
         if (menu.kind() != MachineKind.FERMENTER) graphics.drawString(font, "FE", 246, 121, 0xff404040, false);
-        graphics.drawString(font, text("in"), 274, 121, 0xff404040, false);
-        graphics.drawString(font, text("out"), 300, 121, 0xff404040, false);
-        for (var face : MachineSides.Face.values()) graphics.drawString(font, text("face." + face.name().toLowerCase(java.util.Locale.ROOT)), 190, 136 + face.ordinal() * 13, 0xff404040, false);
+        labels.draw(graphics, font, text("in"), 274, 121, 24);
+        labels.draw(graphics, font, text("out"), 300, 121, 26);
+        for (var face : MachineSides.Face.values()) labels.draw(graphics, font, text("face." + face.name().toLowerCase(java.util.Locale.ROOT)), 190, 136 + face.ordinal() * 13, 48);
         }
         if (menu.kind() != MachineKind.FERMENTER) {
-            graphics.drawString(font, text("rate", menu.displayRate()), 7, 93, 0xff404040, false);
-        } else graphics.drawString(font, text("fermentation_progress", menu.progress(), menu.totalTicks()), 28, 98, 0xff404040, false);
+            labels.draw(graphics, font, text("rate", menu.displayRate()), 7, 93, 162);
+        } else labels.draw(graphics, font, text("fermentation_progress", menu.progress(), menu.totalTicks()), 28, 98, 140);
         if (menu.kind() != MachineKind.POWDER_MIXER && menu.status() != ProcessingMachine.Status.RUNNING)
-            graphics.drawString(font, text("status." + menu.status().name().toLowerCase(java.util.Locale.ROOT)), 28, 111, 0xff404040, false);
+            labels.draw(graphics, font, text("status." + menu.status().name().toLowerCase(java.util.Locale.ROOT)), 28, 111, 140);
     }
     @Override public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+        labels.begin(mouseX - leftPos, mouseY - topPos);
         speedButton.active = menu.canRemove(ProcessingUpgradeItem.Kind.SPEED);
         efficiencyButton.active = menu.canRemove(ProcessingUpgradeItem.Kind.EFFICIENCY);
         speedButton.visible = efficiencyButton.visible = upgradesOpen;
         if (clearButton != null) clearButton.active = !menu.active();
         for (var face : MachineSides.Face.values()) for (int col = 0; col < 3; col++) {
             boolean enabled = menu.enabled(face, MachineSides.Route.values()[col]);
-            sideButtons.get(face.ordinal() * 3 + col).setMessage(text(enabled ? "on" : "off"));
+            var button = sideButtons.get(face.ordinal() * 3 + col);
+            var state = text(enabled ? "on" : "off");
+            if (!button.getMessage().equals(state)) {
+                button.setMessage(state);
+                var help = text(menu.kind() == MachineKind.GENERATOR && col == 2 ? "fuel_container_output" : "route." + MachineSides.Route.values()[col].name().toLowerCase(java.util.Locale.ROOT));
+                button.setTooltip(Tooltip.create(font.width(state) > button.getWidth() - 4 ? state.copy().append("\n").append(help) : help));
+            }
             sideButtons.get(face.ordinal() * 3 + col).visible = sidesOpen && (menu.kind() != MachineKind.FERMENTER || col != 0);
         }
         super.render(graphics, mouseX, mouseY, partialTick);
@@ -133,6 +143,7 @@ public final class ProcessingMachineScreen extends AbstractContainerScreen<Proce
             if (!slot.hasItem() && !menu.filter(i).isEmpty() && isHovering(slot.x, slot.y, 16, 16, mouseX, mouseY))
                 graphics.renderTooltip(font, List.of(text("filter", menu.filter(i).getHoverName()), text("clear_filter_hint")), java.util.Optional.empty(), mouseX, mouseY);
         }
+        labels.renderTooltip(graphics, font, mouseX, mouseY);
     }
     @Override protected boolean hasClickedOutside(double mouseX, double mouseY, int left, int top, int button) {
         if (upgradesOpen && mouseX >= left + 182 && mouseX < left + 334 && mouseY >= top && mouseY < top + 104) return false;

@@ -1,0 +1,9 @@
+{
+  "neoforge:conditions": [{"type": "neoforge:mod_loaded", "modid": "culturaldelights"}],
+  "type": "gascraft:powder_mixing",
+  "pattern": ["PPP", "PBP", "PPP"],
+  "key": {"P": {"item": "gascraft:powdered_fart_gas_concentrated"}, "B": {"item": "gascraft:toxic_binder"}},
+  "result": {"id": "gascraft:taco_chime_gas_pellet_composite", "count": 1},
+  "processing_ticks": 200,
+  "energy_per_operation": 6400
+}

@@ -146,6 +146,7 @@ public final class ProcessingMachine {
             result = recipe.getResultItem(owner.getLevel().registryAccess());
             baseTicks = recipe.processingTicks(); baseEnergy = recipe.energyPerOperation(); experience = recipe.experience();
         }
+        if(result.isEmpty()||!gascraft.gas.GasChainControls.itemAllowed(result))return null;
         NonNullList<ItemStack> inputs = NonNullList.withSize(inputCount, ItemStack.EMPTY);
         for (int slot = 0; slot < inputCount; slot++) inputs.set(slot, inventory.getStackInSlot(slot).copyWithCount(1));
         if (owner.kind() == MachineKind.FERMENTER) {
@@ -176,6 +177,7 @@ public final class ProcessingMachine {
 
     public void tick() {
         if (owner.kind() == MachineKind.GENERATOR) { tickGenerator(); return; }
+        if(work!=null&&!gascraft.gas.GasChainControls.itemAllowed(work.result)){work=null;status=Status.IDLE;owner.setChanged();}
         if (work == null) work = findWork();
         if (work == null) { status = Status.IDLE; return; }
         if (!fits(work)) {

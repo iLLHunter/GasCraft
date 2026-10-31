@@ -97,6 +97,8 @@ public final class GasExposure {
             if (effect.type().equals("instant_potion")) {
                 if (!beneficialPotion(entity, ResourceLocation.parse(effect.potion()))) return false;
                 hasBenefit = true;
+            } else if(effect.type().equals("enlarging")) {
+                hasBenefit=true;
             } else if (!List.of("color", "fade", "end").contains(effect.type())) return false;
         }
         return hasBenefit;
@@ -123,6 +125,7 @@ public final class GasExposure {
         tickGasExposure(player);
     }
     public static void clearOnDeath(Player player) {
+        GasSizing.clearOnDeath(player);
         SicknessStateStore.clear(player);
         player.getPersistentData().remove(STATE);
         PREVIOUS.remove(player);
@@ -193,6 +196,7 @@ public final class GasExposure {
         {
             for (GasCloudEntity cloud : clouds) {
                 if (cloud.instantPulse()) continue; // The release pulse owns this visual cloud's only exposure.
+                if (cloud.gasContents().agents().stream().anyMatch(agent -> agent.factory().equals("olfactory")) && !cloud.olfactoryActive()) continue;
                 double concentration = cloud.gasConcentrationAt(entity.position());
                 if (concentration <= 0) continue;
                 concentrations.merge(cloud.gasContents(), concentration, Math::max);
@@ -201,7 +205,8 @@ public final class GasExposure {
         // Scale exposure through the entity's air-depletion hook,
         // rather than treating underwater breathing as gas immunity. Sarin has explicit exceptions.
         float respiratoryModifier = air - entity.decreaseAirSupply((int)air);
-        concentrations.replaceAll((gas, concentration) -> gas.id().equals(GasCatalog.id("sarin_gas")) ? concentration : concentration * respiratoryModifier);
+        concentrations.replaceAll((gas, concentration) -> gas.id().equals(GasCatalog.id("sarin_gas"))
+            || gas.agents().stream().anyMatch(agent -> agent.factory().equals("olfactory")) ? concentration : concentration * respiratoryModifier);
         var handler = breathingHandler(entity);
         var previous = PREVIOUS.getOrDefault(entity, Map.of());
         previous.forEach((gas, concentration) -> {
@@ -215,6 +220,7 @@ public final class GasExposure {
         });
         concentrations.entrySet().removeIf(entry -> {
             var gas = entry.getKey(); float concentration = entry.getValue().floatValue();
+            if(!GasChainControls.enabled(gas.id()))return true;
             if (handler.isImmune(gas,concentration)) return true;
             if (!previous.containsKey(gas)) net.neoforged.neoforge.common.NeoForge.EVENT_BUS.post(new gascraft.api.event.GasExposureEvent.GasExposureStartEvent(entity, handler, gas, concentration));
             return net.neoforged.neoforge.common.NeoForge.EVENT_BUS.post(new gascraft.api.event.GasExposureEvent.GasExposureTickEvent(entity, handler, gas, concentration)).isCanceled();
@@ -248,6 +254,7 @@ public final class GasExposure {
         applyGasAgents(entity,gas,(float)concentration,false);
     }
     public static void applyGasAgents(LivingEntity entity, GasCatalog.GasDefinition gas, float concentration, boolean forced) {
+        if(!GasChainControls.enabled(gas.id()))return;
         if (entity.level().isClientSide || !entity.isAlive() || exemptPlayer(entity) || gas.id().equals(GasCatalog.id("sarin_gas")) && immuneToNerveAgent(entity)) return;
         float air=breathingHandler(entity).getAirSupply();
         if (!forced && gas.suspendable() && entity.isShiftKeyDown() && air > 0) return;
@@ -255,6 +262,7 @@ public final class GasExposure {
             if (!entity.isAlive()) return;
             float dose = (float) concentration * agent.potency();
             switch (agent.factory()) {
+                case "olfactory" -> { if (dose > 0) GasOlfactory.apply(entity, agent.duration()); }
                 case "sickness" -> {
                     if (forced || agent.ignoreBreath() || air <= 0) {
                         SicknessStateStore.addFromGas(entity, ResourceLocation.parse(agent.effect()), dose / 20, gas.id());
@@ -268,7 +276,8 @@ public final class GasExposure {
                 }
                 case "potion" -> {
                     boolean shortPoison = GasCatalog.isPoisonGas(gas.id()) && agent.effect().equals("minecraft:poison") && agent.duration() == 20;
-                    if (shortPoison || forced || entity.level().getDayTime() % 20 == 0) BuiltInRegistries.MOB_EFFECT.getHolder(ResourceLocation.parse(agent.effect())).ifPresent(effect -> {
+                    boolean regeneration = gas.id().equals(GasCatalog.id("regenerating_mist"))&&agent.effect().equals("minecraft:regeneration");
+                    if (shortPoison || regeneration || forced || entity.level().getDayTime() % 20 == 0) BuiltInRegistries.MOB_EFFECT.getHolder(ResourceLocation.parse(agent.effect())).ifPresent(effect -> {
                         entity.addEffect(new MobEffectInstance(effect, agent.duration(), agent.amplifier()));
                         // Refreshing 20 ticks every tick prevents vanilla's duration-based damage timer
                         // from reaching its intervals. Use the native Poison tick at its normal cadence
@@ -298,6 +307,7 @@ public final class GasExposure {
     }
     public static void applyInstantPotionPulse(LivingEntity entity, GasCatalog.GasDefinition gas,
         net.minecraft.core.Holder<net.minecraft.world.effect.MobEffect> potion, int amplifier, Entity source, Entity owner) {
+        if(!GasChainControls.enabled(gas.id()))return;
         if (entity.level().isClientSide || !entity.isAlive()) return;
         var handler = breathingHandler(entity);
         if (handler.isImmune(gas, 1)) return;
